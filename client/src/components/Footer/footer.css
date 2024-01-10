@@ -1,0 +1,35 @@
+ul li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #2bd0d0;
+}
+
+.social-icon {
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.social-icon:hover svg path {
+  fill: #2bd0d0;
+}
+
+.footer-list-item {
+  margin-bottom: 15px;
+}
+html {
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+}
+.white-logo {
+  width: 50%;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
