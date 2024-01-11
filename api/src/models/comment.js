@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 const { body } = require('express-validator')
 
 const commentSchema = new mongoose.Schema({
-  commentDesign: {
+  commentedDesign: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Design',
     required: true,
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  text: { type: String },
+  text: { type: String, required: true },
   commentDate: { type: Date, required: true },
   isDeleted: { type: Date },
 })
@@ -16,11 +16,7 @@ const commentSchema = new mongoose.Schema({
 const Comment = mongoose.model('Comment', commentSchema)
 
 const commentValidationSchema = [
-  body('commentDate').notEmpty().isDate().withMessage('Se necesita una fecha'),
-  body('punctuation')
-    .notEmpty()
-    .isNumeric()
-    .withMessage('Se necesita una puntuación'),
+  body('text').notEmpty().isString().withMessage('Se necesita un comentario'),
 ]
 
 exports.commentValidationSchema = commentValidationSchema

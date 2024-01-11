@@ -14,7 +14,7 @@ const addComment = async (req, res) => {
     }
 
     const existingComment = await Comment.findOne({
-      commentDesign: designId,
+      commentedDesign: designId,
       user: userId,
     })
     if (existingComment) {
@@ -22,7 +22,7 @@ const addComment = async (req, res) => {
     }
 
     const comment = await Comment.create({
-      commentDesign: designId,
+      commentedDesign: designId,
       user: userId,
       commentDate: new Date(),
       text: text,
@@ -36,3 +36,24 @@ const addComment = async (req, res) => {
     res.status(500).json({ error: 'Error al crear el comentario' })
   }
 }
+
+const hideComment = async (req, res) => {
+  try {
+    const { commentId } = req.params
+
+    const comment = await Comment.findById(commentId)
+    if (!comment) {
+      return res.status(404).json({ error: 'No se encuentra el comentario' })
+    }
+
+    comment.isDeleted = new Date()
+    await comment.save()
+
+    res.json(comment)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error al deshabilitar el comentario' })
+  }
+}
+
+module.exports = { addComment, hideComment }
