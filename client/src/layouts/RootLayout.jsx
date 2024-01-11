@@ -1,21 +1,21 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from "react-router-dom";
 
-import { Container } from '@mui/material'
-import { Footer } from 'components'
+import { Container } from "@mui/material";
+import { Footer } from "components";
 
-// import { Navbar } from 'components'
-import { ToastContainer } from 'react-toastify'
+import { Navbar } from "components";
+import { ToastContainer } from "react-toastify";
 function RootLayout() {
   return (
     <>
-      <Container display='flex' maxWidth='xxl' disableGutters>
-        {/* <Navbar /> */}
-        <Container maxWidth='xl' sx={{ mt: 5 }}>
+      <Container display="flex" maxWidth="xxl" disableGutters>
+        <Navbar />
+        <Container maxWidth="xl" sx={{ mt: 5 }}>
           <Outlet />
         </Container>
 
         <ToastContainer
-          position='top-right'
+          position="top-right"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -24,11 +24,11 @@ function RootLayout() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme='colored'
+          theme="colored"
         />
       </Container>
       <Footer />
     </>
-  )
+  );
 }
-export default RootLayout
+export default RootLayout;
