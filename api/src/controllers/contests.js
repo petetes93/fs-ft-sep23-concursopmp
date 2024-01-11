@@ -45,9 +45,33 @@ const update = async (req, res) => {
   res.json(updatedcontest)
 }
 
+const activate = (req, res, next) => {
+  const currentDate = new Date()
+
+  Contest.updateMany(
+    {
+      startDate: { $lte: currentDate },
+      finishDate: { $gte: currentDate },
+    },
+    { $set: { isActive: true } }
+  )
+    .then(() => {
+      res.status(200).json({
+        success: true,
+        message:
+          'Todos los concursos activos han sido actualizados correctamente.',
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+      next(error)
+    })
+}
+
 module.exports = {
   getAll,
   getOne,
   create,
   update,
+  activate,
 }

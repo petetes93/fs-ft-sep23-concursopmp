@@ -27,6 +27,8 @@ router.post(
   contestController.create
 )
 
+router.put('/activate', auth, admin, validate, contestController.activate)
+
 router.put(
   '/:contestId',
   auth,

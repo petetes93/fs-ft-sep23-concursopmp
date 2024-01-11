@@ -6,12 +6,12 @@ const contestSchema = new mongoose.Schema({
   image: { type: String, required: true },
   description: { type: String, required: true },
   rules: { type: String, required: true },
-  start_date: { type: Date, required: true },
-  finish_date: { type: Date, required: true },
+  startDate: { type: Date, required: true },
+  finishDate: { type: Date, required: true },
   theme: { type: String, required: true },
   isActive: { type: Boolean },
-  approval_date: { type: Date },
-  last_modification: { type: Date },
+  approvalDate: { type: Date },
+  lastModification: { type: Date },
   isDeleted: { type: Date },
 })
 
