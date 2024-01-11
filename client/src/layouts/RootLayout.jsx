@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 
-import { Container } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 import { Footer } from 'components'
 
 // import { Navbar } from 'components'
@@ -27,6 +27,7 @@ function RootLayout() {
           theme='colored'
         />
       </Container>
+
       <Footer />
     </>
   )

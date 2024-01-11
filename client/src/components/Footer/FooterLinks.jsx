@@ -7,12 +7,14 @@ function FooterLinks() {
   return (
     <Grid
       container
+      component='footer'
       sx={{
         backgroundColor: '#232127',
         color: '#ffffff',
         padding: '50px 0',
+        position: 'absolute',
+        bottom: -40,
         width: '100%',
-        position: 'relative',
       }}
     >
       <Grid
