@@ -1,10 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 
 function Brand() {
   return (
     <>
-      <Typography
+      <Grid item xs={12} md={2} sx={{ textAlign: "center" }}>
+        <a href="https://www.pampling.com/">
+          <img
+            src="https://www.pampling.com//img/newfront/logo-21-es-png@2x.svg"
+            alt="Pampling Logo"
+            className="black-logo"
+          />
+        </a>
+      </Grid>
+      {/* <Typography
         variant="h6"
         noWrap
         component={NavLink}
@@ -19,7 +28,7 @@ function Brand() {
         }}
       >
         Pampling
-      </Typography>
+      </Typography> */}
     </>
   );
 }

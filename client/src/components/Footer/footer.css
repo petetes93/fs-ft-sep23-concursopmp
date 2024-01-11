@@ -26,10 +26,15 @@ a:hover {
 }
 html {
   font-size: 18px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 .white-logo {
   width: 50%;
   height: auto;
   filter: brightness(0) invert(1);
+}
+
+.black-logo {
+  width: 50%;
+  height: auto;
 }
