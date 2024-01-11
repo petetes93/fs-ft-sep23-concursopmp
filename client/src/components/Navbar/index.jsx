@@ -11,50 +11,29 @@ import {
   Tooltip,
 } from "@mui/material";
 
-import { useAuth } from "hooks";
+// import { Menu, CollapseMenu } from "../../components";
 
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { stringAvatar } from "./helpers";
-
 import Brand from "./Brand";
-import { Menu, CollapseMenu } from "../../components";
+
 function Navbar() {
-  const [user] = useAuth();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [places, setPlaces] = useState([]);
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-  useEffect(() => {
-    const getPlacesFromApi = async () => {
-      try {
-        const response = await fetch("http://localhost:4040/api/places");
-        const data = await response.json();
-        setPlaces(data);
-      } catch (error) {
-        console.error("Error getting places from API:", error);
-      }
-    };
-
-    getPlacesFromApi();
-  }, []);
 
   const optionsMainMenu = [{ label: "Contests", to: "/customers" }];
-  const optionsUserMenu = user.auth
-    ? [{ label: "Logout", to: "/logout" }]
-    : [
-        { label: "Login", to: "/login" },
-        { label: "Regiter", to: "/register" },
-      ];
+
+  const pages = ["Shop", "Liquidacion", "diseñadores", "Comunidad", "Tiendas"];
 
   return (
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "gray",
+        backgroundColor: "white",
 
         boxShadow: "none",
 
@@ -73,18 +52,35 @@ function Navbar() {
             >
               <MenuIcon />
             </IconButton>
-
-            <CollapseMenu
-              anchor={anchorElNav}
-              onClose={() => setAnchorElNav(null)}
-              options={optionsMainMenu}
-            />
           </Box>
-
-          <Menu
-            options={optionsMainMenu}
-            onClose={() => setAnchorElNav(null)}
-          />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              ml: 20,
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                href="https://www.pampling.com/tienda/catalogo/busqueda"
+                key={page}
+                onClick={handleOpenNavMenu}
+                sx={{
+                  my: 2,
+                  color: "black",
+                  display: "block",
+                  fontFamily: "helvetica",
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ pr: 47 }}>
+            <Button sx={{ color: "black", fontFamily: "helvetica" }}>
+              Contest
+            </Button>
+          </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -94,16 +90,11 @@ function Navbar() {
                     display: { xs: "none", md: "flex" },
                     mr: 1,
                     fontSize: 40,
-                    color: "white",
+                    color: "black",
                   }}
                 />
               </IconButton>
             </Tooltip>
-            <CollapseMenu
-              anchor={anchorElUser}
-              onClose={() => setAnchorElUser(null)}
-              options={optionsUserMenu}
-            />
           </Box>
         </Toolbar>
       </Container>

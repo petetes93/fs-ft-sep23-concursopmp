@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom'
 
-import { Container, Grid } from '@mui/material'
+import { Container } from '@mui/material'
 import { Footer } from 'components'
 
-// import { Navbar } from 'components'
+import { Navbar } from 'components'
 import { ToastContainer } from 'react-toastify'
 function RootLayout() {
   return (
     <>
       <Container display='flex' maxWidth='xxl' disableGutters>
-        {/* <Navbar /> */}
+        <Navbar />
         <Container maxWidth='xl' sx={{ mt: 5 }}>
           <Outlet />
         </Container>
