@@ -1,68 +1,66 @@
-import { useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Container,
-  Typography,
-  Menu,
-  MenuItem,
-  Button,
-  Tooltip,
-} from "@mui/material";
-
-// import { Menu, CollapseMenu } from "../../components";
-
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import "./styles.css";
+import Button from "@mui/material/Button";
 
-import Brand from "./Brand";
+import MenuItem from "@mui/material/MenuItem";
 
-function Navbar() {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+const pages = ["Features", "Pricing", "Resources"];
 
-  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+  const [displayed, setDisplayed] = React.useState(false);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const optionsMainMenu = [{ label: "Contests", to: "/customers" }];
-
-  const pages = ["Shop", "Liquidacion", "diseñadores", "Comunidad", "Tiendas"];
-
   return (
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "white",
+        backgroundColor: "transparent",
+
+        pt: 5,
 
         boxShadow: "none",
+
+        width: "70%",
 
         margin: "auto",
       }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Brand />
-          <Box>
-            <Button
-              sx={{
-                fontFamily: "helvetica",
-                color: "grey",
+          <Typography
+            variant="h4"
+            component="a"
+            sx={{
+              mr: 2,
 
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-            >
-              Contest
-            </Button>
-          </Box>
+              fontFamily: "Poppins",
+
+              fontWeight: 700,
+
+              letterSpacing: ".3rem",
+
+              color: "black",
+            }}
+          >
+            Pampling
+          </Typography>
           <Box
             sx={{
               flexGrow: 1,
@@ -101,7 +99,12 @@ function Navbar() {
               {pages.map((page) => (
                 <MenuItem
                   sx={{
-                    backgroundColor: "white",
+                    backgroundColor: "#3a3054",
+                    "&:hover": {
+                      background: "#3a3054",
+
+                      boxShadow: "none",
+                    },
                   }}
                   className="blockMenu"
                   key={page}
@@ -111,9 +114,9 @@ function Navbar() {
                     width="100%"
                     align="center"
                     sx={{
-                      fontFamily: "helvetica",
+                      fontFamily: "Poppins",
                       fontWeight: 700,
-                      color: "gray",
+                      color: "white",
                     }}
                   >
                     {page}
@@ -124,7 +127,7 @@ function Navbar() {
                 sx={{
                   borderTop: "1px solid black",
 
-                  backgroundColor: "white",
+                  backgroundColor: "#3a3054",
                   "&:hover": {
                     background: "#3a3054",
 
@@ -135,7 +138,12 @@ function Navbar() {
 
               <MenuItem
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: "#3a3054",
+                  "&:hover": {
+                    background: "#3a3054",
+
+                    boxShadow: "none",
+                  },
                 }}
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
@@ -144,17 +152,22 @@ function Navbar() {
                   width="100%"
                   align="center"
                   sx={{
-                    fontFamily: "helvetica",
+                    fontFamily: "Poppins",
                     fontWeight: 700,
-                    color: "gray",
+                    color: "white",
                   }}
                 >
-                  Contest
+                  LogIn
                 </Typography>
               </MenuItem>
               <MenuItem
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: "#3a3054",
+                  "&:hover": {
+                    background: "#3a3054",
+
+                    boxShadow: "none",
+                  },
                 }}
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
@@ -162,15 +175,20 @@ function Navbar() {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: "black",
-
+                    backgroundColor: "#2BD0D0",
+                    "&:hover": {
+                      background: "#bff0f0",
+                      boxShadow: "none",
+                    },
+                    borderRadius: "30px",
+                    fontFamily: "Poppins",
                     fontWeight: "bold",
                     boxShadow: "none",
                     width: "15rem",
                     margin: "auto",
                   }}
                 >
-                  <PersonRoundedIcon />
+                  Sign Up
                 </Button>
               </MenuItem>
             </Menu>
@@ -186,11 +204,11 @@ function Navbar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{
-                  mr: 2,
+                  mr: 5,
 
                   my: 2,
 
-                  fontFamily: "helvetica",
+                  fontFamily: "Poppins",
 
                   color: "grey",
 
@@ -212,18 +230,44 @@ function Navbar() {
             }}
           >
             <Button
+              sx={{
+                color: "gray",
+
+                "&:hover": {
+                  color: "black",
+                },
+
+                fontFamily: "Poppins",
+              }}
+            >
+              Log In
+            </Button>
+
+            <Button
               variant="contained"
               sx={{
-                backgroundColor: "black",
+                backgroundColor: "#2BD0D0",
+
+                "&:hover": {
+                  background: "#bff0f0",
+
+                  boxShadow: "none",
+                },
 
                 borderRadius: "30px",
+
+                mt: 1,
+
+                fontFamily: "Poppins",
+
+                fontWeight: "bold",
 
                 boxShadow: "none",
 
                 height: 50,
               }}
             >
-              <PersonRoundedIcon />
+              Sign Up
             </Button>
           </Box>
         </Toolbar>
@@ -232,4 +276,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default ResponsiveAppBar;
