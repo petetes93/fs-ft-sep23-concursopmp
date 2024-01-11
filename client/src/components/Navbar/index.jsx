@@ -78,7 +78,7 @@ function Navbar() {
           </Box>
           <Box sx={{ pr: 47 }}>
             <Button sx={{ color: "black", fontFamily: "helvetica" }}>
-              Contest
+              Concursos
             </Button>
           </Box>
 

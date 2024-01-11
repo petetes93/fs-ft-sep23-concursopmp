@@ -1,16 +1,25 @@
 import { Outlet } from 'react-router-dom'
 
-import { Container } from '@mui/material'
 import { Footer } from 'components'
 
 import { Navbar } from 'components'
+import { Container } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
+
 function RootLayout() {
   return (
-    <>
-      <Container display='flex' maxWidth='xxl' disableGutters>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+    >
+      <Container
+        display='flex'
+        flexDirection='column'
+        maxWidth='xxl'
+        disableGutters
+        style={{ flex: 1 }}
+      >
         <Navbar />
-        <Container maxWidth='xl' sx={{ mt: 5 }}>
+        <Container disableGutters>
           <Outlet />
         </Container>
 
@@ -29,7 +38,8 @@ function RootLayout() {
       </Container>
 
       <Footer />
-    </>
+    </div>
   )
 }
+
 export default RootLayout

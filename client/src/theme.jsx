@@ -38,8 +38,7 @@ const ThemeProvider = ({ children }) => (
     <div
       style={{
         minHeight: '100vh',
-        background:
-          'linear-gradient(90deg, hsla(217, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%)',
+        background:'#1C8791',
 
         filter:
           'progid:DXImageTransform.Microsoft.gradient(startColorstr="#0061FF", endColorstr="#60EFFF", GradientType=1)',
