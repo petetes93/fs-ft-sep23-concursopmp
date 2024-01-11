@@ -1,15 +1,23 @@
 const { Design } = require('../models/design')
 const mongoose = require('mongoose')
+const { Vote } = require('../models/vote')
 
 const getAll = async (req, res) => {
   try {
     const { author } = req.query
 
-    const query = author ? { author: mongoose.Types.ObjectId(author) } : {}
+    let query = {}
+
+    if (author) {
+      query.author = author
+    }
 
     console.log(query)
 
-    const designs = await Design.find(query).populate('vote_register')
+    const designs = await Design.find(query).populate(
+      'voteRegister',
+      '-votedDesign'
+    )
 
     if (designs.length === 0) {
       return res.status(404).json({ message: 'No hay diseños disponibles' })
@@ -24,7 +32,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   const { designId } = req.params
 
-  const design = await Design.findById(designId).populate('vote_register')
+  const design = await Design.findById(designId).populate('voteRegister')
   if (!design) {
     return res.status(404).json({ message: 'No se encuentra el diseño' })
   }
@@ -46,28 +54,116 @@ const create = async (req, res) => {
   }
 }
 
-const update = async (req, res) => {
+const addVote = async (req, res) => {
   try {
     const { designId } = req.params
+    const userId = req.user.id
+    const punctuation = req.body.punctuation
 
-    const existingDesign = await Design.find({
-      _id: designId,
-    })
-
-    if (!existingDesign) {
+    const design = await Design.findById(designId)
+    if (!design) {
       return res.status(404).json({ error: 'Diseño no encontrado' })
     }
 
-    const updatedDesign = await Design.findByIdAndUpdate(
-      designId,
-      { ...req.body },
-      { new: true }
-    ).populate('vote_register')
+    const existingVote = await Vote.findOne({
+      votedDesign: designId,
+      user: userId,
+    })
+    if (existingVote) {
+      return res.status(400).json({ error: 'Ya has votado por este diseño' })
+    }
+
+    const vote = await Vote.create({
+      votedDesign: designId,
+      user: userId,
+      voteDate: new Date(),
+      punctuation: punctuation,
+    })
+
+    design.voteRegister.push(vote._id)
+    await design.save()
+
+    const updatedDesign = await Design.findById(designId).populate(
+      'voteRegister'
+    )
 
     res.json(updatedDesign)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ error: 'Error al actualizar el diseño' })
+    res.status(500).json({ error: 'Error al agregar el voto' })
+  }
+}
+
+const updateVote = async (req, res) => {
+  try {
+    const { designId } = req.params
+    const userId = req.user.id
+    const newPunctuation = req.body.punctuation
+
+    const design = await Design.findById(designId)
+    if (!design) {
+      return res.status(404).json({ error: 'Diseño no encontrado' })
+    }
+
+    const existingVote = await Vote.findOne({
+      votedDesign: designId,
+      user: userId,
+    })
+
+    if (!existingVote) {
+      return res.status(404).json({ error: 'No has votado por este diseño' })
+    }
+
+    existingVote.punctuation = newPunctuation
+    existingVote.voteDate = new Date()
+    await existingVote.save()
+
+    const updatedDesign = await Design.findById(designId).populate(
+      'voteRegister'
+    )
+
+    res.json(updatedDesign)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error al actualizar el voto' })
+  }
+}
+
+const hideDesign = async (req, res) => {
+  try {
+    const { designId } = req.params
+
+    const design = await Design.findById(designId)
+    if (!design) {
+      return res.status(404).json({ error: 'Diseño no encontrado' })
+    }
+
+    design.isDeleted = new Date()
+    await design.save()
+
+    res.json({ message: 'El diseño ha sido rechazado' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error al deshabilitar el diseño' })
+  }
+}
+
+const showDesign = async (req, res) => {
+  try {
+    const { designId } = req.params
+
+    const design = await Design.findById(designId)
+    if (!design) {
+      return res.status(404).json({ error: 'Diseño no encontrado' })
+    }
+
+    design.approvalDate = new Date()
+    await design.save()
+
+    res.json({ message: 'El diseño ha sido aceptado' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error al habilitar el diseño' })
   }
 }
 
@@ -75,5 +171,8 @@ module.exports = {
   getAll,
   getById,
   create,
-  update,
+  addVote,
+  hideDesign,
+  showDesign,
+  updateVote,
 }

@@ -13,6 +13,6 @@ router.get('/', auth, admin, userController.getAllUsers)
 
 router.get('/:userID', auth, admin, userController.getOneUser)
 
-router.put('/:userID', auth, admin, userController.deleteUser)
+router.delete('/:userID', auth, admin, userController.deleteUser)
 
 module.exports = router

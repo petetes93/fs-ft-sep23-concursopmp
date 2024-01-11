@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { Vote } = require('../models/vote')
+// const { addVote } = require('..controllers/designs')
 
 const create = async (req, res) => {
   try {
