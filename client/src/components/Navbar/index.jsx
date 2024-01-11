@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import {
   AppBar,
@@ -49,7 +50,7 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Brand />
-          <Box>
+          {/* <Box>
             <Button
               sx={{
                 fontFamily: "helvetica",
@@ -60,9 +61,9 @@ function Navbar() {
                 },
               }}
             >
-              Contest
+              Concursos
             </Button>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               flexGrow: 1,
@@ -149,7 +150,7 @@ function Navbar() {
                     color: "gray",
                   }}
                 >
-                  Contest
+                  Concursos
                 </Typography>
               </MenuItem>
               <MenuItem
@@ -160,9 +161,9 @@ function Navbar() {
                 onClick={handleCloseNavMenu}
               >
                 <Button
-                  variant="contained"
+                  color="secondary"
                   sx={{
-                    backgroundColor: "black",
+                    backgroundColor: "transparent",
 
                     fontWeight: "bold",
                     boxShadow: "none",
@@ -170,7 +171,7 @@ function Navbar() {
                     margin: "auto",
                   }}
                 >
-                  <PersonRoundedIcon />
+                  <PersonRoundedIcon fontSize="large" sx={{ color: "black" }} />
                 </Button>
               </MenuItem>
             </Menu>
@@ -181,26 +182,41 @@ function Navbar() {
               display: { xs: "none", md: "none", lg: "none", xl: "flex" },
             }}
           >
+            <Button
+              sx={{
+                fontFamily: "helvetica",
+                color: "grey",
+
+                "&:hover": {
+                  color: "black",
+                },
+              }}
+            >
+              Concursos
+            </Button>
+
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  mr: 2,
+              <Link to="https://www.pampling.com/tienda/catalogo/busqueda">
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    mr: 2,
 
-                  my: 2,
+                    my: 2,
 
-                  fontFamily: "helvetica",
+                    fontFamily: "helvetica",
 
-                  color: "grey",
+                    color: "grey",
 
-                  "&:hover": {
-                    color: "black",
-                  },
-                }}
-              >
-                {page}
-              </Button>
+                    "&:hover": {
+                      color: "black",
+                    },
+                  }}
+                >
+                  {page}
+                </Button>
+              </Link>
             ))}
           </Box>
 
@@ -212,18 +228,18 @@ function Navbar() {
             }}
           >
             <Button
-              variant="contained"
+              variant="outlined"
               sx={{
-                backgroundColor: "black",
+                backgroundColor: "transparent",
 
-                borderRadius: "30px",
+                borderRadius: "50px",
 
                 boxShadow: "none",
 
                 height: 50,
               }}
             >
-              <PersonRoundedIcon />
+              <PersonRoundedIcon fontSize="large" />
             </Button>
           </Box>
         </Toolbar>
