@@ -45,27 +45,65 @@ const update = async (req, res) => {
   res.json(updatedcontest)
 }
 
-const activate = (req, res, next) => {
+const activate = async (req, res, next) => {
   const currentDate = new Date()
 
-  Contest.updateMany(
+  const activation = await Contest.updateMany(
     {
-      startDate: { $lte: currentDate },
-      finishDate: { $gte: currentDate },
+      $and: [
+        { isActive: true },
+        {
+          $or: [
+            { finishDate: { $lt: currentDate } },
+            { startDate: { $gt: currentDate } },
+          ],
+        },
+      ],
+    },
+    { $set: { isActive: false } }
+  )
+
+  const desactivation = await Contest.updateMany(
+    {
+      $or: [
+        {
+          startDate: { $lte: currentDate },
+          finishDate: { $gte: currentDate },
+        },
+        { isActive: true },
+      ],
     },
     { $set: { isActive: true } }
   )
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message:
-          'Todos los concursos activos han sido actualizados correctamente.',
-      })
-    })
-    .catch((error) => {
-      console.error(error)
-      next(error)
-    })
+  if (!activation && !desactivation) {
+    return res
+      .status(404)
+      .json({ message: 'No se han actualizado correctamente los concursos' })
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Se han actualizado correctamente los concursos.',
+  })
+}
+
+const hideContest = async (req, res) => {
+  try {
+    const { contestId } = req.params
+
+    const contest = await Contest.findById(contestId)
+    if (!contest) {
+      return res.status(404).json({ error: 'No se encuentra el comentario' })
+    }
+
+    contest.isDeleted = new Date()
+    await contest.save()
+
+    res.json(contest)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error al deshabilitar el comentario' })
+  }
 }
 
 module.exports = {
@@ -74,4 +112,5 @@ module.exports = {
   create,
   update,
   activate,
+  hideContest,
 }
