@@ -27,6 +27,7 @@ function RootLayout() {
           theme="colored"
         />
       </Container>
+
       <Footer />
     </>
   );
