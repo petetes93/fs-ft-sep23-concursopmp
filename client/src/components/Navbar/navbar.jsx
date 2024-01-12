@@ -32,13 +32,9 @@ function ResponsiveAppBar() {
       position="static"
       sx={{
         backgroundColor: "transparent",
-
         pt: 5,
-
         boxShadow: "none",
-
         width: "70%",
-
         margin: "auto",
       }}
     >
@@ -49,13 +45,9 @@ function ResponsiveAppBar() {
             component="a"
             sx={{
               mr: 2,
-
               fontFamily: "Poppins",
-
               fontWeight: 700,
-
               letterSpacing: ".3rem",
-
               color: "black",
             }}
           >
@@ -102,7 +94,6 @@ function ResponsiveAppBar() {
                     backgroundColor: "#3a3054",
                     "&:hover": {
                       background: "#3a3054",
-
                       boxShadow: "none",
                     },
                   }}
@@ -126,11 +117,9 @@ function ResponsiveAppBar() {
               <MenuItem
                 sx={{
                   borderTop: "1px solid black",
-
                   backgroundColor: "#3a3054",
                   "&:hover": {
                     background: "#3a3054",
-
                     boxShadow: "none",
                   },
                 }}
@@ -141,7 +130,6 @@ function ResponsiveAppBar() {
                   backgroundColor: "#3a3054",
                   "&:hover": {
                     background: "#3a3054",
-
                     boxShadow: "none",
                   },
                 }}
@@ -160,12 +148,12 @@ function ResponsiveAppBar() {
                   LogIn
                 </Typography>
               </MenuItem>
+
               <MenuItem
                 sx={{
                   backgroundColor: "#3a3054",
                   "&:hover": {
                     background: "#3a3054",
-
                     boxShadow: "none",
                   },
                 }}
@@ -193,6 +181,7 @@ function ResponsiveAppBar() {
               </MenuItem>
             </Menu>
           </Box>
+          
           <Box
             sx={{
               flexGrow: 1,
