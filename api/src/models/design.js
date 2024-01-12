@@ -5,12 +5,12 @@ const designSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
   image: { type: String, required: true },
-  upload_date: { type: Date, required: true },
+  uploadDate: { type: Date, required: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   contest: { type: mongoose.Schema.Types.ObjectId, ref: 'Contest' },
-  vote_register: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vote' }],
-  approval_date: { type: Date },
-  last_modification: { type: Date },
+  voteRegister: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vote' }],
+  approvalDate: { type: Date },
+  lastModification: { type: Date },
   isDeleted: { type: Date },
 })
 
@@ -25,7 +25,7 @@ const designValidationSchema = [
     .notEmpty()
     .isString()
     .withMessage('Se necesita una imagen para el diseño'),
-  body('upload_date')
+  body('uploadDate')
     .notEmpty()
     .isDate()
     .withMessage('Se necesita una fecha de subida para el diseño'),

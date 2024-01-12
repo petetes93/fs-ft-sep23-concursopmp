@@ -30,18 +30,34 @@ router.put(
   '/addvote/:designId',
   auth,
   validateParamId('designId'),
-  designValidationSchema,
   validate,
-  designController.update
+  designController.addVote
 )
+
 router.put(
-  '/:designId',
+  '/updatevote/:designId',
+  auth,
+  validateParamId('designId'),
+  validate,
+  designController.updateVote
+)
+
+router.put(
+  '/hidedesign/:designId',
   auth,
   admin,
   validateParamId('designId'),
-  designValidationSchema,
   validate,
-  designController.update
+  designController.hideDesign
+)
+
+router.put(
+  '/showdesign/:designId',
+  auth,
+  admin,
+  validateParamId('designId'),
+  validate,
+  designController.showDesign
 )
 
 module.exports = router

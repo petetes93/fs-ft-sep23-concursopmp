@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import React from "react";
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -6,6 +6,10 @@ import Typography from '@mui/material/Typography';
 
 import Catalog from "src/components/Catalog/Catalog";
 import ContestCard from "../../components/ContestCard/ContestCard";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
 
 function ContestPage() {
 
@@ -14,8 +18,8 @@ function ContestPage() {
       <Card
         sx={{
           maxHeight: '300px',
-          width: '100%',  // Añadir esta línea para ocupar todo el ancho
-          margin: 0,      // Añadir esta línea para eliminar márgenes
+          maxWidth: '100%',
+          margin: 0,
           boxShadow: '0 5px 5px  rgba(0, 0, 0, 0.5)',
           backgroundColor: '#68A9AB',
           marginTop: '70px',
@@ -24,9 +28,8 @@ function ContestPage() {
         }}
       >
         <div>
-          <CardMedia style={{ filter: 'blur(3.5px)' }}
+          <CardMedia style={{ filter: 'blur(3.5px)', height:"300px", width:"100%" }}
             component="img"
-            height="300"
             image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
           />
           <Container disableGutters
@@ -42,7 +45,7 @@ function ContestPage() {
                 fontSize: '30px',
                 marginTop: '-150px',
                 marginBottom: '100px',
-                zIndex: 1
+                zIndex: 1,
               }}
             >
               Descripcion
@@ -51,7 +54,46 @@ function ContestPage() {
         </div>
       </Card>
 
-      <div style={{ marginTop: '100px', marginBottom: '100px' }}>
+      <Container disableGutters sx={{ marginTop: '50px' }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <SearchBar />
+          </Grid>
+
+          <Grid item xs={6} container justifyContent="flex-end">
+            <Select
+              label="Estado"
+              defaultValue="Activo"
+              sx={{
+                minWidth: '120px',
+                '& fieldset': {
+                  border: 'none',
+                },
+                '&:hover fieldset': {
+                  borderColor: 'none',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'none',
+                },
+              }}
+            >
+              <MenuItem value="Activo">Activo</MenuItem>
+              <MenuItem value="Finalizado">Finalizado</MenuItem>
+            </Select>
+          </Grid>
+        </Grid>
+      </Container>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '50px',
+          marginBottom: '100px'
+        }}
+      >
         <ContestCard />
       </div>
     </>

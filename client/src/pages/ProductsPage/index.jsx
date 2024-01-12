@@ -9,10 +9,10 @@ function ProductsPage() {
 
     <h1>PAGINA PARA LOS PRODUCTOS</h1>
     
-    {/* <div style={{marginTop:'100px'}}>
+     <div style={{marginTop:'100px'}}>
       <ProductCard/>
-      <Catalog />
-    </div> */}
+      {/* <Catalog /> */}
+    </div>
     </>
   )
 }

@@ -27,6 +27,10 @@ router.post(
   contestController.create
 )
 
+router.put('/', auth, admin, validate, contestController.activate)
+
+router.put('/delete/:contestId', auth, admin, contestController.hideContest)
+
 router.put(
   '/:contestId',
   auth,

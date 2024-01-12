@@ -37,7 +37,6 @@ function ContestCard() {
         <Typography
           sx={{
             fontSize: '30px',
-            marginBottom: '15px',
             textAlign: 'center',
           }}
         >
