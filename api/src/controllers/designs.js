@@ -43,8 +43,13 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   try {
     const userID = req.user.id
+
+    const { path: image, filename: imageCloudinaryId } = req.file
+
     const newDesign = await Design.create({
       ...req.body,
+      image,
+      imageCloudinaryId,
       author: new mongoose.Types.ObjectId(userID),
     })
 

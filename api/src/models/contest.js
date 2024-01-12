@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 const { body } = require('express-validator')
 
+const createUploader = require('../utils/multer')
+
 const contestSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: String },
+  imageCloudinaryId: { type: String, required: true },
   description: { type: String, required: true },
   rules: { type: String, required: true },
   startDate: { type: Date, required: true },
@@ -44,5 +47,11 @@ const commonValidationSchema = [
     .withMessage('La temática del concurso es obligatoria'),
 ]
 
+const TYPES = {
+  'image/jpeg': 'jpeg',
+  'image/png': 'png',
+}
+
 exports.Contest = Contest
 exports.commonValidationSchema = commonValidationSchema
+exports.uploadImage = createUploader(TYPES).single('image')

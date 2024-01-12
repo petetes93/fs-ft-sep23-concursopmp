@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const designController = require('../controllers/designs')
-const { designValidationSchema } = require('../models/design')
+const { designValidationSchema, uploadImage } = require('../models/design')
 
 const validateParamId = require('../middlewares/mongoIdFromParam')
 
@@ -21,6 +21,7 @@ router.get(
 router.post(
   '/',
   auth,
+  uploadImage,
   designValidationSchema,
   validate,
   designController.create
