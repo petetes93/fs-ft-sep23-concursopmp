@@ -14,7 +14,6 @@ const designSchema = new mongoose.Schema({
   voteRegister: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vote' }],
   commentRegister: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   approvalDate: { type: Date },
-  lastModification: { type: Date },
   isDeleted: { type: Date },
 })
 
