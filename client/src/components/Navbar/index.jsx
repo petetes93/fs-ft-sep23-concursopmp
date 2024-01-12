@@ -45,8 +45,6 @@ function Navbar() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const optionsMainMenu = [{ label: "Contests", to: "/customers" }];
-
   const pages = ["Shop", "Liquidacion", "diseñadores", "Comunidad", "Tiendas"];
 
   return (
@@ -82,7 +80,7 @@ function Navbar() {
             sx={{
               flexGrow: 1,
               ml: "50%",
-              display: { xs: "flex", md: "flex", lg: "flex", xl: "none" },
+              display: { xs: "flex", md: "none", lg: "none", xl: "none" },
             }}
           >
             <IconButton
@@ -110,7 +108,7 @@ function Navbar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "flex", md: "flex", lg: "flex", xl: "none" },
+                display: { xs: "flex", md: "none", lg: "none", xl: "none" },
               }}
             >
               {pages.map((page) => (
@@ -214,23 +212,25 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "none", lg: "none", xl: "flex" },
+              display: { xs: "none", md: "flex", lg: "flex", xl: "flex" },
             }}
           >
-            <Button
-              sx={{
-                ml: "5rem",
-                my: 2,
-                fontFamily: "helvetica",
-                color: "grey",
+            <Link to="./">
+              <Button
+                sx={{
+                  ml: "5rem",
+                  my: 2,
+                  fontFamily: "helvetica",
+                  color: "grey",
 
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-            >
-              Concursos
-            </Button>
+                  "&:hover": {
+                    color: "black",
+                  },
+                }}
+              >
+                Concursos
+              </Button>
+            </Link>
 
             {pages.map((page) => (
               <Link to="https://www.pampling.com/tienda/catalogo/busqueda">
@@ -260,7 +260,7 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "none", lg: "none", xl: "flex" },
+              display: { xs: "none", md: "flex", lg: "flex", xl: "flex" },
             }}
           >
             <Button
@@ -293,8 +293,14 @@ function Navbar() {
               }}
             >
               <div>
-                <Button onClick={handleClose}>Login</Button>
-                <Button onClick={handleClose}>Register</Button>
+                <Link to="./login">
+                  <Button onClick={handleClose}>Login</Button>
+                </Link>
+              </div>
+              <div>
+                <Link to="./register">
+                  <Button onClick={handleClose}>Register</Button>
+                </Link>
               </div>
             </Popover>
           </Box>

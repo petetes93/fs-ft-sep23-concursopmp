@@ -1,44 +1,94 @@
-const mongoose = require('mongoose')
 const { Vote } = require('../models/vote')
-// const { addVote } = require('..controllers/designs')
+const { Design } = require('../models/design')
+const { Contest } = require('../models/contest')
 
-const create = async (req, res) => {
+const addVote = async (req, res) => {
   try {
-    const userID = req.user.id
-    const newVote = await Vote.create({
-      ...req.body,
-      user: new mongoose.Types.ObjectId(userID),
+    const { designId } = req.params
+    const userId = req.user.id
+    const punctuation = req.body.punctuation
+
+    const design = await Design.findById(designId)
+    if (!design) {
+      return res.status(404).json({ error: 'Diseño no encontrado' })
+    }
+
+    const contest = await Contest.findById(design.contest)
+    if (!contest || !contest.isActive) {
+      return res.status(400).json({ error: 'El concurso no está activo' })
+    }
+
+    const existingVote = await Vote.findOne({
+      votedDesign: designId,
+      user: userId,
+    })
+    if (existingVote) {
+      return res.status(400).json({ error: 'Ya has votado por este diseño' })
+    }
+
+    const vote = await Vote.create({
+      votedDesign: designId,
+      user: userId,
+      voteDate: new Date(),
+      punctuation: punctuation,
     })
 
-    res.json(newVote)
+    design.voteRegister.push(vote._id)
+    const Saved = await design.save()
+
+    if (!Saved) {
+      res.status(500).json({ error: 'Error al agregar el voto' })
+    }
+
+    const updatedDesign = await Design.findById(designId).populate(
+      'voteRegister'
+    )
+
+    res.json(updatedDesign)
   } catch (error) {
-    res.status(500).json({ error: 'Error al añadir voto' })
+    console.error(error)
+    res.status(500).json({ error: 'Error al agregar el voto' })
   }
 }
 
-const update = async (req, res) => {
+const updateVote = async (req, res) => {
   try {
-    const { voteId } = req.params
+    const { designId } = req.params
+    const userId = req.user.id
+    const newPunctuation = req.body.punctuation
 
-    const existingVote = await Vote.find({
-      _id: voteId,
+    const design = await Design.findById(designId)
+    if (!design) {
+      return res.status(404).json({ error: 'Diseño no encontrado' })
+    }
+
+    const contest = await Contest.findById(design.contest)
+    if (!contest || !contest.isActive) {
+      return res.status(400).json({ error: 'El concurso no está activo' })
+    }
+
+    const existingVote = await Vote.findOne({
+      votedDesign: designId,
+      user: userId,
     })
 
     if (!existingVote) {
-      return res.status(404).json({ error: 'No has votado' })
+      return res.status(404).json({ error: 'No has votado por este diseño' })
     }
 
-    const updatedVote = await Vote.findByIdAndUpdate(
-      voteId,
-      { ...req.body },
-      { new: true }
+    existingVote.punctuation = newPunctuation
+    existingVote.lastModification = new Date()
+    await existingVote.save()
+
+    const updatedDesign = await Design.findById(designId).populate(
+      'voteRegister'
     )
 
-    res.json(updatedVote)
+    res.json(updatedDesign)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Error al actualizar el voto' })
   }
 }
 
-module.exports = { create, update }
+module.exports = { addVote, updateVote }

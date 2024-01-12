@@ -1,6 +1,5 @@
 const { Comment } = require('../models/comment')
 const { Design } = require('../models/design')
-const mongoose = require('mongoose')
 
 const addComment = async (req, res) => {
   try {
@@ -13,14 +12,6 @@ const addComment = async (req, res) => {
       return res.status(404).json({ error: 'Diseño no encontrado' })
     }
 
-    const existingComment = await Comment.findOne({
-      commentedDesign: designId,
-      user: userId,
-    })
-    if (existingComment) {
-      return res.status(400).json({ error: 'Ya has comentado este diseño' })
-    }
-
     const comment = await Comment.create({
       commentedDesign: designId,
       user: userId,
@@ -28,9 +19,16 @@ const addComment = async (req, res) => {
       text: text,
     })
 
-    await comment.save()
+    design.commentRegister.push(comment._id)
 
-    res.json(comment)
+    await design.save()
+
+    const updatedDesign = await Design.findById(designId).populate(
+      'commentRegister',
+      '-commentedDesign'
+    )
+
+    res.json(updatedDesign)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Error al crear el comentario' })
