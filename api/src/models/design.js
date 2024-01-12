@@ -1,14 +1,18 @@
 const mongoose = require('mongoose')
 const { body } = require('express-validator')
 
+const createUploader = require('../utils/multer')
+
 const designSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
-  image: { type: String, required: true },
+  image: { type: String },
+  imageCloudinaryId: { type: String, required: true },
   uploadDate: { type: Date, required: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   contest: { type: mongoose.Schema.Types.ObjectId, ref: 'Contest' },
   voteRegister: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vote' }],
+  commentRegister: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   approvalDate: { type: Date },
   lastModification: { type: Date },
   isDeleted: { type: Date },
@@ -31,5 +35,11 @@ const designValidationSchema = [
     .withMessage('Se necesita una fecha de subida para el diseño'),
 ]
 
+const TYPES = {
+  'image/jpeg': 'jpeg',
+  'image/png': 'png',
+}
+
 exports.designValidationSchema = designValidationSchema
 exports.Design = Design
+exports.uploadImage = createUploader(TYPES).single('image')

@@ -26,8 +26,12 @@ const getOne = async (req, res) => {
 }
 
 const create = async (req, res) => {
+  const { path: image, filename: imageCloudinaryId } = req.file
+
   const newcontest = await Contest.create({
     ...req.body,
+    image,
+    imageCloudinaryId,
   })
   res.json(newcontest)
 }
@@ -35,12 +39,18 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   const { contestId } = req.params
 
-  const updates = { ...req.body }
+  const { path: image, filename: imageCloudinaryId } = req.file
+
+  const updates = { ...req.body, image, imageCloudinaryId }
   const oldcontest = await Contest.findByIdAndUpdate(contestId, updates)
   if (!oldcontest) {
     return res.status(404).json({ message: 'concurso no encontrado' })
   }
   const updatedcontest = { contestId, ...updates }
+
+  await cloudinary.uploader.destroy(updatedcontest.imageCloudinaryId, {
+    invalidate: true,
+  })
 
   res.json(updatedcontest)
 }
