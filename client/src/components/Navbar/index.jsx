@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import {
   AppBar,
@@ -12,42 +12,42 @@ import {
   MenuItem,
   Button,
   Tooltip,
-} from "@mui/material";
+} from '@mui/material'
 
 // import { Menu, CollapseMenu } from "../../components";
 
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import MenuIcon from "@mui/icons-material/Menu";
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
+import MenuIcon from '@mui/icons-material/Menu'
 
-import Brand from "./Brand";
+import Brand from './Brand'
 
 function Navbar() {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElUser, setAnchorElUser] = useState(null)
 
-  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget)
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget)
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
-  const optionsMainMenu = [{ label: "Contests", to: "/customers" }];
+  const optionsMainMenu = [{ label: 'Contests', to: '/customers' }]
 
-  const pages = ["Shop", "Liquidacion", "diseñadores", "Comunidad", "Tiendas"];
+  const pages = ['Shop', 'Liquidacion', 'diseñadores', 'Comunidad', 'Tiendas']
 
   return (
     <AppBar
-      position="static"
+      position='static'
       sx={{
-        backgroundColor: "white",
+        backgroundColor: 'white',
 
-        boxShadow: "none",
+        boxShadow: 'none',
 
-        margin: "auto",
+        margin: 'auto',
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Brand />
           {/* <Box>
@@ -68,54 +68,54 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              ml: "50%",
-              display: { xs: "flex", md: "flex", lg: "flex", xl: "none" },
+              ml: '50%',
+              display: { xs: 'flex', md: 'flex', lg: 'flex', xl: 'none' },
             }}
           >
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              color="black"
+              color='black'
             >
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
+                vertical: 'top',
+                horizontal: 'center',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "flex", md: "flex", lg: "flex", xl: "none" },
+                display: { xs: 'flex', md: 'flex', lg: 'flex', xl: 'none' },
               }}
             >
               {pages.map((page) => (
                 <MenuItem
                   sx={{
-                    backgroundColor: "white",
+                    backgroundColor: 'white',
                   }}
-                  className="blockMenu"
+                  className='blockMenu'
                   key={page}
                   onClick={handleCloseNavMenu}
                 >
                   <Typography
-                    width="100%"
-                    align="center"
+                    width='100%'
+                    align='center'
                     sx={{
-                      fontFamily: "helvetica",
+                      fontFamily: 'helvetica',
                       fontWeight: 700,
-                      color: "gray",
+                      color: 'gray',
                     }}
                   >
                     {page}
@@ -124,31 +124,31 @@ function Navbar() {
               ))}
               <MenuItem
                 sx={{
-                  borderTop: "1px solid black",
+                  borderTop: '1px solid black',
 
-                  backgroundColor: "white",
-                  "&:hover": {
-                    background: "#3a3054",
+                  backgroundColor: 'white',
+                  '&:hover': {
+                    background: '#3a3054',
 
-                    boxShadow: "none",
+                    boxShadow: 'none',
                   },
                 }}
               ></MenuItem>
 
               <MenuItem
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: 'white',
                 }}
-                className="blockMenu"
+                className='blockMenu'
                 onClick={handleCloseNavMenu}
               >
                 <Typography
-                  width="100%"
-                  align="center"
+                  width='100%'
+                  align='center'
                   sx={{
-                    fontFamily: "helvetica",
+                    fontFamily: 'helvetica',
                     fontWeight: 700,
-                    color: "gray",
+                    color: 'gray',
                   }}
                 >
                   Concursos
@@ -156,23 +156,23 @@ function Navbar() {
               </MenuItem>
               <MenuItem
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: 'white',
                 }}
-                className="blockMenu"
+                className='blockMenu'
                 onClick={handleCloseNavMenu}
               >
                 <Button
-                  color="secondary"
+                  color='secondary'
                   sx={{
-                    backgroundColor: "transparent",
+                    backgroundColor: 'transparent',
 
-                    fontWeight: "bold",
-                    boxShadow: "none",
-                    width: "15rem",
-                    margin: "auto",
+                    fontWeight: 'bold',
+                    boxShadow: 'none',
+                    width: '15rem',
+                    margin: 'auto',
                   }}
                 >
-                  <PersonRoundedIcon fontSize="large" sx={{ color: "black" }} />
+                  <PersonRoundedIcon fontSize='large' sx={{ color: 'black' }} />
                 </Button>
               </MenuItem>
             </Menu>
@@ -180,16 +180,16 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "none", lg: "none", xl: "flex" },
+              display: { xs: 'none', md: 'none', lg: 'none', xl: 'flex' },
             }}
           >
             <Button
               sx={{
-                fontFamily: "helvetica",
-                color: "grey",
+                fontFamily: 'helvetica',
+                color: 'grey',
 
-                "&:hover": {
-                  color: "black",
+                '&:hover': {
+                  color: 'black',
                 },
               }}
             >
@@ -197,7 +197,7 @@ function Navbar() {
             </Button>
 
             {pages.map((page) => (
-              <Link to="https://www.pampling.com/tienda/catalogo/busqueda">
+              <Link to='https://www.pampling.com/tienda/catalogo/busqueda'>
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
@@ -206,12 +206,12 @@ function Navbar() {
 
                     my: 2,
 
-                    fontFamily: "helvetica",
+                    fontFamily: 'helvetica',
 
-                    color: "grey",
+                    color: 'grey',
 
-                    "&:hover": {
-                      color: "black",
+                    '&:hover': {
+                      color: 'black',
                     },
                   }}
                 >
@@ -224,29 +224,29 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "none", lg: "none", xl: "flex" },
-              justifyContent: "space-evenly",
+              display: { xs: 'none', md: 'none', lg: 'none', xl: 'flex' },
+              justifyContent: 'space-evenly',
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{
-                backgroundColor: "transparent",
+                backgroundColor: 'transparent',
 
-                borderRadius: "50px",
+                borderRadius: '50px',
 
-                boxShadow: "none",
+                boxShadow: 'none',
 
                 height: 50,
               }}
             >
-              <PersonRoundedIcon fontSize="large" />
+              <PersonRoundedIcon fontSize='large' />
             </Button>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
