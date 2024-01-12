@@ -28,22 +28,6 @@ router.post(
 )
 
 router.put(
-  '/addvote/:designId',
-  auth,
-  validateParamId('designId'),
-  validate,
-  designController.addVote
-)
-
-router.put(
-  '/updatevote/:designId',
-  auth,
-  validateParamId('designId'),
-  validate,
-  designController.updateVote
-)
-
-router.put(
   '/hidedesign/:designId',
   auth,
   admin,

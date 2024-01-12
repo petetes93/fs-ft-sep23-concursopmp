@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const voteController = require('../controllers/votes')
-const { voteValidationSchema } = require('../models/vote')
 
 const validateParamId = require('../middlewares/mongoIdFromParam')
 
@@ -9,15 +8,20 @@ const auth = require('../middlewares/auth')
 
 const router = Router()
 
-router.post('/', auth, voteValidationSchema, validate, voteController.create)
+router.post(
+  '/:designId',
+  auth,
+  validate,
+  validateParamId('designId'),
+  voteController.addVote
+)
 
 router.put(
-  '/:voteId',
+  '/:designId',
   auth,
-  validateParamId('voteId'),
-  voteValidationSchema,
+  validateParamId('designId'),
   validate,
-  voteController.update
+  voteController.updateVote
 )
 
 module.exports = router
