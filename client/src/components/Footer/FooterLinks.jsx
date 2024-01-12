@@ -12,8 +12,8 @@ function FooterLinks() {
         backgroundColor: '#232127',
         color: '#ffffff',
         padding: '50px 0',
-        position: 'absolute',
-        bottom: -40,
+        position: 'relative',
+        marginTop: '20px',
         width: '100%',
       }}
     >

@@ -4,6 +4,8 @@ import ErrorPage from 'pages/ErrorPage'
 import RootLayout from 'layouts/RootLayout'
 import ProductsPage from './pages/ProductsPage'
 import ContestPage from './pages/ContestPage'
+import LoginPage from 'pages/LoginPage'
+import RegisterPage from 'pages/RegisterPage'
 
 const router = createBrowserRouter([
   {
@@ -11,13 +13,23 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-       {
-         path: '/',
-         element: <ContestPage/>
-       },
+      {
+        path: '/',
+        element: <ContestPage />,
+      },
       {
         path: '/product',
-        element: <ProductsPage/>,
+        element: <ProductsPage />,
+      },
+      {
+        path: '/login',
+        // element: <ProtectedRoute page={LoginPage} role='anonymous' />,
+        element: <LoginPage />,
+      },
+      {
+        path: '/register',
+        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
+        element: <RegisterPage />,
       },
     ],
   },
