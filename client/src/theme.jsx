@@ -25,7 +25,7 @@ const theme = createTheme({
   },
 
   typography: {
-    fontFamily: 'Anton, sans-serif',
+    fontFamily: 'Barlow, sans-serif',
     h2: {
       fontSize: '2.5rem',
     },
@@ -34,7 +34,7 @@ const theme = createTheme({
 
 const ThemeProvider = ({ children }) => (
   <MUIThemeProvider theme={theme}>
-    <CssBaseline />
+    <CssBaseline /> 
     <div
       style={{
         minHeight: '100vh',
