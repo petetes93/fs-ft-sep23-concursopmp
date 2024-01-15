@@ -10,7 +10,7 @@ function Brand() {
         md={2}
         sx={{
           textAlign: "center",
-          display: { xs: "block", md: "block" },
+          display: { xs: "flex", md: "flex", lg: "flex", xl: "flex" },
           maxWidth: "100%", // Ensure the container doesn't exceed the viewport width
           margin: "0 auto", // Center the container horizontally
         }}

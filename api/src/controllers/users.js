@@ -24,14 +24,18 @@ const register = async (req, res) => {
       return res.status(400).send({ msg: 'Vuelve a intentarlo más tarde' })
     }
 
-    S
     const salt = await bcrypt.genSalt(10)
     const password = await bcrypt.hash(passwordPlainText, salt)
 
     const newUser = await User.create({ username, password, isAdmin, ...rest })
 
     const token = jwt.sign(
-      { id: newUser._id, isAdmin: newUser.isAdmin, username: newUser.username },
+      {
+        id: newUser._id,
+        isAdmin: newUser.isAdmin,
+        username: newUser.username,
+        email: newUser.email,
+      },
       process.env.privateKey
     )
 
