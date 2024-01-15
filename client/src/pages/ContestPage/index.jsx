@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Container, Grid, CircularProgress, TextField } from '@mui/material'
+import {
+  Container,
+  Grid,
+  CircularProgress,
+  TextField,
+  FormControl,
+  InputLabel,
+} from '@mui/material'
 import React from 'react'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
@@ -15,16 +22,22 @@ function ContestPage() {
   const { contests, loading } = useContests()
 
   const [searchTerm, setSearchTerm] = useState('')
+  const [filterStatus, setFilterStatus] = useState('')
 
   if (loading) return <CircularProgress />
 
   const filteredContests = contests.filter(contest => {
     return (
-      contest &&
-      contest.theme &&
-      contest.theme.toLowerCase().includes(searchTerm.toLowerCase())
+      (!searchTerm ||
+        contest.theme.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!filterStatus ||
+        (filterStatus === '' && contest.isActive) ||
+        (contest.isActive && filterStatus === 'Activo') ||
+        (!contest.isActive && filterStatus === 'Finalizado'))
     )
   })
+
+  console.log(contests)
 
   return (
     <>
@@ -105,25 +118,31 @@ function ContestPage() {
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
-            <Select
-              label="Estado"
-              defaultValue="Activo"
-              sx={{
-                minWidth: '120px',
-                '& fieldset': {
-                  border: 'none',
-                },
-                '&:hover fieldset': {
-                  borderColor: 'none',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'none',
-                },
-              }}
-            >
-              <MenuItem value="Activo">Activo</MenuItem>
-              <MenuItem value="Finalizado">Finalizado</MenuItem>
-            </Select>
+            <FormControl>
+              <InputLabel>Estado</InputLabel>
+              <Select
+                label="Estado"
+                value={filterStatus}
+                onChange={e => setFilterStatus(e.target.value)}
+                sx={{
+                  minWidth: '120px',
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'none',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'none',
+                  },
+                }}
+              >
+                {' '}
+                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="Activo">Activo</MenuItem>
+                <MenuItem value="Finalizado">Finalizado</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
       </Container>

@@ -1,6 +1,13 @@
+import { useEffect, useState } from 'react'
 import * as React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Container, Grid, Button, CircularProgress } from '@mui/material'
+import {
+  Container,
+  Grid,
+  Button,
+  CircularProgress,
+  TextField,
+} from '@mui/material'
 import Catalog from 'src/components/Catalog/Catalog'
 import ProductCard from 'src/components/ProductCard/ProductCard'
 import SearchBar from '../../components/SearchBar/SearchBar'
@@ -17,12 +24,19 @@ function ProductsPage() {
   const { contestId } = useParams()
   const { designs, loading } = useDesigns()
   const { contest, loadingContest } = useContest(contestId)
+  const [searchAuthor, setSearchAuthor] = useState('')
 
   if (loading && loadingContest) return <CircularProgress />
 
   const matchedDesigns = designs.filter(design => design.contest === contestId)
 
-  console.log(matchedDesigns)
+  const filteredAuthor = matchedDesigns.filter(design => {
+    return (
+      design &&
+      design.author.username &&
+      design.author.username.toLowerCase().includes(searchAuthor.toLowerCase())
+    )
+  })
 
   return (
     <>
@@ -73,7 +87,32 @@ function ProductsPage() {
       <Container disableGutters sx={{ marginTop: '50px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SearchBar />
+            <TextField
+              label="Buscar por autor"
+              variant="outlined"
+              value={searchAuthor}
+              onChange={e => setSearchAuthor(e.target.value)}
+              sx={{
+                '& input': {
+                  color: 'black',
+                  height: '100%',
+                },
+                '& fieldset': {
+                  border: 'none',
+                },
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                borderRadius: '20px',
+                outline: 'none',
+                width: '700px',
+                height: '40px',
+                lineHeight: '60px',
+                display: 'flex',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                },
+              }}
+            />
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
@@ -103,7 +142,7 @@ function ProductsPage() {
           marginBottom: '100px',
         }}
       >
-        {matchedDesigns.map(design => {
+        {filteredAuthor.map(design => {
           return <ProductCard key={design._id} design={design} />
         })}
       </div>
