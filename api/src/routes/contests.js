@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const contestController = require('../controllers/contests')
-const { commonValidationSchema } = require('../models/contest')
+const { commonValidationSchema, uploadImage } = require('../models/contest')
 
 const mongoIdFromParam = require('../middlewares/mongoIdFromParam')
 
@@ -22,6 +22,7 @@ router.post(
   '/',
   auth,
   admin,
+  uploadImage,
   commonValidationSchema,
   validate,
   contestController.create
@@ -35,6 +36,7 @@ router.put(
   '/:contestId',
   auth,
   admin,
+  uploadImage,
   mongoIdFromParam('contestId'),
   commonValidationSchema,
   validate,
