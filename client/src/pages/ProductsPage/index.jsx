@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Container, Grid, Button, CircularProgress } from '@mui/material'
 import Catalog from 'src/components/Catalog/Catalog'
 import ProductCard from 'src/components/ProductCard/ProductCard'
@@ -14,12 +14,15 @@ import { useDesigns, useContest } from 'hooks'
 import AddIcon from '@mui/icons-material/Add'
 
 function ProductsPage() {
+  const { contestId } = useParams()
   const { designs, loading } = useDesigns()
-  const { contest } = useContest()
+  const { contest, loadingContest } = useContest(contestId)
 
-  if (loading) return <CircularProgress />
+  if (loading && loadingContest) return <CircularProgress />
 
-  console.log(designs)
+  const matchedDesigns = designs.filter(design => design.contest === contestId)
+
+  console.log(matchedDesigns)
 
   return (
     <>
@@ -37,11 +40,11 @@ function ProductsPage() {
         <div>
           <CardMedia
             style={{
-              /*  filter: 'blur(1px)',*/ height: '300px',
+              height: '300px',
               width: '100%',
             }}
             component="img"
-            image="https://www.pixground.com/wp-content/uploads/2023/10/Halloween-Spooky-Pumpkin-Forest-AI-Generated-4K-Wallpaper-jpg.webp"
+            image={contest.image}
           />
           <Container
             disableGutters
@@ -61,7 +64,7 @@ function ProductsPage() {
                 zIndex: 1,
               }}
             >
-              CONCURSO 1
+              {contest.name}
             </Typography>
           </Container>
         </div>
@@ -100,7 +103,9 @@ function ProductsPage() {
           marginBottom: '100px',
         }}
       >
-        <ProductCard />
+        {matchedDesigns.map(design => {
+          return <ProductCard key={design._id} design={design} />
+        })}
       </div>
     </>
   )

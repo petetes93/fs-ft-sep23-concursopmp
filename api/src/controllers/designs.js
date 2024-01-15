@@ -1,7 +1,5 @@
 const { Design } = require('../models/design')
 const mongoose = require('mongoose')
-const { Contest } = require('../models/contest')
-const { Vote } = require('../models/vote')
 const { sendEmail } = require('../utils/nodemailer')
 
 const getAll = async (req, res) => {
@@ -16,10 +14,9 @@ const getAll = async (req, res) => {
 
     console.log(query)
 
-    const designs = await Design.find(query).populate(
-      'voteRegister',
-      '-votedDesign'
-    )
+    const designs = await Design.find(query)
+      .populate('voteRegister', '-votedDesign')
+      .populate('author', '-password -_id -email -isAdmin -__v')
 
     if (designs.length === 0) {
       return res.status(404).json({ message: 'No hay diseños disponibles' })

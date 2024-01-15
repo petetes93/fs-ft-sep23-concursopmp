@@ -1,11 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
 
-function ContestCard() {
+function ContestCard({ contest }) {
+  const { name, image, _id } = contest
   return (
     <Card
       sx={{
@@ -14,17 +15,13 @@ function ContestCard() {
         boxShadow: '0 10px 10px rgba(0, 0, 0, 0.5)',
         backgroundColor: '#68A9AB',
         display: 'flex',
-        flexDirection: 'column', 
-        justifyContent: 'center', 
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
     >
       <div>
-      <Link to = {"/product"}>
-        <CardMedia
-          component="img"
-          height="300"
-          image="https://services.meteored.com/img/article/halloween-fiesta-origen-leyendas-1698230767203_1280.jpg"
-        />
+        <Link to={`/contest/${_id}`}>
+          <CardMedia component="img" height="300" image={image} />
         </Link>
       </div>
 
@@ -37,19 +34,19 @@ function ContestCard() {
           color: 'white',
         }}
       >
-        <Link to = {"/product"}>
-        <Typography
-          sx={{
-            fontSize: '30px',
-            textAlign: 'center',
-          }}
-        >
-          Concurso 1
-        </Typography>
+        <Link to={`/contest/${_id}`}>
+          <Typography
+            sx={{
+              fontSize: '30px',
+              textAlign: 'center',
+            }}
+          >
+            {name}
+          </Typography>
         </Link>
       </CardContent>
     </Card>
-  );
+  )
 }
 
-export default ContestCard;
+export default ContestCard
