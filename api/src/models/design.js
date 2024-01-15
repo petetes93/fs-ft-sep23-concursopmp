@@ -24,14 +24,14 @@ const designValidationSchema = [
     .notEmpty()
     .isString()
     .withMessage('Se necesita un título para el diseño'),
-  body('image')
-    .notEmpty()
-    .isString()
-    .withMessage('Se necesita una imagen para el diseño'),
-  body('uploadDate')
-    .notEmpty()
-    .isDate()
-    .withMessage('Se necesita una fecha de subida para el diseño'),
+  // body('image')
+  //   .notEmpty()
+  //   .isString()
+  //   .withMessage('Se necesita una imagen para el diseño'),
+  // body('uploadDate')
+  //   .notEmpty()
+  //   .isDate()
+  //   .withMessage('Se necesita una fecha de subida para el diseño'),
 ]
 
 const TYPES = {
