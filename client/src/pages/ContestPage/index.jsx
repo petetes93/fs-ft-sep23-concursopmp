@@ -14,17 +14,6 @@ import MenuItem from '@mui/material/MenuItem'
 function ContestPage() {
   const { contests, loading } = useContests()
 
-  /*   useEffect(() => {
-    contestService
-      .get()
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error('Error', error)
-      })
-  }, []) */
-
   if (loading) return <CircularProgress />
 
   console.log(contests)
@@ -116,7 +105,11 @@ function ContestPage() {
           marginBottom: '100px',
         }}
       >
-        <ContestCard />
+        {contests.map(contest => {
+          console.log(contest)
+
+          return <ContestCard key={contest._id} contest={contest} />
+        })}
       </div>
     </>
   )

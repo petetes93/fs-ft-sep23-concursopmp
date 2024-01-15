@@ -3,7 +3,7 @@ import contestService from 'services/contest-service'
 
 function useContest(contestId) {
   const [contest, setContest] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loadingContest, setLoading] = useState(true)
   const [errors, setErrors] = useState(null)
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function useContest(contestId) {
       .catch(errors => setErrors(errors))
       .finally(() => setLoading(false))
   }, [])
-  return { contest, loading, errors, setContest }
+  return { contest, loadingContest, errors, setContest }
 }
 
 export default useContest
