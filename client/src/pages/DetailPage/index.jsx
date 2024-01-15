@@ -9,33 +9,35 @@ import {
   TextField,
   Divider,
 } from "@mui/material";
-import Catalog from "../../components/Catalog/Catalog";
 
-import { useDesign } from "hooks";
+import useDesigns from "../../hooks/useDesigns";
 
-import designService from "../../services/design-service";
 import commentService from "../../services/comment-service";
 
 const DetailsPage = () => {
-  // const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState("");
 
-  // const { design, loading, setDesign } = useDesign();
+  const { design, loading, setDesign } = useDesigns();
 
-  // const handleCommentChange = (event) => {
-  //   setNewComment(event.target.value);
-  // };
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
+  };
 
-  // const handleAddComment = async () => {
-  //   try {
-  //     await commentService.create({ comment: newComment }).then((res) => {
-  //       console.log("creado", res.data);
-  //       setDesign({ ...design, comments: [...design.comments, res.data] });
-  //     });
-  //     setNewComment("");
-  //   } catch (error) {
-  //     console.error("Error adding comment:", error);
-  //   }
-  // };
+  const handleAddComment = async () => {
+    try {
+      await commentService.create({ comment: newComment }).then((res) => {
+        console.log("creado", res.data);
+        setDesigns({ ...designs, comments: [...designs.comments, res.data] });
+      });
+      setNewComment("");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  };
+
+  const author = designs.length;
+
+  console.log(author);
 
   return (
     <div>
@@ -57,7 +59,7 @@ const DetailsPage = () => {
               mb: "3rem",
             }}
           >
-            {Catalog.name}
+            {author}
           </Typography>
           <Divider
             style={{
@@ -72,7 +74,10 @@ const DetailsPage = () => {
           <Box
             sx={{ display: "flex", justifyContent: "flex-start", mt: "3rem" }}
           >
-            <img src={Catalog.name} style={{ width: "100%", height: "auto" }} />
+            <img
+              src={designs.length}
+              style={{ width: "100%", height: "auto" }}
+            />
           </Box>
 
           {/* Descripción del producto */}
@@ -92,7 +97,7 @@ const DetailsPage = () => {
           {/* Información del autor */}
           <div>
             <Typography variant="h6">Información del Autor</Typography>
-            <Typography variant="body1">Nombre: name</Typography>
+            <Typography variant="body1">{designs.length}</Typography>
             <Typography variant="body1">Email: email</Typography>
             {/* Puedes agregar más información del autor según tus necesidades */}
           </div>
@@ -107,14 +112,14 @@ const DetailsPage = () => {
               multiline
               rows={3}
               sx={{ width: "60%", mt: "2rem" }}
-              // value={newComment}
-              // onChange={handleCommentChange}
+              value={newComment}
+              onChange={handleCommentChange}
             />
             <Button
               sx={{ width: "20%", mt: "2rem" }}
               variant="contained"
               color="primary"
-              // onClick={handleAddComment}
+              onClick={handleAddComment}
             >
               Agregar Comentario
             </Button>
