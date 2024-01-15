@@ -1,23 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Divider } from '@mui/material'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Divider } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 function ProductCard({ design }) {
-  const { image, title, author, uploadDate, voteRegister, _id } = design
+  const { image, title, author, uploadDate, voteRegister, _id } = design;
 
-  console.log(voteRegister)
+  console.log(voteRegister);
   return (
     <Card
       sx={{
         maxHeight: 600,
         maxWidth: 345,
-        boxShadow: '0 10px 10px  rgba(0, 0, 0, 0.5)',
-        backgroundColor: '#68A9AB',
+        boxShadow: "0 10px 10px  rgba(0, 0, 0, 0.5)",
+        backgroundColor: "#68A9AB",
       }}
     >
       <div>
@@ -29,18 +29,18 @@ function ProductCard({ design }) {
       <CardContent
         sx={{
           //color: 'white',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
         }}
       >
         <Link to={`/design/${_id}`}>
           <div>
-            <div style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ textDecoration: "none", color: "inherit" }}>
               <Typography
                 sx={{
-                  fontSize: '30px',
-                  marginBottom: '15px',
+                  fontSize: "30px",
+                  marginBottom: "15px",
                 }}
               >
                 {title}
@@ -50,9 +50,9 @@ function ProductCard({ design }) {
             <Typography
               variant="body2"
               fontSize="25px"
-              sx={{ display: 'flex', alignItems: 'center' }}
+              sx={{ display: "flex", alignItems: "center" }}
             >
-              <span style={{ marginRight: '6px' }}>{voteRegister.length}</span>
+              <span style={{ marginRight: "6px" }}>{voteRegister.length}</span>
 
               <ThumbUpAltIcon />
             </Typography>
@@ -73,29 +73,28 @@ function ProductCard({ design }) {
 
       <Divider
         style={{
-          // width: '100%',
-          backgroundColor: 'black',
-          opacity: '0.2',
-          width: '90%',
-          marginLeft: '15px',
+          backgroundColor: "black",
+          opacity: "0.2",
+          width: "90%",
+          marginLeft: "15px",
         }}
       />
       <div>
         <Typography
           variant="body2"
           sx={{
-            fontSize: '14px',
-            marginBottom: '10px',
-            fontFamily: 'Montserrat, sans-serif',
-            marginTop: '10px',
-            textAlign: 'center',
+            fontSize: "14px",
+            marginBottom: "10px",
+            fontFamily: "Montserrat, sans-serif",
+            marginTop: "10px",
+            textAlign: "center",
           }}
         >
           {author.username}
         </Typography>
       </div>
     </Card>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;
