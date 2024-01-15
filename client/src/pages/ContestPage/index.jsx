@@ -1,17 +1,33 @@
-import { Container, Grid } from "@mui/material";
-import React from "react";
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-
-import Catalog from "src/components/Catalog/Catalog";
-import ContestCard from "../../components/ContestCard/ContestCard";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-
+import { useEffect, useState } from 'react'
+import { Container, Grid, CircularProgress } from '@mui/material'
+import React from 'react'
+import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import { useContests } from 'hooks'
+import Catalog from 'src/components/Catalog/Catalog'
+import ContestCard from '../../components/ContestCard/ContestCard'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
 function ContestPage() {
+  const { contests, loading } = useContests()
+
+  /*   useEffect(() => {
+    contestService
+      .get()
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error('Error', error)
+      })
+  }, []) */
+
+  if (loading) return <CircularProgress />
+
+  console.log(contests)
 
   return (
     <>
@@ -27,18 +43,24 @@ function ContestPage() {
         }}
       >
         <div>
-            <CardMedia style={{ /*filter: 'blur(3.5px)',*/ height:"300px", width:"100%" }}
-              component="img"
-              image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
+          <CardMedia
+            style={{
+              /*filter: 'blur(3.5px)',*/ height: '300px',
+              width: '100%',
+            }}
+            component="img"
+            image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
           />
-          
-          <Container disableGutters
+
+          <Container
+            disableGutters
             sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               height: '100vh',
-            }}>
+            }}
+          >
             <Typography
               sx={{
                 color: 'white',
@@ -91,13 +113,13 @@ function ContestPage() {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: '50px',
-          marginBottom: '100px'
+          marginBottom: '100px',
         }}
       >
         <ContestCard />
       </div>
     </>
-  );
+  )
 }
 
-export default ContestPage;
+export default ContestPage

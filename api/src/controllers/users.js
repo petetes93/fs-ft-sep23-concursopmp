@@ -24,7 +24,6 @@ const register = async (req, res) => {
       return res.status(400).send({ msg: 'Vuelve a intentarlo más tarde' })
     }
 
-    // Encriptar la contraseña
     const salt = await bcrypt.genSalt(10)
     const password = await bcrypt.hash(passwordPlainText, salt)
 
@@ -153,7 +152,7 @@ const deleteUser = async (req, res) => {
     await Vote.deleteMany({ user: userID })
 
     const userDesigns = await Design.find({ author: userID })
-    const designIDs = userDesigns.map((design) => design._id)
+    const designIDs = userDesigns.map(design => design._id)
 
     await Vote.deleteMany({ design: { $in: designIDs } })
 
