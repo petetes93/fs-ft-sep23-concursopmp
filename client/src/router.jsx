@@ -9,8 +9,8 @@ import RegisterPage from "pages/RegisterPage";
 // import AdminPage from "./pages/AdminPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import DetailsPage from "./pages/DetailPage";
+import AddDesingPage from "pages/AddDesingPage";
 import AdminContestPage from "./pages/AdminContestPage";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: <ContestPage />,
       },
       {
-        path: "/product",
+        path: "/contest/:contestId",
         element: <ProductsPage />,
       },
       {
@@ -51,8 +51,12 @@ const router = createBrowserRouter([
         element: <AdminContestPage />,
       },
       {
-        path: "/details",
+        path: "/design/:designId",
         element: <DetailsPage />,
+      },
+      {
+        path: "/product/add_desing",
+        element: <AddDesingPage />,
       },
     ],
   },
