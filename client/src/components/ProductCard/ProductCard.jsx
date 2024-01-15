@@ -1,4 +1,5 @@
 import React from 'react';
+import { Divider } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -57,7 +58,33 @@ function ProductCard() {
         <Typography variant="body2" sx={{ fontSize: '14px', margin: '5px', fontFamily: 'Montserrat, sans-serif' }}>
           2024-01-09
         </Typography>
+
       </CardContent>
+
+      <Divider
+        style={{
+          width: '100%',
+          backgroundColor:'black',
+          opacity:'0.2',
+          width:'90%',
+          marginLeft:'15px'
+        }}
+        />
+<div>
+        <Typography variant="body2"
+          sx={{
+            fontSize: '14px',
+            marginBottom: '10px',
+            fontFamily: 'Montserrat, sans-serif',
+            marginTop:'10px',
+            textAlign:'center'
+          }}
+          >
+          by Pepote
+        </Typography>
+
+
+     </div>   
     </Card>
   )
 }

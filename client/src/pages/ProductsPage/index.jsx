@@ -61,25 +61,6 @@ function ProductsPage() {
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
-            <Select
-              label="Estado"
-              defaultValue="Activo"
-              sx={{
-                minWidth: '120px',
-                '& fieldset': {
-                  border: 'none',
-                },
-                '&:hover fieldset': {
-                  borderColor: 'none',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'none',
-                },
-              }}
-            >
-              <MenuItem value="Activo">Activo</MenuItem>
-              <MenuItem value="Finalizado">Finalizado</MenuItem>
-            </Select>
 
             <Link to = {"/product/add_desing"}>
               <Button
@@ -87,7 +68,7 @@ function ProductsPage() {
                 startIcon={<AddIcon />}
                 sx={{
                   marginLeft: '15px',
-                  marginTop:'10px'
+                  marginTop:'12px'
                 }}
               >
                 Añadir diseño
