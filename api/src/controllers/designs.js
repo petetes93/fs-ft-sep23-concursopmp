@@ -1,5 +1,6 @@
 const { Design } = require('../models/design')
 const mongoose = require('mongoose')
+const { Contest } = require('../models/contest')
 
 const getAll = async (req, res) => {
   try {
