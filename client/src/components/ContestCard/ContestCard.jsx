@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -18,11 +19,13 @@ function ContestCard() {
       }}
     >
       <div>
+      <Link to = {"/product"}>
         <CardMedia
           component="img"
           height="300"
           image="https://services.meteored.com/img/article/halloween-fiesta-origen-leyendas-1698230767203_1280.jpg"
         />
+        </Link>
       </div>
 
       <CardContent
@@ -34,6 +37,7 @@ function ContestCard() {
           color: 'white',
         }}
       >
+        <Link to = {"/product"}>
         <Typography
           sx={{
             fontSize: '30px',
@@ -42,6 +46,7 @@ function ContestCard() {
         >
           Concurso 1
         </Typography>
+        </Link>
       </CardContent>
     </Card>
   );

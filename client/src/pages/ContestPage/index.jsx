@@ -22,16 +22,16 @@ function ContestPage() {
           margin: 0,
           boxShadow: '0 5px 5px  rgba(0, 0, 0, 0.5)',
           backgroundColor: '#68A9AB',
-          marginTop: '70px',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
         <div>
-          <CardMedia style={{ filter: 'blur(3.5px)', height:"300px", width:"100%" }}
-            component="img"
-            image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
+            <CardMedia style={{ /*filter: 'blur(3.5px)',*/ height:"300px", width:"100%" }}
+              component="img"
+              image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
           />
+          
           <Container disableGutters
             sx={{
               display: 'flex',
@@ -43,7 +43,7 @@ function ContestPage() {
               sx={{
                 color: 'white',
                 fontSize: '30px',
-                marginTop: '-150px',
+                marginTop: '-170px',
                 marginBottom: '100px',
                 zIndex: 1,
               }}
