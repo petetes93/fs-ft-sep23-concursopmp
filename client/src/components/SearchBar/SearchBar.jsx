@@ -16,6 +16,7 @@ function SearchBar() {
                 // onChange={(e) => setQuery(e.target.value)}
                 margin="normal"
                 sx={{
+                    marginLeft:'10px',
                     '& input': {
                         color: 'black',
                         height: '100%',
