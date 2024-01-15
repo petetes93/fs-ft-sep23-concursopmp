@@ -73,7 +73,7 @@ function ProductCard({ design }) {
 
       <Divider
         style={{
-          width: '100%',
+          // width: '100%',
           backgroundColor: 'black',
           opacity: '0.2',
           width: '90%',

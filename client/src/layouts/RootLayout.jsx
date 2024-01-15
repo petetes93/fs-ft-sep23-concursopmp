@@ -12,9 +12,9 @@ function RootLayout() {
       style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
     >
       <Container
-        display='flex'
-        flexDirection='column'
-        maxWidth='xxl'
+        display="flex"
+        flexDirection="column"
+        maxWidth="xxl"
         disableGutters
         style={{ flex: 1 }}
       >
@@ -24,7 +24,7 @@ function RootLayout() {
         </Container>
 
         <ToastContainer
-          position='top-right'
+          position="top-right"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -33,7 +33,7 @@ function RootLayout() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme='colored'
+          theme="colored"
         />
       </Container>
 
