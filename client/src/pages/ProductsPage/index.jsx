@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Container, Grid } from "@mui/material";
+import { Link } from 'react-router-dom';
+import { Container, Grid, Button } from "@mui/material";
 import Catalog from "src/components/Catalog/Catalog"
 import ProductCard from "src/components/ProductCard/ProductCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -8,6 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 
 function ProductsPage() {
 
@@ -25,9 +28,9 @@ function ProductsPage() {
         }}
       >
         <div>
-          <CardMedia style={{ filter: 'blur(3.5px)', height:"300px", width:"100%" }}
+          <CardMedia style={{ /*  filter: 'blur(1px)',*/ height:"300px", width:"100%" }} 
             component="img"
-            image="https://services.meteored.com/img/article/halloween-fiesta-origen-leyendas-1698230767203_1280.jpg"
+            image="https://www.pixground.com/wp-content/uploads/2023/10/Halloween-Spooky-Pumpkin-Forest-AI-Generated-4K-Wallpaper-jpg.webp"
           />
           <Container disableGutters
             sx={{
@@ -77,9 +80,24 @@ function ProductsPage() {
               <MenuItem value="Activo">Activo</MenuItem>
               <MenuItem value="Finalizado">Finalizado</MenuItem>
             </Select>
+
+            <Link to = {"/product/add_desing"}>
+              <Button
+                aria-label="add"
+                startIcon={<AddIcon />}
+                sx={{
+                  marginLeft: '15px',
+                  marginTop:'10px'
+                }}
+              >
+                Añadir diseño
+              </Button>
+            </Link>
+
           </Grid>
         </Grid>
       </Container>
+
 
       <div
         style={{

@@ -6,6 +6,7 @@ import ProductsPage from './pages/ProductsPage'
 import ContestPage from './pages/ContestPage'
 import LoginPage from 'pages/LoginPage'
 import RegisterPage from 'pages/RegisterPage'
+import AddDesingPage from 'pages/AddDesingPage'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         path: '/register',
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
         element: <RegisterPage />,
+      },
+      {
+        path: '/product/add_desing',
+        element: <AddDesingPage />,
       },
     ],
   },

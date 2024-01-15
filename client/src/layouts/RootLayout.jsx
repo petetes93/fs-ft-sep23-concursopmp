@@ -19,7 +19,7 @@ function RootLayout() {
         style={{ flex: 1 }}
       >
         <Navbar />
-        <Container disableGutters>
+        <Container disableGutters maxWidth="100vh">
           <Outlet />
         </Container>
 

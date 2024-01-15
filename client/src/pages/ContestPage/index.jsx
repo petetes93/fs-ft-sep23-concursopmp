@@ -27,7 +27,7 @@ function ContestPage() {
         }}
       >
         <div>
-            <CardMedia style={{ filter: 'blur(3.5px)', height:"300px", width:"100%" }}
+            <CardMedia style={{ /*filter: 'blur(3.5px)',*/ height:"300px", width:"100%" }}
               component="img"
               image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
           />
