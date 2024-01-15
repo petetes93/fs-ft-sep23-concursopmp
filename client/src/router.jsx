@@ -9,6 +9,7 @@ import RegisterPage from "pages/RegisterPage";
 // import AdminPage from "./pages/AdminPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import DetailsPage from "./pages/DetailPage";
+import AddDesingPage from 'pages/AddDesingPage'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         path: "/details",
         element: <DetailsPage />,
       },
+      {
+      path: '/product/add_desing',
+      element: <AddDesingPage />,
+      }
     ],
   },
 ]);
