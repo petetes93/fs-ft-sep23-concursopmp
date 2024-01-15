@@ -1,36 +1,38 @@
-import React from "react";
-import { createBrowserRouter } from "react-router-dom";
-import ErrorPage from "pages/ErrorPage";
-import RootLayout from "layouts/RootLayout";
-import ProductsPage from "./pages/ProductsPage";
-import ContestPage from "./pages/ContestPage";
-import LoginPage from "pages/LoginPage";
-import RegisterPage from "pages/RegisterPage";
+import React from 'react'
+import { createBrowserRouter } from 'react-router-dom'
+import ErrorPage from 'pages/ErrorPage'
+import RootLayout from 'layouts/RootLayout'
+import ProductsPage from './pages/ProductsPage'
+import ContestPage from './pages/ContestPage'
+import LoginPage from 'pages/LoginPage'
+import RegisterPage from 'pages/RegisterPage'
 // import AdminPage from "./pages/AdminPage";
-import AdminUserPage from "./pages/AdminUserPage";
-import DetailsPage from "./pages/DetailPage";
+import AdminUserPage from './pages/AdminUserPage'
+import DetailsPage from './pages/DetailPage'
+import LoginAdmin from './pages/AdminLogin'
+import ConcursoForm from './pages/CrearConcurso/crearconcurso'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <ContestPage />,
       },
       {
-        path: "/product",
+        path: '/product',
         element: <ProductsPage />,
       },
       {
-        path: "/login",
+        path: '/login',
         // element: <ProtectedRoute page={LoginPage} role='anonymous' />,
         element: <LoginPage />,
       },
       {
-        path: "/register",
+        path: '/register',
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
         element: <RegisterPage />,
       },
@@ -40,16 +42,24 @@ const router = createBrowserRouter([
       //   element: <AdminPage />,
       // },
       {
-        path: "/adminuser",
+        path: '/adminuser',
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
         element: <AdminUserPage />,
       },
       {
-        path: "/details",
+        path: '/details',
         element: <DetailsPage />,
+      },
+      {
+        path: '/admin',
+        element: <LoginAdmin />,
+      },
+      {
+        path: '/crearconcurso',
+        element: <ConcursoForm />,
       },
     ],
   },
-]);
+])
 
-export default router;
+export default router
