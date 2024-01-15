@@ -9,6 +9,7 @@ import RegisterPage from "pages/RegisterPage";
 // import AdminPage from "./pages/AdminPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import DetailsPage from "./pages/DetailPage";
+import AdminContestPage from "./pages/AdminContestPage";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
         path: "/adminuser",
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
         element: <AdminUserPage />,
+      },
+      {
+        path: "/admincontest",
+        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
+        element: <AdminContestPage />,
       },
       {
         path: "/details",
