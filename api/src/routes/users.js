@@ -9,19 +9,14 @@ router.post("/login", userController.login);
 
 router.post("/register", userController.register);
 
-// anadir auth, admin
-router.get("/", userController.getAllUsers);
+router.get("/", auth, admin, userController.getAllUsers);
 
-// anadir auth, admin
-router.get("/:userID", userController.getOneUser);
+router.get("/:userID", auth, admin, userController.getOneUser);
 
-// anadir auth, admin
-router.put("/delete/:userID", userController.isDeleted);
+router.put("/delete/:userID", auth, admin, userController.isDeleted);
 
-// anadir auth, admin
-router.put("/:userID", userController.updateUser);
+router.put("/:userID", auth, admin, userController.updateUser);
 
-// anadir auth, admin
-router.delete("/:userID", userController.deleteUser);
+router.delete("/:userID", auth, admin, userController.deleteUser);
 
 module.exports = router;
