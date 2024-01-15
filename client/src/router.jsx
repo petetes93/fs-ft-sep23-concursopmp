@@ -11,6 +11,7 @@ import AdminUserPage from './pages/AdminUserPage'
 import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import ConcursoForm from './pages/CrearConcurso/crearconcurso'
+import AddDesingPage from 'pages/AddDesingPage'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
         element: <ContestPage />,
       },
       {
-        path: '/product',
+        path: '/contest/:contestId',
         element: <ProductsPage />,
       },
       {
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
         element: <AdminUserPage />,
       },
       {
-        path: '/details',
+        path: '/design/:designId',
         element: <DetailsPage />,
       },
       {

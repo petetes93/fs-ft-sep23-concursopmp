@@ -1,11 +1,16 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Divider } from '@mui/material'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 
-function ProductCard() {
+function ProductCard({ design }) {
+  const { image, title, author, uploadDate, voteRegister, _id } = design
+
+  console.log(voteRegister)
   return (
     <Card
       sx={{
@@ -16,13 +21,9 @@ function ProductCard() {
       }}
     >
       <div>
-        <CardMedia
-          component="img"
-          // alt={product.name}
-          height="300"
-          // image={product.imageURL}
-          image="https://statics.pampling.com/imagenes/galerias/imagen_32117.jpg?1704817667"
-        />
+        <Link to={`/design/${_id}`}>
+          <CardMedia component="img" alt={title} height="300" image={image} />
+        </Link>
       </div>
 
       <CardContent
@@ -33,33 +34,68 @@ function ProductCard() {
           alignItems: 'flex-end',
         }}
       >
-        <div>
-          <div style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={`/design/${_id}`}>
+          <div>
+            <div style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Typography
+                sx={{
+                  fontSize: '30px',
+                  marginBottom: '15px',
+                }}
+              >
+                {title}
+              </Typography>
+            </div>
+
             <Typography
-              sx={{
-                fontSize: '30px',
-                marginBottom: '15px',
-              }}
+              variant="body2"
+              fontSize="25px"
+              sx={{ display: 'flex', alignItems: 'center' }}
             >
-              Producto 1
+              <span style={{ marginRight: '6px' }}>{voteRegister.length}</span>
+
+              <ThumbUpAltIcon />
             </Typography>
           </div>
+        </Link>
 
-          <Typography variant="body2" fontSize="25px" sx={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '6px' }}>
-              5
-            </span>
-
-            <ThumbUpAltIcon />
-          </Typography>
-        </div>
-
-        <Typography variant="body2" sx={{ fontSize: '14px', margin: '5px', fontFamily: 'Montserrat, sans-serif' }}>
+        {/*   <Typography
+          variant="body2"
+          sx={{
+            fontSize: '14px',
+            margin: '5px',
+            fontFamily: 'Montserrat, sans-serif',
+          }}
+        >
           2024-01-09
-        </Typography>
+        </Typography> */}
       </CardContent>
+
+      <Divider
+        style={{
+          width: '100%',
+          backgroundColor: 'black',
+          opacity: '0.2',
+          width: '90%',
+          marginLeft: '15px',
+        }}
+      />
+      <div>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: '14px',
+            marginBottom: '10px',
+            fontFamily: 'Montserrat, sans-serif',
+            marginTop: '10px',
+            textAlign: 'center',
+          }}
+        >
+          {author.username}
+        </Typography>
+      </div>
     </Card>
   )
 }
 
-export default ProductCard;
+export default ProductCard

@@ -1,17 +1,22 @@
-import { Container, Grid } from "@mui/material";
-import React from "react";
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-
-import Catalog from "src/components/Catalog/Catalog";
-import ContestCard from "../../components/ContestCard/ContestCard";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-
+import { useEffect, useState } from 'react'
+import { Container, Grid, CircularProgress } from '@mui/material'
+import React from 'react'
+import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import { useContests } from 'hooks'
+import Catalog from 'src/components/Catalog/Catalog'
+import ContestCard from '../../components/ContestCard/ContestCard'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
 function ContestPage() {
+  const { contests, loading } = useContests()
+
+  if (loading) return <CircularProgress />
+
+  console.log(contests)
 
   return (
     <>
@@ -22,28 +27,34 @@ function ContestPage() {
           margin: 0,
           boxShadow: '0 5px 5px  rgba(0, 0, 0, 0.5)',
           backgroundColor: '#68A9AB',
-          marginTop: '70px',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
         <div>
-          <CardMedia style={{ filter: 'blur(3.5px)', height:"300px", width:"100%" }}
+          <CardMedia
+            style={{
+              /*filter: 'blur(3.5px)',*/ height: '300px',
+              width: '100%',
+            }}
             component="img"
             image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
           />
-          <Container disableGutters
+
+          <Container
+            disableGutters
             sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               height: '100vh',
-            }}>
+            }}
+          >
             <Typography
               sx={{
                 color: 'white',
                 fontSize: '30px',
-                marginTop: '-150px',
+                marginTop: '-170px',
                 marginBottom: '100px',
                 zIndex: 1,
               }}
@@ -91,13 +102,17 @@ function ContestPage() {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: '50px',
-          marginBottom: '100px'
+          marginBottom: '100px',
         }}
       >
-        <ContestCard />
+        {contests.map(contest => {
+          console.log(contest)
+
+          return <ContestCard key={contest._id} contest={contest} />
+        })}
       </div>
     </>
-  );
+  )
 }
 
-export default ContestPage;
+export default ContestPage
