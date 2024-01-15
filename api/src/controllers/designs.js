@@ -1,6 +1,7 @@
 const { Design } = require('../models/design')
 const mongoose = require('mongoose')
 const { Vote } = require('../models/vote')
+const { sendEmail } = require('../utils/nodemailer')
 
 const getAll = async (req, res) => {
   try {
@@ -43,6 +44,8 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   try {
     const userID = req.user.id
+    const email = req.user.email
+    const username = req.user.username
 
     const { path: image, filename: imageCloudinaryId } = req.file
 
@@ -51,7 +54,14 @@ const create = async (req, res) => {
       image,
       imageCloudinaryId,
       author: new mongoose.Types.ObjectId(userID),
+      uploadDate: new Date(),
     })
+
+    console.log(req.user)
+
+    if (newDesign) {
+      await sendEmail(email, username)
+    }
 
     res.json(newDesign)
   } catch (error) {
