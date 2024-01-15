@@ -120,19 +120,45 @@ function Navbar() {
                   key={page}
                   onClick={handleCloseNavMenu}
                 >
+                  <Link to="https://www.pampling.com/tienda/catalogo/busqueda">
+                    <Typography
+                      width="100%"
+                      align="center"
+                      sx={{
+                        fontFamily: "helvetica",
+                        fontWeight: 700,
+                        color: "gray",
+                        pl: 11,
+                        alignItems: "center",
+                      }}
+                    >
+                      {page}
+                    </Typography>
+                  </Link>
+                </MenuItem>
+              ))}
+              <MenuItem
+                sx={{
+                  backgroundColor: "white",
+                }}
+                className="blockMenu"
+                onClick={handleCloseNavMenu}
+              >
+                <Link to="/">
                   <Typography
                     width="100%"
-                    align="center"
                     sx={{
                       fontFamily: "helvetica",
                       fontWeight: 700,
                       color: "gray",
+                      alignContent: "center",
+                      pl: 11,
                     }}
                   >
-                    {page}
+                    Concursos
                   </Typography>
-                </MenuItem>
-              ))}
+                </Link>
+              </MenuItem>
               <MenuItem
                 sx={{
                   borderTop: "1px solid black",
@@ -153,17 +179,21 @@ function Navbar() {
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
               >
-                <Typography
-                  width="100%"
-                  align="center"
-                  sx={{
-                    fontFamily: "helvetica",
-                    fontWeight: 700,
-                    color: "gray",
-                  }}
-                >
-                  Concursos
-                </Typography>
+                <Link to="./login">
+                  <Button
+                    color="secondary"
+                    sx={{
+                      backgroundColor: "transparent",
+
+                      fontWeight: "bold",
+                      boxShadow: "none",
+                      width: "15rem",
+                      margin: "auto",
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Link>
               </MenuItem>
               <MenuItem
                 sx={{
@@ -172,40 +202,21 @@ function Navbar() {
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
               >
-                <Button
-                  color="secondary"
-                  sx={{
-                    backgroundColor: "transparent",
+                <Link to="./register">
+                  <Button
+                    color="secondary"
+                    sx={{
+                      backgroundColor: "transparent",
 
-                    fontWeight: "bold",
-                    boxShadow: "none",
-                    width: "15rem",
-                    margin: "auto",
-                  }}
-                >
-                  Login
-                </Button>
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  backgroundColor: "white",
-                }}
-                className="blockMenu"
-                onClick={handleCloseNavMenu}
-              >
-                <Button
-                  color="secondary"
-                  sx={{
-                    backgroundColor: "transparent",
-
-                    fontWeight: "bold",
-                    boxShadow: "none",
-                    width: "15rem",
-                    margin: "auto",
-                  }}
-                >
-                  Register
-                </Button>
+                      fontWeight: "bold",
+                      boxShadow: "none",
+                      width: "15rem",
+                      margin: "auto",
+                    }}
+                  >
+                    Register
+                  </Button>
+                </Link>
               </MenuItem>
             </Menu>
           </Box>
@@ -224,7 +235,7 @@ function Navbar() {
                   color: "grey",
 
                   "&:hover": {
-                    color: "black",
+                    color: "#2bd0d0",
                   },
                 }}
               >
@@ -247,7 +258,7 @@ function Navbar() {
                     color: "grey",
 
                     "&:hover": {
-                      color: "black",
+                      color: "#2bd0d0",
                     },
                   }}
                 >
@@ -264,10 +275,8 @@ function Navbar() {
             }}
           >
             <Button
-              variant="outlined"
+              variant="secondary"
               sx={{
-                backgroundColor: "transparent",
-
                 borderRadius: "50px",
 
                 boxShadow: "none",
@@ -276,7 +285,15 @@ function Navbar() {
               }}
               onClick={handleClick}
             >
-              <PersonRoundedIcon fontSize="large" />
+              <PersonRoundedIcon
+                fontSize="large"
+                sx={{
+                  color: "black",
+                  "&:hover": {
+                    color: "#2bd0d0",
+                  },
+                }}
+              />
             </Button>
             <Popover
               id={id}
