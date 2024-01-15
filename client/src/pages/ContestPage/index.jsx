@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
-import { Container, Grid, CircularProgress } from '@mui/material'
+import { Container, Grid, CircularProgress, TextField } from '@mui/material'
 import React from 'react'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { useContests } from 'hooks'
 import Catalog from 'src/components/Catalog/Catalog'
-import ContestCard from '../../components/ContestCard/ContestCard'
-import SearchBar from '../../components/SearchBar/SearchBar'
+import ContestCard from 'src/components/ContestCard/ContestCard'
+import SearchBar from 'src/components/ContestCard/ContestCard'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
 function ContestPage() {
   const { contests, loading } = useContests()
 
+  const [searchTerm, setSearchTerm] = useState('')
+
   if (loading) return <CircularProgress />
 
-  console.log(contests)
+  const filteredContests = contests.filter(contest => {
+    return (
+      contest &&
+      contest.theme &&
+      contest.theme.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  })
 
   return (
     <>
@@ -34,7 +42,7 @@ function ContestPage() {
         <div>
           <CardMedia
             style={{
-              /*filter: 'blur(3.5px)',*/ height: '300px',
+              height: '300px',
               width: '100%',
             }}
             component="img"
@@ -68,7 +76,32 @@ function ContestPage() {
       <Container disableGutters sx={{ marginTop: '50px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SearchBar />
+            <TextField
+              label="Buscar temática"
+              variant="outlined"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              sx={{
+                '& input': {
+                  color: 'black',
+                  height: '100%',
+                },
+                '& fieldset': {
+                  border: 'none',
+                },
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                borderRadius: '20px',
+                outline: 'none',
+                width: '700px',
+                height: '40px',
+                lineHeight: '60px',
+                display: 'flex',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                },
+              }}
+            />
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
@@ -105,9 +138,7 @@ function ContestPage() {
           marginBottom: '100px',
         }}
       >
-        {contests.map(contest => {
-          console.log(contest)
-
+        {filteredContests.map(contest => {
           return <ContestCard key={contest._id} contest={contest} />
         })}
       </div>
