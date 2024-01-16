@@ -7,8 +7,13 @@ const fields = [
   },
   {
     name: 'image',
-    label: '',
+    placeholder: 'URL Image',
     type: 'file',
+  },
+  {
+    name: 'description',
+    label: 'Descipción',
+    multiline: true,
   },
   {
     name: 'rules',
@@ -16,12 +21,12 @@ const fields = [
     multiline: true,
   },
   {
-    name: 'start',
+    name: 'startDate',
     label: 'Fecha de Inicio',
     type: 'date',
   },
   {
-    name: 'finish',
+    name: 'finishDate',
     label: 'Fecha de Finalización',
     type: 'date',
   },
@@ -31,15 +36,21 @@ const fields = [
   },
 ]
 
+const TYPES = {
+  'image/jpeg': 'jpeg',
+
+  'image/png': 'png',
+}
 const schema = yup
   .object({
     name: yup.string().required('Nombre de usuario obligatorio'),
-    image: yup.string().required('Imagen no válida'),
-    rules: yup.string().required('Contraseña obligatoria'),
-    start: yup.date().required('Fecha no válida'),
-    finish: yup.date().required('Fecha no válida'),
+    image: yup.mixed().required('Imagen Obligatoria'),
+    rules: yup.string().required('Reglas obligatorias'),
+    description: yup.string().required('Descripción obligatoria'),
+    startDate: yup.string().required('Fecha no válida'),
+    finishDate: yup.string().required('Fecha no válida'),
     theme: yup.string().required('Contraseña obligatoria'),
   })
   .required()
 
-export { fields, schema }
+export { fields, schema, TYPES }
