@@ -18,7 +18,7 @@ const contestSchema = new mongoose.Schema({
   isDeleted: { type: Date },
 })
 
-const Contest = mongoose.model('contest', contestSchema)
+const Contest = mongoose.model('Contest', contestSchema)
 
 const commonValidationSchema = [
   body('name')
