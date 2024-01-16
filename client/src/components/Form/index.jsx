@@ -1,14 +1,12 @@
-// Form.js
-
 import { useEffect } from 'react'
-import { Button, Stack, Typography } from '@mui/material'
+import { Button, Stack, TextField } from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import * as fields from './input-fields'
 
 function Form({
-  inputs = [],
+  inputs,
   validationSchema,
   onSubmit,
   errorsFromResponse = [],
@@ -37,28 +35,24 @@ function Form({
       onSubmit={handleSubmit((data) => onSubmit(data, { setError, reset }))}
       spacing={5}
     >
-      {Array.isArray(inputs) &&
-        inputs.map(({ name, label, type, ...rest }) => {
-          const Input = fields[type] || fields.input
+      {inputs.map(({ name, type, ...rest }) => {
+        const Input = fields[type] || fields.input
 
-          return (
-            <div key={name}>
-              <Typography variant='subtitle1' gutterBottom>
-                {label}
-              </Typography>
-              <Input
-                type={type}
-                errors={errors[name]}
-                inputRef={register(name)}
-                {...rest}
-              />
-            </div>
-          )
-        })}
+        const { ref, ...registerProps } = register(name)
+
+        return (
+          <Input
+            type={type}
+            errors={errors[name]}
+            inputRef={ref}
+            {...registerProps}
+            {...rest}
+          />
+        )
+      })}
 
       <Button type='submit'>{submitLabel}</Button>
     </Stack>
   )
 }
-
 export default Form

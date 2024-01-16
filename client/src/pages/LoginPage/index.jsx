@@ -5,12 +5,12 @@ import { Form } from 'components'
 import { login } from 'services/auth-service'
 import { toast } from 'react-toastify'
 import { schema, fields } from './form-data'
-// import { useAuth } from 'hooks'
+import { useAuth } from 'hooks'
 import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
   const navigate = useNavigate()
-  //   const [, dispatch] = useAuth()
+  const [, dispatch] = useAuth()
   const [errorsFromResponse, setErrorsFromResponse] = useState([])
 
   const onSubmit = (user) => {
