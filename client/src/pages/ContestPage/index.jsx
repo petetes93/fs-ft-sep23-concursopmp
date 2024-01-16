@@ -56,7 +56,7 @@ function ContestPage() {
         <div>
           <CardMedia
             style={{
-              /*filter: 'blur(3.5px)',*/ height: '500px',
+              height: '500px',
               width: '100%',
             }}
             component="img"
@@ -98,6 +98,7 @@ function ContestPage() {
               <TextField
                 label="Buscar temática"
                 variant="outlined"
+                autoComplete="off"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 sx={{
@@ -163,7 +164,7 @@ function ContestPage() {
                 {' '}
                 <MenuItem value="">Todos</MenuItem>
                 <MenuItem value="Activo">Activo</MenuItem>
-                <MenuItem value="Finalizado">Finalizado</MenuItem>
+                <MenuItem value="Finalizado">Inactivos</MenuItem>
               </Select>
             </FormControl>
           </Grid>

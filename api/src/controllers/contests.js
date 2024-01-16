@@ -6,10 +6,10 @@ const getAll = (req, res, next) => {
   const query = theme ? { theme } : {}
 
   Contest.find(query)
-    .then((contests) => {
+    .then(contests => {
       res.json(contests)
     })
-    .catch((error) => {
+    .catch(error => {
       next(error)
     })
 }
@@ -109,7 +109,7 @@ const hideContest = async (req, res) => {
 
     const contest = await Contest.findById(contestId)
     if (!contest) {
-      return res.status(404).json({ error: 'No se encuentra el comentario' })
+      return res.status(404).json({ error: 'No se encuentra el concurso' })
     }
 
     contest.isDeleted = new Date()
@@ -118,7 +118,7 @@ const hideContest = async (req, res) => {
     res.json(contest)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ error: 'Error al deshabilitar el comentario' })
+    res.status(500).json({ error: 'Error al deshabilitar el concurso' })
   }
 }
 
