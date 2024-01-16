@@ -30,6 +30,10 @@ const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
+        path: '/product/add_desing',
+        element: <AddDesingPage />,
+      },
+      {
         path: '/login',
         // element: <ProtectedRoute page={LoginPage} role='anonymous' />,
         element: <LoginPage />,

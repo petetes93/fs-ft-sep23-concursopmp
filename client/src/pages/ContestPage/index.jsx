@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Container, Grid, CircularProgress, TextField } from '@mui/material'
+import {
+  Container,
+  Grid,
+  CircularProgress,
+  TextField,
+  FormControl,
+  InputLabel,
+} from '@mui/material'
 import React from 'react'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
@@ -16,16 +23,22 @@ function ContestPage() {
   const { contests, loading } = useContests()
 
   const [searchTerm, setSearchTerm] = useState('')
+  const [filterStatus, setFilterStatus] = useState('')
 
   if (loading) return <CircularProgress />
 
-  const filteredContests = contests.filter((contest) => {
+  const filteredContests = contests.filter(contest => {
     return (
-      contest &&
-      contest.theme &&
-      contest.theme.toLowerCase().includes(searchTerm.toLowerCase())
+      (!searchTerm ||
+        contest.theme.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!filterStatus ||
+        (filterStatus === '' && contest.isActive) ||
+        (contest.isActive && filterStatus === 'Activo') ||
+        (!contest.isActive && filterStatus === 'Finalizado'))
     )
   })
+
+  console.log(contests)
 
   return (
     <>
@@ -46,8 +59,8 @@ function ContestPage() {
               /*filter: 'blur(3.5px)',*/ height: '500px',
               width: '100%',
             }}
-            component='img'
-            image='https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg'
+            component="img"
+            image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
           />
 
           <Container
@@ -83,10 +96,10 @@ function ContestPage() {
           <Grid item xs={6}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <TextField
-                label='Buscar temática'
-                variant='outlined'
+                label="Buscar temática"
+                variant="outlined"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 sx={{
                   '& label': {
                     marginTop: '-7px',
@@ -127,26 +140,32 @@ function ContestPage() {
             </div>
           </Grid>
 
-          <Grid item xs={6} container justifyContent='flex-end'>
-            <Select
-              label='Estado'
-              defaultValue='Activo'
-              sx={{
-                minWidth: '120px',
-                '& fieldset': {
-                  border: 'none',
-                },
-                '&:hover fieldset': {
-                  borderColor: 'none',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'none',
-                },
-              }}
-            >
-              <MenuItem value='Activo'>Activo</MenuItem>
-              <MenuItem value='Finalizado'>Finalizado</MenuItem>
-            </Select>
+          <Grid item xs={6} container justifyContent="flex-end">
+            <FormControl>
+              <InputLabel>Estado</InputLabel>
+              <Select
+                label="Estado"
+                value={filterStatus}
+                onChange={e => setFilterStatus(e.target.value)}
+                sx={{
+                  minWidth: '120px',
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'none',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'none',
+                  },
+                }}
+              >
+                {' '}
+                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="Activo">Activo</MenuItem>
+                <MenuItem value="Finalizado">Finalizado</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
       </Container>
@@ -165,7 +184,7 @@ function ContestPage() {
           marginBottom: '100px',
         }}
       >
-        {filteredContests.map((contest) => {
+        {filteredContests.map(contest => {
           return <ContestCard key={contest._id} contest={contest} />
         })}
       </div>
