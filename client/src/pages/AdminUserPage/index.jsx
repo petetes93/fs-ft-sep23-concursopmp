@@ -138,8 +138,8 @@ const AdminUserPage = () => {
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const openDeleteModal = (userId) => {
-    setSelectedUserId(userId);
+  const openDeleteModal = (userID) => {
+    setSelectedUserId(userID);
     setOpenModal(true);
   };
 
