@@ -89,6 +89,7 @@ function ProductsPage() {
           <Grid item xs={6}>
             <TextField
               label="Buscar por autor"
+              autoComplete="off"
               variant="outlined"
               value={searchAuthor}
               onChange={e => setSearchAuthor(e.target.value)}

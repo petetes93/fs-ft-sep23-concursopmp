@@ -91,6 +91,7 @@ function ContestPage() {
           <Grid item xs={6}>
             <TextField
               label="Buscar temática"
+              autoComplete="off"
               variant="outlined"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
