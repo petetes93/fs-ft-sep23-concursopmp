@@ -10,6 +10,8 @@ import ContestCard from 'src/components/ContestCard/ContestCard'
 import SearchBar from 'src/components/ContestCard/ContestCard'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import SearchIcon from '@mui/icons-material/Search'
+
 
 function ContestPage() {
   const { contests, loading } = useContests()
@@ -30,7 +32,7 @@ function ContestPage() {
     <>
       <Card
         sx={{
-          maxHeight: '300px',
+          maxHeight: '400px',
           maxWidth: '100%',
           margin: 0,
           boxShadow: '0 5px 5px  rgba(0, 0, 0, 0.5)',
@@ -42,7 +44,7 @@ function ContestPage() {
         <div>
           <CardMedia
             style={{
-              height: '300px',
+              /*filter: 'blur(3.5px)',*/ height: '500px',
               width: '100%',
             }}
             component="img"
@@ -62,12 +64,14 @@ function ContestPage() {
               sx={{
                 color: 'white',
                 fontSize: '30px',
-                marginTop: '-170px',
+                marginTop: '-360px',
                 marginBottom: '100px',
                 zIndex: 1,
+                textAlign: 'center',
+
               }}
             >
-              Descripcion
+              "Explora y vota en emocionantes sorteos temáticos mientras descubres creativos diseños. ¡Participa en la diversión y elige tus favoritos para tener la oportunidad de ganar premios increíbles!"
             </Typography>
           </Container>
         </div>
@@ -76,32 +80,49 @@ function ContestPage() {
       <Container disableGutters sx={{ marginTop: '50px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
+            
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <TextField
               label="Buscar temática"
               variant="outlined"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               sx={{
+                '& label': {
+                  marginTop:'-7px'
+                },
+                  marginLeft:'10px',
                 '& input': {
                   color: 'black',
-                  height: '100%',
+                  height: '10px',
                 },
                 '& fieldset': {
                   border: 'none',
                 },
+                '& legend': { display: 'none' },
+                '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.1s ease-in" },
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 borderRadius: '20px',
                 outline: 'none',
                 width: '700px',
                 height: '40px',
-                lineHeight: '60px',
-                display: 'flex',
-                justifyContent: 'center',
+                marginBottom: '',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.25)',
                 },
               }}
             />
+            <SearchIcon
+              sx={{
+                fontSize:'25px',
+                color: 'black',
+                marginLeft: '-30px',
+                alignSelf: 'center',
+                paddingRight: '5px',
+              }}
+            />
+          </div>
+
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
@@ -129,19 +150,25 @@ function ContestPage() {
       </Container>
 
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: '50px',
-          marginBottom: '100px',
-        }}
-      >
-        {filteredContests.map(contest => {
-          return <ContestCard key={contest._id} contest={contest} />
-        })}
-      </div>
+  style={{
+
+    display: 'grid',
+    flexDirection: 'column',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+    gap: '40px',
+    marginLeft: '20px',
+    marginRight: '20px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '50px',
+    marginBottom: '100px',
+  }}
+>
+  {filteredContests.map(contest => {
+    return <ContestCard key={contest._id} contest={contest} />;
+  })}
+</div>
+
     </>
   )
 }
