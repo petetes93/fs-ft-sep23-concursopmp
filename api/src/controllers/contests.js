@@ -109,7 +109,7 @@ const hideContest = async (req, res) => {
 
     const contest = await Contest.findById(contestId)
     if (!contest) {
-      return res.status(404).json({ error: 'No se encuentra el concurso' })
+      return res.status(404).json({ error: 'No se encuentra el comentario' })
     }
 
     contest.isDeleted = new Date()
