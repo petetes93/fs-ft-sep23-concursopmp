@@ -135,11 +135,12 @@ function ProductsPage() {
 
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: '40px',
           marginTop: '50px',
+          marginLeft: '20px',
+          marginRight: '20px',
           marginBottom: '100px',
         }}
       >

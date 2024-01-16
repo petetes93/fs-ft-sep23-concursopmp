@@ -1,12 +1,12 @@
 import apiClient, { setToken } from './api-client'
 import { jwtDecode } from 'jwt-decode'
 
-const getEndpoint = slug => '/users' + slug
+const getEndpoint = (slug) => '/user' + slug
 
 const tokenKey = 'token'
 
-const login = async user => {
-  const endpoint = getEndpoint('/signin')
+const login = async (user) => {
+  const endpoint = getEndpoint('/login')
 
   const response = await apiClient.post(endpoint, user)
 
@@ -19,8 +19,8 @@ const login = async user => {
   return jwtDecode(token)
 }
 
-const register = async user => {
-  const endpoint = getEndpoint('/signup')
+const register = async (user) => {
+  const endpoint = getEndpoint('/register')
 
   const response = await apiClient.post(endpoint, user)
 

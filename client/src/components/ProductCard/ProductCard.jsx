@@ -14,10 +14,10 @@ function ProductCard({ design }) {
   return (
     <Card
       sx={{
-        maxHeight: 600,
-        maxWidth: 345,
-        boxShadow: "0 10px 10px  rgba(0, 0, 0, 0.5)",
-        backgroundColor: "#68A9AB",
+        maxHeight: 550,
+        width: 345,
+        boxShadow: '0 10px 10px  rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#68A9AB',
       }}
     >
       <div>
@@ -73,10 +73,10 @@ function ProductCard({ design }) {
 
       <Divider
         style={{
-          backgroundColor: "black",
-          opacity: "0.2",
-          width: "90%",
-          marginLeft: "15px",
+          backgroundColor: 'black',
+          opacity: '0.2',
+          width: '90%',
+          marginLeft: '15px',
         }}
       />
       <div>
