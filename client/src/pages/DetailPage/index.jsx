@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import {
   Card,
   CardContent,
@@ -13,21 +13,31 @@ import {
   Rating,
 } from '@mui/material'
 
+import { toast } from 'react-toastify'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+
 import { useDesign, useAuth } from 'hooks'
 
 import voteService from '../../services/vote-service'
 
-// import commentService from 'services'
+import commentService from '../../services/comment-service'
 
 const DetailsPage = () => {
   const { designId } = useParams()
   const [newComment, setNewComment] = useState('')
   const [selectedRating, setSelectedRating] = useState(0)
-  const [{ id }] = useAuth()
+  const [{ id, username }] = useAuth()
 
   const { design, loading, setDesign } = useDesign(designId)
 
-  if (loading) return <CircularProgress />
+  useEffect(() => {
+    if (!loading) {
+      const userVote = design.voteRegister.find(vote => vote.user === id)
+      if (userVote) {
+        setSelectedRating(userVote.punctuation)
+      }
+    }
+  }, [loading, design.voteRegister, id])
 
   const handleVote = value => {
     console.log(`Votaste con ${value} estrellas`)
@@ -35,12 +45,56 @@ const DetailsPage = () => {
     if (!design.voteRegister.find(vote => vote.user === id))
       voteService
         .addVote(designId, { punctuation: selectedRating })
-        .then(() => console.log('El voto ha sido registrado'))
+        .then(() => toast.success('Tu voto ha sido registrado'))
         .catch(err => console.log(err))
+
+    voteService
+      .update(designId, { punctuation: selectedRating })
+      .then(() => {
+        setNewComment('')
+        toast.success('Tu voto ha sido actualizado')
+      })
+      .catch(err => console.log(err))
   }
 
+  const handleSubmit = () => {
+    commentService
+      .addComment(designId, { text: newComment })
+      .then(() => {
+        console.log('Comentario Enviado')
+
+        setDesign(prevDesign => ({
+          ...prevDesign,
+          commentRegister: [
+            ...prevDesign.commentRegister,
+            {
+              user: { username: username },
+              commentDate: new Date(),
+              text: newComment,
+            },
+          ],
+        }))
+
+        setNewComment('')
+      })
+      .catch(err => console.log(err))
+  }
+
+  if (loading) return <CircularProgress />
+
+  console.log(design.contest)
   return (
     <div>
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<ArrowBackIosIcon />}
+        component={Link}
+        to={`/contest/${design.contest._id}`}
+        sx={{ mt: 5, ml: 5 }}
+      >
+        Volver
+      </Button>
       <Card
         sx={{
           mt: '6rem',
@@ -83,22 +137,26 @@ const DetailsPage = () => {
             <Typography variant="body1">{design.description}</Typography>
           </Box>
 
-          <div>
-            <p>Tu calificación: {selectedRating} estrellas</p>
-            <Rating
-              name="voting-stars"
-              value={selectedRating}
-              precision={1}
-              onChange={(event, value) => setSelectedRating(value)}
-            />
-            <Button
-              variant="contained"
-              sx={{ ml: 2, mb: 1 }}
-              onClick={() => handleVote(selectedRating)}
-            >
-              Votar
-            </Button>
-          </div>
+          {design.contest.isActive ? (
+            <div>
+              <p>Tu calificación: {selectedRating} estrellas</p>
+              <Rating
+                name="voting-stars"
+                value={selectedRating}
+                precision={1}
+                onChange={(event, value) => setSelectedRating(value)}
+              />
+              <Button
+                variant="contained"
+                sx={{ ml: 2, mb: 1 }}
+                onClick={() => handleVote(selectedRating)}
+              >
+                Votar
+              </Button>
+            </div>
+          ) : (
+            ''
+          )}
 
           {/* Información del autor */}
 
@@ -114,32 +172,40 @@ const DetailsPage = () => {
             {/* AQUI VAN LOS COMENTARIOS DE LA DB  */}
 
             {design.commentRegister.length > 0 ? (
-              design.commentRegister.map(comment => {
-                const totalDate = new Date(comment.commentDate)
+              design.commentRegister
+                .filter(comment => !comment.isDeleted)
+                .map(comment => {
+                  const totalDate = new Date(comment.commentDate)
 
-                const commentDate = `${totalDate.getDate()}-${
-                  totalDate.getMonth() + 1
-                }-${totalDate.getFullYear()}`
+                  const commentDate = `${totalDate.getDate()}-${
+                    totalDate.getMonth() + 1
+                  }-${totalDate.getFullYear()} ${
+                    totalDate.getHours() + 1
+                  }:${totalDate.getMinutes()}`
 
-                return (
-                  <Paper
-                    elevation={3}
-                    style={{ padding: '16px', margin: '10px', width: '300px' }}
-                  >
-                    <Box display="flex" justifyContent="space-between" mb={1}>
-                      <Typography variant="subtitle1" fontWeight="bold">
-                        {comment.user.username}
+                  return (
+                    <Paper
+                      elevation={3}
+                      style={{
+                        padding: '16px',
+                        margin: '10px',
+                        width: '300px',
+                      }}
+                    >
+                      <Box display="flex" justifyContent="space-between" mb={1}>
+                        <Typography variant="subtitle1" fontWeight="bold">
+                          {comment.user.username}
+                        </Typography>
+                        <Typography variant="caption" color="textSecondary">
+                          {commentDate}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body1" component="div">
+                        {comment.text}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
-                        {commentDate}
-                      </Typography>
-                    </Box>
-                    <Typography variant="body1" component="div">
-                      {comment.text}
-                    </Typography>
-                  </Paper>
-                )
-              })
+                    </Paper>
+                  )
+                })
             ) : (
               <Paper
                 elevation={3}
@@ -167,14 +233,14 @@ const DetailsPage = () => {
               multiline
               rows={3}
               sx={{ width: '60%', mt: '2rem' }}
-              // value={newComment}
-              // onChange={handleCommentChange}
+              value={newComment}
+              onChange={e => setNewComment(e.target.value)}
             />
             <Button
               sx={{ width: '20%', mt: '2rem' }}
               variant="contained"
               color="primary"
-              // onClick={handleAddComment}
+              onClick={handleSubmit}
             >
               Agregar Comentario
             </Button>
