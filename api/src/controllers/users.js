@@ -113,9 +113,15 @@ const updateUser = async (req, res) => {
   try {
     const { userID } = req.params;
 
+    const user = await User.findById(userID);
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
     const updateFields = {
       updateDate: new Date(),
-      isAdmin: true,
+      isAdmin: !user.isAdmin,
     };
 
     const updatedUser = await User.updateOne(
@@ -128,15 +134,19 @@ const updateUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 const isDeleted = async (req, res) => {
   try {
     const { userID } = req.params;
 
+    // Obtener el usuario actual
+    const existingUser = await User.findById(userID);
+
+    // Verificar si isDeleted ya tiene una fecha asignada
     const updateFields = {
-      isDeleted: new Date(),
+      isDeleted: existingUser.isDeleted ? null : new Date(),
     };
 
+    // Actualizar el usuario con los nuevos campos
     const updatedUser = await User.findByIdAndUpdate(userID, updateFields, {
       new: true,
     });

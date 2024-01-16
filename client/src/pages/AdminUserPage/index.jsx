@@ -15,9 +15,19 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button as MuiButton,
+} from "@mui/material";
 
 const AdminUserPage = () => {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
     axios
@@ -66,9 +76,12 @@ const AdminUserPage = () => {
       });
   };
 
-  const suspendAccount = (userID) => {
-    const isDeleted = users.find((user) => user._id === userID).isDeleted;
+  const toggleAccountStatus = (userID, isDeleted) => {
+    const action = isDeleted ? activateAccount : suspendAccount;
+    action(userID);
+  };
 
+  const suspendAccount = (userID) => {
     axios
       .put(`http://localhost:3000/api/user/delete/${userID}`)
       .then((response) => {
@@ -87,7 +100,7 @@ const AdminUserPage = () => {
 
   const activateAccount = (userID) => {
     axios
-      .put(`http://localhost:3000/api/user/activate/${userID}`)
+      .put(`http://localhost:3000/api/user/delete/${userID}`)
       .then((response) => {
         setUsers(
           users.map((user) =>
@@ -103,15 +116,36 @@ const AdminUserPage = () => {
   };
 
   const deleteUser = (userID) => {
+    openDeleteModal(userID);
+  };
+
+  const confirmDeleteUser = () => {
     axios
-      .delete(`http://localhost:3000/api/user/${userID}`)
+      .delete(`http://localhost:3000/api/user/${selectedUserId}`)
       .then((response) => {
-        setUsers(users.filter((user) => user._id !== userID));
+        setUsers(users.filter((user) => user._id !== selectedUserId));
         toast.success("Usuario eliminado correctamente");
       })
       .catch((error) => {
         console.error("Error al borrar definitivamente a un usuario", error);
+      })
+      .finally(() => {
+        closeDeleteModal();
       });
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const openDeleteModal = (userId) => {
+    setSelectedUserId(userId);
+    setOpenModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setSelectedUserId(null);
+    setOpenModal(false);
   };
 
   return (
@@ -125,8 +159,10 @@ const AdminUserPage = () => {
           variant="outlined"
           size="medium"
           sx={{ width: "200px", marginRight: "20px" }}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <Stack
             key={user._id}
             direction="row"
@@ -171,12 +207,7 @@ const AdminUserPage = () => {
                 variant="contained"
                 color={user.isDeleted ? "success" : "warning"}
                 startIcon={user.isDeleted ? <RestoreIcon /> : <BlockIcon />}
-                onClick={() =>
-                  user.isDeleted
-                    ? (activateAccount(user._id),
-                      toast.success("Usuario activado con éxito"))
-                    : suspendAccount(user._id)
-                }
+                onClick={() => toggleAccountStatus(user._id, user.isDeleted)}
               >
                 {user.isDeleted ? "Activar" : "Suspender"}
               </Button>
@@ -190,6 +221,20 @@ const AdminUserPage = () => {
             </Stack>
           </Stack>
         ))}
+        <Dialog open={openModal} onClose={closeDeleteModal}>
+          <DialogTitle>Confirmar eliminación</DialogTitle>
+          <DialogContent>
+            <Typography>
+              ¿Estás seguro de que deseas eliminar este usuario?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <MuiButton onClick={closeDeleteModal}>Cancelar</MuiButton>
+            <MuiButton onClick={confirmDeleteUser} color="error">
+              Eliminar
+            </MuiButton>
+          </DialogActions>
+        </Dialog>
       </Stack>
     </Container>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Stack,
@@ -9,8 +9,27 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import axios from "axios";
 
 function AdminContestPage() {
+  const [contests, setContests] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/contest")
+      .then((response) => {
+        setContests(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching contests:", error);
+      });
+  }, []);
+
+  const filteredContests = contests.filter((contest) =>
+    contest.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Container component="main" maxWidth="md">
       <Stack spacing={3} alignItems="center">
@@ -29,6 +48,8 @@ function AdminContestPage() {
               variant="outlined"
               size="medium"
               sx={{ width: "200px", marginRight: "20px" }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Stack>
           <Button
@@ -40,10 +61,10 @@ function AdminContestPage() {
             Añadir concurso
           </Button>
         </Stack>
-        {/* Mapea tus datos de concursos aquí */}
-        {[...Array(5)].map((_, index) => (
+        {/* Mapea tus datos de concursos filtrados aquí */}
+        {filteredContests.map((contest) => (
           <Stack
-            key={index}
+            key={contest._id}
             direction="row"
             spacing={2}
             alignItems="center"
@@ -55,7 +76,7 @@ function AdminContestPage() {
               width: "100%",
             }}
           >
-            <Typography variant="body1">Concurso 1 {index + 1}</Typography>
+            <Typography variant="body1">Concurso: {contest.name}</Typography>
             <Stack direction="row" spacing={1}>
               <Button
                 variant="contained"
