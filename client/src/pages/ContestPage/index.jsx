@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Container, Grid, CircularProgress, TextField } from '@mui/material'
+import {
+  Container,
+  Grid,
+  CircularProgress,
+  TextField,
+  FormControl,
+  InputLabel,
+} from '@mui/material'
 import React from 'react'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
@@ -12,21 +19,26 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import SearchIcon from '@mui/icons-material/Search'
 
-
 function ContestPage() {
   const { contests, loading } = useContests()
 
   const [searchTerm, setSearchTerm] = useState('')
+  const [filterStatus, setFilterStatus] = useState('')
 
   if (loading) return <CircularProgress />
 
   const filteredContests = contests.filter(contest => {
     return (
-      contest &&
-      contest.theme &&
-      contest.theme.toLowerCase().includes(searchTerm.toLowerCase())
+      (!searchTerm ||
+        contest.theme.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!filterStatus ||
+        (filterStatus === '' && contest.isActive) ||
+        (contest.isActive && filterStatus === 'Activo') ||
+        (!contest.isActive && filterStatus === 'Finalizado'))
     )
   })
+
+  console.log(contests)
 
   return (
     <>
@@ -68,10 +80,12 @@ function ContestPage() {
                 marginBottom: '100px',
                 zIndex: 1,
                 textAlign: 'center',
-
               }}
             >
-              "Explora y vota en emocionantes sorteos temáticos mientras descubres creativos diseños. ¡Participa en la diversión y elige tus favoritos para tener la oportunidad de ganar premios increíbles!"
+              "Explora y vota en emocionantes sorteos temáticos mientras
+              descubres creativos diseños. ¡Participa en la diversión y elige
+              tus favoritos para tener la oportunidad de ganar premios
+              increíbles!"
             </Typography>
           </Container>
         </div>
@@ -80,95 +94,100 @@ function ContestPage() {
       <Container disableGutters sx={{ marginTop: '50px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <TextField
-              label="Buscar temática"
-              variant="outlined"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              sx={{
-                '& label': {
-                  marginTop:'-7px'
-                },
-                  marginLeft:'10px',
-                '& input': {
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <TextField
+                label="Buscar temática"
+                variant="outlined"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                sx={{
+                  '& label': {
+                    marginTop: '-7px',
+                  },
+                  marginLeft: '10px',
+                  '& input': {
+                    color: 'black',
+                    height: '10px',
+                  },
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '& legend': { display: 'none' },
+                  '& .MuiInputLabel-shrink': {
+                    opacity: 0,
+                    transition: 'all 0.1s ease-in',
+                  },
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  borderRadius: '20px',
+                  outline: 'none',
+                  width: '700px',
+                  height: '40px',
+                  marginBottom: '',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                  },
+                }}
+              />
+              <SearchIcon
+                sx={{
+                  fontSize: '25px',
                   color: 'black',
-                  height: '10px',
-                },
-                '& fieldset': {
-                  border: 'none',
-                },
-                '& legend': { display: 'none' },
-                '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.1s ease-in" },
-                backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                borderRadius: '20px',
-                outline: 'none',
-                width: '700px',
-                height: '40px',
-                marginBottom: '',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                },
-              }}
-            />
-            <SearchIcon
-              sx={{
-                fontSize:'25px',
-                color: 'black',
-                marginLeft: '-30px',
-                alignSelf: 'center',
-                paddingRight: '5px',
-              }}
-            />
-          </div>
-
+                  marginLeft: '-30px',
+                  alignSelf: 'center',
+                  paddingRight: '5px',
+                }}
+              />
+            </div>
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
-            <Select
-              label="Estado"
-              defaultValue="Activo"
-              sx={{
-                minWidth: '120px',
-                '& fieldset': {
-                  border: 'none',
-                },
-                '&:hover fieldset': {
-                  borderColor: 'none',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'none',
-                },
-              }}
-            >
-              <MenuItem value="Activo">Activo</MenuItem>
-              <MenuItem value="Finalizado">Finalizado</MenuItem>
-            </Select>
+            <FormControl>
+              <InputLabel>Estado</InputLabel>
+              <Select
+                label="Estado"
+                value={filterStatus}
+                onChange={e => setFilterStatus(e.target.value)}
+                sx={{
+                  minWidth: '120px',
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'none',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'none',
+                  },
+                }}
+              >
+                {' '}
+                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="Activo">Activo</MenuItem>
+                <MenuItem value="Finalizado">Finalizado</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
       </Container>
 
       <div
-  style={{
-
-    display: 'grid',
-    flexDirection: 'column',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gap: '40px',
-    marginLeft: '20px',
-    marginRight: '20px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '50px',
-    marginBottom: '100px',
-  }}
->
-  {filteredContests.map(contest => {
-    return <ContestCard key={contest._id} contest={contest} />;
-  })}
-</div>
-
+        style={{
+          display: 'grid',
+          flexDirection: 'column',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: '40px',
+          marginLeft: '20px',
+          marginRight: '20px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '50px',
+          marginBottom: '100px',
+        }}
+      >
+        {filteredContests.map(contest => {
+          return <ContestCard key={contest._id} contest={contest} />
+        })}
+      </div>
     </>
   )
 }

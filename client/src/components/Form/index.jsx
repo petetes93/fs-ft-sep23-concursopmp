@@ -1,14 +1,12 @@
-// Form.js
-
 import { useEffect } from 'react'
-import { Button, Stack, Typography } from '@mui/material'
+import { Button, Stack, TextField, Typography } from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import * as fields from './input-fields'
 
 function Form({
-  inputs = [],
+  inputs,
   validationSchema,
   onSubmit,
   errorsFromResponse = [],
@@ -16,7 +14,7 @@ function Form({
   defaultValues = {},
 }) {
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     setError,
@@ -37,24 +35,20 @@ function Form({
       onSubmit={handleSubmit((data) => onSubmit(data, { setError, reset }))}
       spacing={5}
     >
-      {Array.isArray(inputs) &&
-        inputs.map(({ name, label, type, ...rest }) => {
-          const Input = fields[type] || fields.input
+      {inputs.map(({ name, type, label, ...rest }) => {
+        const Input = fields[type] || fields.input
 
-          return (
-            <div key={name}>
-              <Typography variant='subtitle1' gutterBottom>
-                {label}
-              </Typography>
-              <Input
-                type={type}
-                errors={errors[name]}
-                inputRef={register(name)}
-                {...rest}
-              />
-            </div>
-          )
-        })}
+        return (
+          <Stack key={name} spacing={1}>
+            <Typography variant='subtitle1'>{label}</Typography>
+            <Controller
+              control={control}
+              name={name}
+              render={({ field }) => <Input type={type} {...field} {...rest} />}
+            />
+          </Stack>
+        )
+      })}
 
       <Button type='submit'>{submitLabel}</Button>
     </Stack>

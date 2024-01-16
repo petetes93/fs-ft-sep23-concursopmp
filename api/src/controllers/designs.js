@@ -31,7 +31,10 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   const { designId } = req.params
 
-  const design = await Design.findById(designId).populate('voteRegister')
+  const design = await Design.findById(designId)
+    .populate('voteRegister')
+    .populate('author', '-password -_id -email -isAdmin -__v')
+    .populate('commentRegister')
   if (!design) {
     return res.status(404).json({ message: 'No se encuentra el diseño' })
   }

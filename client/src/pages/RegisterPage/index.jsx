@@ -9,12 +9,13 @@ import { toast } from 'react-toastify'
 
 import { schema, fields } from './form-data'
 
-// import { useAuth } from 'hooks'
+import { useAuth } from 'hooks'
 import { useNavigate } from 'react-router-dom'
 
 function RegisterPage() {
   const navigate = useNavigate()
-  //   const [, dispatch] = useAuth()
+  const [, dispatch] = useAuth()
+
   const [errorsFromResponse, setErrorsFromResponse] = useState([])
 
   const onSubmit = (user) => {
@@ -24,7 +25,7 @@ function RegisterPage() {
 
         const type = isAdmin ? 'admin' : 'login'
 
-        // dispatch({ type, username })
+        dispatch({ type, username })
         navigate('/', { replace: true })
       })
       .catch((err) => {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Card,
   CardContent,
@@ -8,138 +8,126 @@ import {
   Box,
   TextField,
   Divider,
-} from "@mui/material";
+  CircularProgress,
+} from '@mui/material'
 
-import useDesigns from "../../hooks/useDesigns";
+import { useDesign } from 'hooks'
 
-import commentService from "../../services/comment-service";
+import commentService from '../../services/comment-service'
 
 const DetailsPage = () => {
-  const [newComment, setNewComment] = useState("");
+  const { designId } = useParams()
+  const [newComment, setNewComment] = useState('')
 
-  const { design, loading, setDesign } = useDesigns();
+  const { design, loading, setDesign } = useDesign(designId)
 
-  const handleCommentChange = (event) => {
-    setNewComment(event.target.value);
-  };
+  if (loading) return <CircularProgress />
 
-  const handleAddComment = async () => {
-    try {
-      await commentService.create({ comment: newComment }).then((res) => {
-        console.log("creado", res.data);
-        setDesigns({ ...designs, comments: [...designs.comments, res.data] });
-      });
-      setNewComment("");
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-  };
+  console.log(design)
 
-  const author = designs.length;
+  // const handleCommentChange = event => {
+  //   setNewComment(event.target.value)
+  // }
 
-  console.log(author);
+  // const handleAddComment = async () => {
+  //   try {
+  //     await commentService.create({ comment: newComment }).then(res => {
+  //       console.log('creado', res.data)
+  //       setDesigns({ ...designs, comments: [...designs.comments, res.data] })
+  //     })
+  //     setNewComment('')
+  //   } catch (error) {
+  //     console.error('Error adding comment:', error)
+  //   }
+  // }
 
   return (
     <div>
       <Card
         sx={{
-          mt: "6rem",
-          width: "60%",
-          ml: "20%",
+          mt: '6rem',
+          width: '60%',
+          ml: '20%',
         }}
       >
         <CardContent>
-          {/* Título del producto */}
           <Typography
-            variant="h5"
+            variant="h4"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mb: "3rem",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              mb: '3rem',
             }}
           >
-            {author}
+            {design.title}
           </Typography>
           <Divider
             style={{
-              marginBottom: "25px",
-              width: "80%",
-              margin: "0 auto",
-              backgroundColor: "grey",
-              opacity: "0.5",
+              marginBottom: '25px',
+              width: '80%',
+              margin: '0 auto',
+              backgroundColor: 'grey',
+              opacity: '0.5',
             }}
           />
-          {/* Imagen del producto */}
-          <Box
-            sx={{ display: "flex", justifyContent: "flex-start", mt: "3rem" }}
-          >
-            <img
-              src={designs.length}
-              style={{ width: "100%", height: "auto" }}
-            />
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2%' }}>
+            <Typography variant="body1">{design.author.username}</Typography>
           </Box>
 
-          {/* Descripción del producto */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", ml: "50%" }}>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. A,
-              recusandae maiores! Ipsa perferendis assumenda porro repudiandae
-              id molestias itaque officia iste possimus quo vitae beatae ut,
-              fugiat tempora consequatur odit.
-            </Typography>
+          <Box
+            sx={{ display: 'flex', justifyContent: 'flex-start', mt: '3rem' }}
+          >
+            <img src={design.image} style={{ width: '100%', height: 'auto' }} />
           </Box>
-          {/* Botón para darle a me gusta */}
-          {/* <Button variant="outlined" color="primary" onClick={handleLike}>
-            {!faved ? <FavoriteBorder /> : <Favorite />}
-          </Button> */}
+
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2%' }}>
+            <Typography variant="body1">{design.description}</Typography>
+          </Box>
 
           {/* Información del autor */}
-          <div>
-            <Typography variant="h6">Información del Autor</Typography>
-            <Typography variant="body1">{designs.length}</Typography>
-            <Typography variant="body1">Email: email</Typography>
-            {/* Puedes agregar más información del autor según tus necesidades */}
-          </div>
+
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
-            <TextField
-              label="Nuevo comentario"
-              multiline
-              rows={3}
-              sx={{ width: "60%", mt: "2rem" }}
-              value={newComment}
-              onChange={handleCommentChange}
-            />
-            <Button
-              sx={{ width: "20%", mt: "2rem" }}
-              variant="contained"
-              color="primary"
-              onClick={handleAddComment}
-            >
-              Agregar Comentario
-            </Button>
-          </div>
-
-          <div style={{ marginTop: "2rem" }}>
             <Typography variant="h6">Comentarios</Typography>
+            {/* AQUI VAN LOS COMENTARIOS DE LA DB  */}
 
-            {/* <div>
+            <div style={{ marginTop: '2rem' }}>
+              {/* <div>
                 {place.comments.map((comment, index) => (
                   <Typography key={index} variant="body2">
                     {comment.comment}
                   </Typography>
                 ))}
               </div> */}
+            </div>
+            <Typography variant="h6">Añadir Comentario</Typography>
+
+            <TextField
+              label="Nuevo comentario"
+              multiline
+              rows={3}
+              sx={{ width: '60%', mt: '2rem' }}
+              // value={newComment}
+              // onChange={handleCommentChange}
+            />
+            <Button
+              sx={{ width: '20%', mt: '2rem' }}
+              variant="contained"
+              color="primary"
+              // onClick={handleAddComment}
+            >
+              Agregar Comentario
+            </Button>
           </div>
         </CardContent>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default DetailsPage;
+export default DetailsPage

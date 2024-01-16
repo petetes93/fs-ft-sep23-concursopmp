@@ -30,8 +30,7 @@ router.post(
 
 router.put("/", auth, admin, validate, contestController.activate);
 
-// añadir auth, admin
-router.put("/delete/:contestId", contestController.hideContest);
+router.put("/delete/:contestId", auth, admin, contestController.hideContest);
 
 router.put(
   "/:contestId",

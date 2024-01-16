@@ -7,9 +7,13 @@ function useContests() {
   const [errors, setErrors] = useState(null)
 
   useEffect(() => {
+    contestService.activate()
+
     contestService
       .get()
-      .then(({ data }) => setContests(data))
+      .then(({ data }) => {
+        setContests(data)
+      })
       .catch(errors => setErrors(errors))
       .finally(() => setLoading(false))
   }, [])
