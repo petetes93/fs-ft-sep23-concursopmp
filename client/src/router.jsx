@@ -9,6 +9,8 @@ import RegisterPage from "pages/RegisterPage";
 // import AdminPage from "./pages/AdminPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import DetailsPage from "./pages/DetailPage";
+import LoginAdmin from "./pages/AdminLogin";
+import ConcursoForm from "./pages/CrearConcurso/crearconcurso";
 import AddDesingPage from "pages/AddDesingPage";
 import AdminContestPage from "./pages/AdminContestPage";
 const router = createBrowserRouter([
@@ -55,8 +57,12 @@ const router = createBrowserRouter([
         element: <DetailsPage />,
       },
       {
-        path: "/product/add_desing",
-        element: <AddDesingPage />,
+        path: "/admin",
+        element: <LoginAdmin />,
+      },
+      {
+        path: "/createcontest",
+        element: <ConcursoForm />,
       },
     ],
   },
