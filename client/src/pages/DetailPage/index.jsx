@@ -9,37 +9,35 @@ import {
   TextField,
   Divider,
   CircularProgress,
+  Paper,
+  Rating,
 } from '@mui/material'
 
-import { useDesign } from 'hooks'
+import { useDesign, useAuth } from 'hooks'
 
-import commentService from '../../services/comment-service'
+import voteService from '../../services/vote-service'
+
+// import commentService from 'services'
 
 const DetailsPage = () => {
   const { designId } = useParams()
   const [newComment, setNewComment] = useState('')
+  const [selectedRating, setSelectedRating] = useState(0)
+  const [{ id }] = useAuth()
 
   const { design, loading, setDesign } = useDesign(designId)
 
   if (loading) return <CircularProgress />
 
-  console.log(design)
-
-  // const handleCommentChange = event => {
-  //   setNewComment(event.target.value)
-  // }
-
-  // const handleAddComment = async () => {
-  //   try {
-  //     await commentService.create({ comment: newComment }).then(res => {
-  //       console.log('creado', res.data)
-  //       setDesigns({ ...designs, comments: [...designs.comments, res.data] })
-  //     })
-  //     setNewComment('')
-  //   } catch (error) {
-  //     console.error('Error adding comment:', error)
-  //   }
-  // }
+  const handleVote = value => {
+    console.log(`Votaste con ${value} estrellas`)
+    setSelectedRating(value)
+    if (!design.voteRegister.find(vote => vote.user === id))
+      voteService
+        .addVote(designId, { punctuation: selectedRating })
+        .then(() => console.log('El voto ha sido registrado'))
+        .catch(err => console.log(err))
+  }
 
   return (
     <div>
@@ -85,6 +83,23 @@ const DetailsPage = () => {
             <Typography variant="body1">{design.description}</Typography>
           </Box>
 
+          <div>
+            <p>Tu calificación: {selectedRating} estrellas</p>
+            <Rating
+              name="voting-stars"
+              value={selectedRating}
+              precision={1}
+              onChange={(event, value) => setSelectedRating(value)}
+            />
+            <Button
+              variant="contained"
+              sx={{ ml: 2, mb: 1 }}
+              onClick={() => handleVote(selectedRating)}
+            >
+              Votar
+            </Button>
+          </div>
+
           {/* Información del autor */}
 
           <div
@@ -93,8 +108,48 @@ const DetailsPage = () => {
               flexDirection: 'column',
             }}
           >
-            <Typography variant="h6">Comentarios</Typography>
+            <Typography variant="h6" sx={{ mt: 2 }}>
+              Comentarios
+            </Typography>
             {/* AQUI VAN LOS COMENTARIOS DE LA DB  */}
+
+            {design.commentRegister.length > 0 ? (
+              design.commentRegister.map(comment => {
+                const totalDate = new Date(comment.commentDate)
+
+                const commentDate = `${totalDate.getDate()}-${
+                  totalDate.getMonth() + 1
+                }-${totalDate.getFullYear()}`
+
+                return (
+                  <Paper
+                    elevation={3}
+                    style={{ padding: '16px', margin: '10px', width: '300px' }}
+                  >
+                    <Box display="flex" justifyContent="space-between" mb={1}>
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {comment.user.username}
+                      </Typography>
+                      <Typography variant="caption" color="textSecondary">
+                        {commentDate}
+                      </Typography>
+                    </Box>
+                    <Typography variant="body1" component="div">
+                      {comment.text}
+                    </Typography>
+                  </Paper>
+                )
+              })
+            ) : (
+              <Paper
+                elevation={3}
+                style={{ padding: '16px', margin: '10px', width: '300px' }}
+              >
+                <Typography variant="body1" component="div">
+                  ¡Sé el primero en añadir un comentario!
+                </Typography>
+              </Paper>
+            )}
 
             <div style={{ marginTop: '2rem' }}>
               {/* <div>
