@@ -12,6 +12,7 @@ import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import ConcursoForm from './pages/CrearConcurso/crearconcurso'
 import AddDesingPage from 'pages/AddDesingPage'
+import AdminContestPage from './pages/AdminContestPage'
 import ProtectedRoute from './utils/ProtectedRoute'
 
 const router = createBrowserRouter([
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
         element: <AdminUserPage />,
       },
       {
+        path: '/admincontest',
+        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
+        element: <AdminContestPage />,
+      },
+      {
         path: '/design/:designId',
         element: <DetailsPage />,
       },
@@ -57,7 +63,7 @@ const router = createBrowserRouter([
         element: <LoginAdmin />,
       },
       {
-        path: '/crearconcurso',
+        path: '/createcontest',
         element: <ConcursoForm />,
       },
     ],
