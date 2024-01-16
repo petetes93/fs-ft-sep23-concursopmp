@@ -16,8 +16,6 @@ function ContestPage() {
 
   if (loading) return <CircularProgress />
 
-  console.log(contests)
-
   return (
     <>
       <Card
@@ -37,8 +35,8 @@ function ContestPage() {
               /*filter: 'blur(3.5px)',*/ height: '300px',
               width: '100%',
             }}
-            component="img"
-            image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
+            component='img'
+            image='https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg'
           />
 
           <Container
@@ -71,10 +69,10 @@ function ContestPage() {
             <SearchBar />
           </Grid>
 
-          <Grid item xs={6} container justifyContent="flex-end">
+          <Grid item xs={6} container justifyContent='flex-end'>
             <Select
-              label="Estado"
-              defaultValue="Activo"
+              label='Estado'
+              defaultValue='Activo'
               sx={{
                 minWidth: '120px',
                 '& fieldset': {
@@ -88,8 +86,8 @@ function ContestPage() {
                 },
               }}
             >
-              <MenuItem value="Activo">Activo</MenuItem>
-              <MenuItem value="Finalizado">Finalizado</MenuItem>
+              <MenuItem value='Activo'>Activo</MenuItem>
+              <MenuItem value='Finalizado'>Finalizado</MenuItem>
             </Select>
           </Grid>
         </Grid>
@@ -105,9 +103,7 @@ function ContestPage() {
           marginBottom: '100px',
         }}
       >
-        {contests.map(contest => {
-          console.log(contest)
-
+        {contests.map((contest) => {
           return <ContestCard key={contest._id} contest={contest} />
         })}
       </div>

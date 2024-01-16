@@ -20,7 +20,10 @@ const schema = yup
   .object({
     username: yup.string().required('Nombre de usuario obligatorio'),
     password: yup.string().required('Contraseña obligatoria'),
-    email: yup.string().required('email obligatorio'),
+    email: yup
+      .string()
+      .email('Correo electrónico no válido')
+      .required('Correo electrónico obligatorio'),
   })
   .required()
 

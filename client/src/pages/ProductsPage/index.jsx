@@ -20,9 +20,9 @@ function ProductsPage() {
 
   if (loading && loadingContest) return <CircularProgress />
 
-  const matchedDesigns = designs.filter(design => design.contest === contestId)
-
-  console.log(matchedDesigns)
+  const matchedDesigns = designs.filter(
+    (design) => design.contest === contestId
+  )
 
   return (
     <>
@@ -43,7 +43,7 @@ function ProductsPage() {
               height: '300px',
               width: '100%',
             }}
-            component="img"
+            component='img'
             image={contest.image}
           />
           <Container
@@ -76,10 +76,10 @@ function ProductsPage() {
             <SearchBar />
           </Grid>
 
-          <Grid item xs={6} container justifyContent="flex-end">
+          <Grid item xs={6} container justifyContent='flex-end'>
             <Link to={'/product/add_desing'}>
               <Button
-                aria-label="add"
+                aria-label='add'
                 startIcon={<AddIcon />}
                 sx={{
                   marginLeft: '15px',
@@ -103,7 +103,7 @@ function ProductsPage() {
           marginBottom: '100px',
         }}
       >
-        {matchedDesigns.map(design => {
+        {matchedDesigns.map((design) => {
           return <ProductCard key={design._id} design={design} />
         })}
       </div>

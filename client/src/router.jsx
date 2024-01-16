@@ -12,6 +12,7 @@ import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import ConcursoForm from './pages/CrearConcurso/crearconcurso'
 import AddDesingPage from 'pages/AddDesingPage'
+import ProtectedRoute from './utils/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
