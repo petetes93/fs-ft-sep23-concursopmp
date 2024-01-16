@@ -1,4 +1,5 @@
 import create from 'services/http-service'
+import apiClient from './api-client'
 
 const commentService = create('/comment')
 
