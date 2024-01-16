@@ -10,10 +10,22 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+import contestService from "../../services/contest-service";
+import { Link } from "react-router-dom";
 
 function AdminContestPage() {
   const [contests, setContests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedContestId, setSelectedContestId] = useState(null);
 
   useEffect(() => {
     axios
@@ -29,6 +41,33 @@ function AdminContestPage() {
   const filteredContests = contests.filter((contest) =>
     contest.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const suspendContest = (contestId) => {
+    openDeleteModal(contestId);
+  };
+
+  const confirmSuspendContest = () => {
+    contestService
+      .desactivate(selectedContestId)
+      .then(() => toast.success("Concurso inhabilitado"))
+      .catch((error) => {
+        console.error("Error al desactivar el concurso", error);
+        toast.error("Error al desactivar el concurso");
+      })
+      .finally(() => {
+        closeDeleteModal();
+      });
+  };
+
+  const openDeleteModal = (contestId) => {
+    setSelectedContestId(contestId);
+    setOpenModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setSelectedContestId(null);
+    setOpenModal(false);
+  };
 
   return (
     <Container component="main" maxWidth="md">
@@ -60,6 +99,14 @@ function AdminContestPage() {
           >
             Añadir concurso
           </Button>
+          <Button
+            variant="contained"
+            color="success"
+            component={Link}
+            to="/adminuser"
+          >
+            Ir a Usuarios
+          </Button>
         </Stack>
         {/* Mapea tus datos de concursos filtrados aquí */}
         {filteredContests.map((contest) => (
@@ -90,12 +137,27 @@ function AdminContestPage() {
                 color="error"
                 aria-label="delete"
                 sx={{ fontSize: "1rem" }}
+                onClick={() => suspendContest(contest._id)}
               >
                 <DeleteIcon />
               </IconButton>
             </Stack>
           </Stack>
         ))}
+        <Dialog open={openModal} onClose={closeDeleteModal}>
+          <DialogTitle>Confirmar eliminación</DialogTitle>
+          <DialogContent>
+            <Typography>
+              ¿Estás seguro de que deseas eliminar este concurso?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeDeleteModal}>Cancelar</Button>
+            <Button onClick={confirmSuspendContest} color="error">
+              Eliminar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Stack>
     </Container>
   );

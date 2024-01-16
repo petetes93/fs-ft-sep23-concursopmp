@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { body } = require("express-validator");
+const mongoose = require('mongoose')
+const { body } = require('express-validator')
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
@@ -10,24 +10,24 @@ const userSchema = new mongoose.Schema({
   createDate: { type: Date },
   updateDate: { type: Date },
   isDeleted: { type: Date },
-});
+})
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema)
 
 const userValidationSchema = [
-  body("username")
+  body('username')
     .isString()
     .notEmpty()
-    .withMessage("El nombre de usuario no puede estar vacío"),
-  body("password")
+    .withMessage('El nombre de usuario no puede estar vacío'),
+  body('password')
     .isString()
     .notEmpty()
-    .withMessage("La password no puede estar vacía"),
-  body("email")
+    .withMessage('La password no puede estar vacía'),
+  body('email')
     .isEmail()
     .notEmpty()
-    .withMessage("El email no puede estar vacío"),
-];
+    .withMessage('El email no puede estar vacío'),
+]
 
-module.exports = User;
-exports.userValidationSchema = userValidationSchema;
+module.exports = User
+exports.userValidationSchema = userValidationSchema
