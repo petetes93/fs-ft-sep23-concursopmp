@@ -1,15 +1,15 @@
 const { Contest } = require('../models/contest')
-
+const cloudinary = require('../utils/cloudinary')
 const getAll = (req, res, next) => {
   const { theme } = req.query
 
   const query = theme ? { theme } : {}
 
   Contest.find(query)
-    .then(contests => {
+    .then((contests) => {
       res.json(contests)
     })
-    .catch(error => {
+    .catch((error) => {
       next(error)
     })
 }
@@ -54,7 +54,7 @@ const update = async (req, res) => {
   }
   const updatedcontest = { contestId, ...updates }
 
-  await cloudinary.uploader.destroy(updatedcontest.imageCloudinaryId, {
+  await cloudinary.uploader.destroy(oldcontest.imageCloudinaryId, {
     invalidate: true,
   })
 
