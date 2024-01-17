@@ -19,6 +19,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SearchIcon from "@mui/icons-material/Search";
 
+
 function ContestPage() {
   const { contests, loading } = useContests();
 
@@ -58,8 +59,8 @@ function ContestPage() {
         <div>
           <CardMedia
             style={{
-              height: "500px",
-              width: "100%",
+              filter: 'blur(3.5px)', height: '500px',
+              width: '100%',
             }}
             component="img"
             image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
@@ -81,13 +82,12 @@ function ContestPage() {
                 marginTop: "-360px",
                 marginBottom: "100px",
                 zIndex: 1,
-                textAlign: "center",
+                textAlign: 'center',
+                filter: 'drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.5))',
+
               }}
             >
-              "Explora y vota en emocionantes sorteos temáticos mientras
-              descubres creativos diseños. ¡Participa en la diversión y elige
-              tus favoritos para tener la oportunidad de ganar premios
-              increíbles!"
+              "Explora y vota en emocionantes sorteos temáticos mientras descubres creativos diseños. ¡Participa en la diversión y elige tus favoritos para tener la oportunidad de ganar premios increíbles!"
             </Typography>
           </Container>
         </div>
@@ -96,101 +96,89 @@ function ContestPage() {
       <Container disableGutters sx={{ marginTop: "50px" }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <TextField
-                label="Buscar temática"
-                variant="outlined"
-                autoComplete="off"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                sx={{
-                  "& label": {
-                    marginTop: "-7px",
-                  },
-                  marginLeft: "10px",
-                  "& input": {
-                    color: "black",
-                    height: "10px",
-                  },
-                  "& fieldset": {
-                    border: "none",
-                  },
-                  "& legend": { display: "none" },
-                  "& .MuiInputLabel-shrink": {
-                    opacity: 0,
-                    transition: "all 0.1s ease-in",
-                  },
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  borderRadius: "20px",
-                  outline: "none",
-                  width: "700px",
-                  height: "40px",
-                  marginBottom: "",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.25)",
-                  },
-                }}
-              />
-              <SearchIcon
-                sx={{
-                  fontSize: "25px",
-                  color: "black",
-                  marginLeft: "-30px",
-                  alignSelf: "center",
-                  paddingRight: "5px",
-                }}
-              />
-            </div>
+            
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <TextField
+              label="Buscar temática"
+              variant="outlined"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              sx={{
+                '& label': {
+                  marginTop:'-7px'
+                },
+                  marginLeft:'10px',
+                '& input': {
+                  color: 'black',
+                  height: '10px',
+                },
+                '& fieldset': {
+                  border: 'none',
+                },
+                '& legend': { display: 'none' },
+                '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.1s ease-in" },
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                borderRadius: '20px',
+                outline: 'none',
+                width: '700px',
+                height: '40px',
+                marginBottom: '',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                  boxShadow: 'inset 0 0 0 2px white'
+                },
+              }}
+            />
+            <SearchIcon
+              sx={{
+                fontSize:'25px',
+                color: 'black',
+                marginLeft: '-30px',
+                alignSelf: 'center',
+                paddingRight: '5px',
+              }}
+            />
+          </div>
+
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
-            <FormControl>
-              <InputLabel>Estado</InputLabel>
-              <Select
-                label="Estado"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                sx={{
-                  minWidth: "120px",
-                  "& fieldset": {
-                    border: "none",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "none",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "none",
-                  },
-                }}
-              >
-                {" "}
-                <MenuItem value="">Todos</MenuItem>
-                <MenuItem value="Activo">Activo</MenuItem>
-                <MenuItem value="Finalizado">Inactivos</MenuItem>
-              </Select>
-            </FormControl>
+            <Select
+              defaultValue="Activo"
+              sx={{
+                minWidth: '130px',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                }
+              }}
+            >
+              <MenuItem value="Activo">Activo</MenuItem>
+              <MenuItem value="Finalizado">Finalizado</MenuItem>
+            </Select>
           </Grid>
         </Grid>
       </Container>
 
       <div
         style={{
-          display: "grid",
-          flexDirection: "column",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "40px",
-          marginLeft: "20px",
-          marginRight: "20px",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "50px",
-          marginBottom: "100px",
+
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: '40px',
+          marginLeft: '20px',
+          marginRight: '20px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '50px',
+          marginBottom: '100px',
         }}
       >
-        {filteredContests.map((contest) => {
+        {filteredContests.map(contest => {
           return <ContestCard key={contest._id} contest={contest} />;
         })}
       </div>
+
     </>
   );
 }

@@ -34,19 +34,46 @@ const theme = createTheme({
 
 const ThemeProvider = ({ children }) => (
   <MUIThemeProvider theme={theme}>
-    <CssBaseline /> 
+    <CssBaseline />
     <div
       style={{
+        position: 'relative',
         minHeight: '100vh',
-        background:'#1C8791',
-
-        filter:
-          'progid:DXImageTransform.Microsoft.gradient(startColorstr="#0061FF", endColorstr="#60EFFF", GradientType=1)',
+        overflow: 'hidden',
       }}
     >
-      {children}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: 'url("https://www.hdwallpapers.in/download/blue_mixed_paint_aesthetic_background_4k_hd_blue_aesthetic-HD.jpg")',
+          backgroundColor:'#95d5b2',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'blur(30px)',
+        }}
+      ></div>
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        {children}
+      </div>
     </div>
   </MUIThemeProvider>
-)
+);
+
 
 export default ThemeProvider
+
+// Enlaces para fondos
+//https://images.pexels.com/photos/10458835/pexels-photo-10458835.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+//https://www.hdwallpapers.in/download/blue_mixed_paint_aesthetic_background_4k_hd_blue_aesthetic-HD.jpg
+//https://images6.alphacoders.com/133/1333587.jpg
+//https://images.alphacoders.com/133/1338593.png
+//https://images5.alphacoders.com/133/1330526.png
