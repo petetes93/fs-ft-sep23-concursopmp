@@ -25,9 +25,16 @@ function Navbar() {
   const [user] = useAuth();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+
+  const handleOpenUserResponsive = (event) =>
+    setIsLoggedIn(event.currentTarget);
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -107,7 +114,7 @@ function Navbar() {
                       align="center"
                       sx={{
                         fontFamily: "helvetica",
-                        fontWeight: 700,
+                        fontWeight: 500,
                         color: "gray",
                         pl: 11,
                         alignItems: "center",
@@ -130,10 +137,11 @@ function Navbar() {
                     width="100%"
                     sx={{
                       fontFamily: "helvetica",
-                      fontWeight: 700,
+                      fontWeight: 500,
                       color: "gray",
                       alignContent: "center",
                       pl: 11,
+                      mr: 10,
                     }}
                   >
                     Concursos
@@ -156,31 +164,89 @@ function Navbar() {
               <MenuItem
                 sx={{
                   backgroundColor: "white",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
               >
-                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-                  <Button
-                    variant="secondary"
-                    sx={{
-                      borderRadius: "50px",
-                      boxShadow: "none",
-                      height: 50,
-                      ml: 10,
-                    }}
-                    onClick={handleOpenUserMenu}
-                  >
-                    <PersonRoundedIcon
-                      fontSize="medium"
-                      sx={{
-                        color: "black",
-                        "&:hover": {
-                          color: "#2bd0d0",
-                        },
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: "flex", md: "none" },
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  {!isLoggedIn && (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Link
+                        to="/login"
+                        style={{
+                          fontFamily: "helvetica",
+                          fontWeight: 900,
+                          color: "gray",
+                        }}
+                      >
+                        <Button
+                          variant="secondary"
+                          sx={{
+                            borderRadius: "50px",
+                            boxShadow: "none",
+                            height: 50,
+                          }}
+                          onClick={handleOpenUserResponsive}
+                        >
+                          Login
+                        </Button>
+                      </Link>
+                      <Link
+                        to="/register"
+                        style={{
+                          fontFamily: "helvetica",
+                          fontWeight: 700,
+                          color: "gray",
+                        }}
+                      >
+                        <Button
+                          variant="secondary"
+                          sx={{
+                            borderRadius: "50px",
+                            boxShadow: "none",
+                            height: 50,
+                          }}
+                          onClick={handleOpenUserResponsive}
+                        >
+                          Register
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+
+                  {isLoggedIn && (
+                    <Link
+                      to="/logout"
+                      style={{
+                        fontFamily: "helvetica",
+                        fontWeight: 700,
+                        color: "gray",
                       }}
-                    />
-                  </Button>
+                    >
+                      <Button
+                        variant="secondary"
+                        sx={{
+                          borderRadius: "50px",
+                          boxShadow: "none",
+                          height: 50,
+                          ml: 10,
+                        }}
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </Button>
+                    </Link>
+                  )}
                 </Box>
               </MenuItem>
             </Menu>
@@ -246,7 +312,7 @@ function Navbar() {
                 color: "black",
               }}
             >
-              {user ? `Hola, ${user.username}` : "Hola, Invitado"}
+              {user.username ? `Hola, ${user.username}` : null}
             </span>
             <Button
               variant="secondary"
