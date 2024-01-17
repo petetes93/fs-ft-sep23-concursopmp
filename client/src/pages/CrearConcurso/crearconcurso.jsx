@@ -12,15 +12,8 @@ function ConcursoForm() {
   const [, dispatch] = useAuth()
   const [erroresDesdeRespuesta, setErroresDesdeRespuesta] = useState([])
 
-  const handleFormSubmit = (concursoData) => {
+  const handleFormSubmit = concursoData => {
     console.log(concursoData)
-    // concursoData.startDate = `${concursoData.startDate.getFullYear()}-${
-    //   concursoData.startDate.getMonth() + 1
-    // }-${concursoData.startDate.getDate()}`
-    // concursoData.finishDate = `${concursoData.finishDate.getFullYear()}-${
-    //   concursoData.finishDate.getMonth() + 1
-    // }-${concursoData.finishDate.getDate()}`
-    // console.log(concursoData)
 
     const formData = new FormData()
 
@@ -34,27 +27,21 @@ function ConcursoForm() {
 
     contestService
       .create(formData)
-      .then((response) => {
+      .then(response => {
         toast.success('Concurso creado exitosamente.')
         navigate('/', { replace: true })
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err)
-        // const { data, status } = err.response
-        // if (Array.isArray(data) && status === 400) {
-        //   setErroresDesdeRespuesta(err.response.data)
-        // } else {
-        //   toast.error(data.message)
-        // }
       })
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems='center'
+        alignItems="center"
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -67,7 +54,7 @@ function ConcursoForm() {
           marginBottom: '50px',
         }}
       >
-        <Typography variant='h2' component='h2' sx={{ marginBottom: '20px' }}>
+        <Typography variant="h2" component="h2" sx={{ marginBottom: '20px' }}>
           Crear Concurso
         </Typography>
 
@@ -76,8 +63,8 @@ function ConcursoForm() {
           onSubmit={handleFormSubmit}
           validationSchema={schema}
           erroresDesdeRespuesta={erroresDesdeRespuesta}
-          submitLabel='Crear Concurso'
-          fieldWidth='10ch'
+          submitLabel="Crear Concurso"
+          fieldWidth="10ch"
           sx={{ width: '100%' }}
         />
       </Stack>
