@@ -143,19 +143,26 @@ function ContestPage() {
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
-            <Select
-              defaultValue="Activo"
-              sx={{
-                minWidth: '130px',
-                backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                }
-              }}
-            >
-              <MenuItem value="Activo">Activo</MenuItem>
-              <MenuItem value="Finalizado">Finalizado</MenuItem>
-            </Select>
+            <FormControl>
+              <InputLabel>Estado</InputLabel>
+              <Select
+                label="Estado"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                sx={{
+                  minWidth: '130px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                  }
+                }}
+              >
+                {" "}
+                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="Activo">Activo</MenuItem>
+                <MenuItem value="Finalizado">Inactivos</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
       </Container>
