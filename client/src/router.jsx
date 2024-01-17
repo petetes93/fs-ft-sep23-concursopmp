@@ -14,7 +14,8 @@ import ConcursoForm from './pages/CrearConcurso/crearconcurso'
 import AddDesingPage from 'pages/AddDesingPage'
 import AdminContestPage from './pages/AdminContestPage'
 import ProtectedRoute from './utils/ProtectedRoute'
-
+import LogoutPage from './pages/LogoutPage'
+import Dashboard from './pages/Dashboard'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
       //   element: <AdminPage />,
       // },
       {
+        path: '/dashboard',
+        element: <Dashboard />,
+      },
+
+      {
         path: '/adminuser',
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
         element: <AdminUserPage />,
@@ -69,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: '/createcontest',
         element: <ConcursoForm />,
+      },
+      {
+        path: '/logout',
+        element: <LogoutPage />,
       },
     ],
   },

@@ -1,44 +1,59 @@
-import { useEffect, useState } from 'react'
-import { Container, Grid, CircularProgress, TextField } from '@mui/material'
-import React from 'react'
-import Card from '@mui/material/Card'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { useContests } from 'hooks'
-import Catalog from 'src/components/Catalog/Catalog'
-import ContestCard from 'src/components/ContestCard/ContestCard'
-import SearchBar from 'src/components/ContestCard/ContestCard'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import SearchIcon from '@mui/icons-material/Search'
+import { useEffect, useState } from "react";
+import {
+  Container,
+  Grid,
+  CircularProgress,
+  TextField,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import React from "react";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { useContests } from "hooks";
+import Catalog from "src/components/Catalog/Catalog";
+import ContestCard from "src/components/ContestCard/ContestCard";
+import SearchBar from "src/components/ContestCard/ContestCard";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import SearchIcon from "@mui/icons-material/Search";
 
 
 function ContestPage() {
-  const { contests, loading } = useContests()
+  const { contests, loading } = useContests();
 
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
 
-  if (loading) return <CircularProgress />
+  if (loading) return <CircularProgress />;
 
-  const filteredContests = contests.filter(contest => {
+  const visibleContests = contests.filter((contest) => !contest.isDeleted);
+
+  const filteredContests = visibleContests.filter((contest) => {
     return (
-      contest &&
-      contest.theme &&
-      contest.theme.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  })
+      (!searchTerm ||
+        contest.theme.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!filterStatus ||
+        (filterStatus === "" && contest.isActive) ||
+        (contest.isActive && filterStatus === "Activo") ||
+        (!contest.isActive && filterStatus === "Finalizado"))
+    );
+  });
+
+  console.log(contests);
 
   return (
     <>
       <Card
         sx={{
-          maxHeight: '400px',
-          maxWidth: '100%',
+          maxHeight: "400px",
+          maxWidth: "100%",
           margin: 0,
-          boxShadow: '0 5px 5px  rgba(0, 0, 0, 0.5)',
-          backgroundColor: '#68A9AB',
-          display: 'flex',
-          flexDirection: 'column',
+          boxShadow: "0 5px 5px  rgba(0, 0, 0, 0.5)",
+          backgroundColor: "#68A9AB",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <div>
@@ -54,18 +69,18 @@ function ContestPage() {
           <Container
             disableGutters
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              height: '100vh',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              height: "100vh",
             }}
           >
             <Typography
               sx={{
-                color: 'white',
-                fontSize: '30px',
-                marginTop: '-360px',
-                marginBottom: '100px',
+                color: "white",
+                fontSize: "30px",
+                marginTop: "-360px",
+                marginBottom: "100px",
                 zIndex: 1,
                 textAlign: 'center',
                 filter: 'drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.5))',
@@ -78,7 +93,7 @@ function ContestPage() {
         </div>
       </Card>
 
-      <Container disableGutters sx={{ marginTop: '50px' }}>
+      <Container disableGutters sx={{ marginTop: "50px" }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             
@@ -165,7 +180,7 @@ function ContestPage() {
       </div>
 
     </>
-  )
+  );
 }
 
-export default ContestPage
+export default ContestPage;

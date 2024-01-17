@@ -22,6 +22,7 @@ import {
   DialogActions,
   Button as MuiButton,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const AdminUserPage = () => {
   const [users, setUsers] = useState([]);
@@ -138,8 +139,8 @@ const AdminUserPage = () => {
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const openDeleteModal = (userId) => {
-    setSelectedUserId(userId);
+  const openDeleteModal = (userID) => {
+    setSelectedUserId(userID);
     setOpenModal(true);
   };
 
@@ -154,14 +155,34 @@ const AdminUserPage = () => {
         <Typography variant="h4" component="h4">
           Lista de Usuarios
         </Typography>
-        <TextField
-          label="Buscar usuarios"
-          variant="outlined"
-          size="medium"
-          sx={{ width: "200px", marginRight: "20px" }}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <Container
+          component="div"
+          maxWidth="md"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <TextField
+            label="Buscar usuarios"
+            variant="outlined"
+            size="medium"
+            sx={{ width: "200px", marginRight: "20px" }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            color="success"
+            component={Link}
+            to="/admincontest"
+          >
+            Ir a Concursos
+          </Button>
+        </Container>
+
         {filteredUsers.map((user) => (
           <Stack
             key={user._id}
