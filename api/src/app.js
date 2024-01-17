@@ -9,5 +9,5 @@ require('./startup/db')()
 require('./startup/routes')(app)
 
 app.listen(port, () => {
-  console.log(`Server is in ${port}`)
+  console.log(`Server is running on ${port}`)
 })
