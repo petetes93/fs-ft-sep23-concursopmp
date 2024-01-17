@@ -138,15 +138,12 @@ const isDeleted = async (req, res) => {
   try {
     const { userID } = req.params;
 
-    // Obtener el usuario actual
     const existingUser = await User.findById(userID);
 
-    // Verificar si isDeleted ya tiene una fecha asignada
     const updateFields = {
       isDeleted: existingUser.isDeleted ? null : new Date(),
     };
 
-    // Actualizar el usuario con los nuevos campos
     const updatedUser = await User.findByIdAndUpdate(userID, updateFields, {
       new: true,
     });

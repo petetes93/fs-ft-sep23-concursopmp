@@ -34,7 +34,17 @@ const getById = async (req, res) => {
   const design = await Design.findById(designId)
     .populate('voteRegister')
     .populate('author', '-password -_id -email -isAdmin -__v')
-    .populate('commentRegister')
+    .populate({
+      path: 'commentRegister',
+      populate: {
+        path: 'user',
+        select: '-password -_id -email -isAdmin -__v',
+      },
+    })
+    .populate({
+      path: 'contest',
+      select: 'isActive',
+    })
   if (!design) {
     return res.status(404).json({ message: 'No se encuentra el diseño' })
   }

@@ -21,7 +21,7 @@ function Dashboard() {
             size="large"
             sx={{ width: "300px", height: "100px" }}
             component={Link}
-            to="/usuarios"
+            to="/adminuser"
           >
             Usuarios
           </Button>
@@ -31,7 +31,7 @@ function Dashboard() {
             size="large"
             sx={{ width: "300px", height: "100px" }}
             component={Link}
-            to="/concursos"
+            to="/admincontest"
           >
             Concursos
           </Button>

@@ -37,7 +37,27 @@ function Form({
     >
       {inputs.map(({ name, type, label, ...rest }) => {
         const Input = fields[type] || fields.input
-
+        if (type === 'file') {
+          return (
+            <Controller
+              key={name}
+              name={name}
+              control={control}
+              render={({ field: { onChange, value, ...field } }) => {
+                return (
+                  <Input
+                    {...field}
+                    {...rest}
+                    value={value?.fileName}
+                    type={type}
+                    errors={errors[name]}
+                    onChange={(e) => onChange(e.target.files[0])}
+                  />
+                )
+              }}
+            />
+          )
+        }
         return (
           <Stack key={name} spacing={1}>
             <Typography variant='subtitle1'>{label}</Typography>

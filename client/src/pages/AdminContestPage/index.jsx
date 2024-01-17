@@ -18,6 +18,8 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
+import contestService from "../../services/contest-service";
+import { Link } from "react-router-dom";
 
 function AdminContestPage() {
   const [contests, setContests] = useState([]);
@@ -45,18 +47,9 @@ function AdminContestPage() {
   };
 
   const confirmSuspendContest = () => {
-    axios
-      .put(`http://localhost:3000/api/contest/delete/${selectedContestId}`)
-      .then((response) => {
-        setContests(
-          contests.map((contest) =>
-            contest._id === selectedContestId
-              ? { ...contest, isDeleted: new Date() }
-              : contest
-          )
-        );
-        toast.success("Concurso desactivado correctamente");
-      })
+    contestService
+      .desactivate(selectedContestId)
+      .then(() => toast.success("Concurso inhabilitado"))
       .catch((error) => {
         console.error("Error al desactivar el concurso", error);
         toast.error("Error al desactivar el concurso");
@@ -105,6 +98,14 @@ function AdminContestPage() {
             sx={{ backgroundColor: "#b05f5f" }}
           >
             Añadir concurso
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            component={Link}
+            to="/adminuser"
+          >
+            Ir a Usuarios
           </Button>
         </Stack>
         {/* Mapea tus datos de concursos filtrados aquí */}

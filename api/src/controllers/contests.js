@@ -1,68 +1,68 @@
-const { Contest } = require("../models/contest");
+const { Contest } = require('../models/contest')
 
 const getAll = (req, res, next) => {
-  const { theme } = req.query;
+  const { theme } = req.query
 
-  const query = theme ? { theme } : {};
+  const query = theme ? { theme } : {}
 
   Contest.find(query)
-    .then((contests) => {
-      res.json(contests);
+    .then(contests => {
+      res.json(contests)
     })
-    .catch((error) => {
-      next(error);
-    });
-};
+    .catch(error => {
+      next(error)
+    })
+}
 
 const getOne = async (req, res) => {
-  const { contestId } = req.params;
+  const { contestId } = req.params
 
-  const contest = await Contest.findById(contestId);
+  const contest = await Contest.findById(contestId)
   if (!contest) {
-    return res.status(404).json({ message: "concurso no encontrado" });
+    return res.status(404).json({ message: 'concurso no encontrado' })
   }
 
-  res.json(contest);
-};
+  res.json(contest)
+}
 
 const create = async (req, res) => {
-  const { path: image, filename: imageCloudinaryId } = req.file;
+  const { path: image, filename: imageCloudinaryId } = req.file
 
   const newcontest = await Contest.create({
     ...req.body,
     image,
     imageCloudinaryId,
     creationDate: new Date(),
-  });
-  res.json(newcontest);
-};
+  })
+  res.json(newcontest)
+}
 
 const update = async (req, res) => {
-  const { contestId } = req.params;
+  const { contestId } = req.params
 
-  const { path: image, filename: imageCloudinaryId } = req.file;
+  const { path: image, filename: imageCloudinaryId } = req.file
 
   const updates = {
     ...req.body,
     image,
     imageCloudinaryId,
     lastModification: new Date(),
-  };
-  const oldcontest = await Contest.findByIdAndUpdate(contestId, updates);
-  if (!oldcontest) {
-    return res.status(404).json({ message: "concurso no encontrado" });
   }
-  const updatedcontest = { contestId, ...updates };
+  const oldcontest = await Contest.findByIdAndUpdate(contestId, updates)
+  if (!oldcontest) {
+    return res.status(404).json({ message: 'concurso no encontrado' })
+  }
+  const updatedcontest = { contestId, ...updates }
 
   await cloudinary.uploader.destroy(updatedcontest.imageCloudinaryId, {
     invalidate: true,
-  });
+  })
 
-  res.json(updatedcontest);
-};
+  res.json(updatedcontest)
+}
 
 const activate = async (req, res, next) => {
-  const currentDate = new Date();
+  const currentDate = new Date()
 
   const activation = await Contest.updateMany(
     {
@@ -77,7 +77,7 @@ const activate = async (req, res, next) => {
       ],
     },
     { $set: { isActive: false } }
-  );
+  )
 
   const desactivation = await Contest.updateMany(
     {
@@ -90,37 +90,37 @@ const activate = async (req, res, next) => {
       ],
     },
     { $set: { isActive: true } }
-  );
+  )
   if (!activation && !desactivation) {
     return res
       .status(404)
-      .json({ message: "No se han actualizado correctamente los concursos" });
+      .json({ message: 'No se han actualizado correctamente los concursos' })
   }
 
   res.status(200).json({
     success: true,
-    message: "Se han actualizado correctamente los concursos.",
-  });
-};
+    message: 'Se han actualizado correctamente los concursos.',
+  })
+}
 
 const hideContest = async (req, res) => {
   try {
-    const { contestId } = req.params;
+    const { contestId } = req.params
 
-    const contest = await Contest.findById(contestId);
+    const contest = await Contest.findById(contestId)
     if (!contest) {
-      return res.status(404).json({ error: "No se encuentra el concurso" });
+      return res.status(404).json({ error: 'No se encuentra el comentario' })
     }
 
-    contest.isDeleted = new Date();
-    await contest.save();
+    contest.isDeleted = new Date()
+    await contest.save()
 
-    res.json(contest);
+    res.json(contest)
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al deshabilitar el concurso" });
+    console.error(error)
+    res.status(500).json({ error: 'Error al deshabilitar el concurso' })
   }
-};
+}
 
 module.exports = {
   getAll,
@@ -129,4 +129,4 @@ module.exports = {
   update,
   activate,
   hideContest,
-};
+}

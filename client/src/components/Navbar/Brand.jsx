@@ -15,7 +15,7 @@ function Brand() {
           margin: "0 auto", // Center the container horizontally
         }}
       >
-        <a href="https://www.pampling.com/">
+        <a href="/">
           <img
             src="https://www.pampling.com//img/newfront/logo-21-es-png@2x.svg"
             alt="Pampling Logo"
@@ -24,22 +24,6 @@ function Brand() {
           />
         </a>
       </Grid>
-      {/* <Typography
-        variant="h6"
-        noWrap
-        component={NavLink}
-        sx={{
-          mr: 2,
-          display: { xs: "none", md: "flex" },
-          fontFamily: "poppins",
-          fontWeight: 700,
-          letterSpacing: ".1rem",
-          color: "inherit",
-          textDecoration: "none",
-        }}
-      >
-        Pampling
-      </Typography> */}
     </>
   );
 }
