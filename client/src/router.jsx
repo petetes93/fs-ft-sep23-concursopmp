@@ -58,6 +58,11 @@ const router = createBrowserRouter([
       //   element: <AdminPage />,
       // },
       {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+
+      {
         path: "/adminuser",
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
         element: <AdminUserPage />,
