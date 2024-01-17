@@ -94,6 +94,8 @@ function AdminContestPage() {
           <Button
             variant="contained"
             color="primary"
+            component={Link}
+            to="/createcontest"
             startIcon={<AccountBoxIcon />}
             sx={{ backgroundColor: "#b05f5f" }}
           >

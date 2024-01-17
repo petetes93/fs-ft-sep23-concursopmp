@@ -53,10 +53,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
       },
-      {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
+
       {
         path: "/adminuser",
         // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
