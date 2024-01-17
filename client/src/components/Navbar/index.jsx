@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -11,11 +11,10 @@ import {
   Menu,
   MenuItem,
   Button,
-  Tooltip,
-  Popover,
 } from "@mui/material";
 
-// import { Menu, CollapseMenu } from "../../components";
+import { CollapseMenu } from "../../components";
+import { useAuth } from "hooks";
 
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -23,6 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Brand from "./Brand";
 
 function Navbar() {
+  const [user] = useAuth();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -33,19 +33,14 @@ function Navbar() {
     setAnchorElNav(null);
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
   const pages = ["Shop", "Liquidacion", "diseñadores", "Comunidad", "Tiendas"];
+
+  const optionsUserMenu = user.auth
+    ? [{ label: "Logout", to: "/logout" }]
+    : [
+        { label: "Login", to: "/login" },
+        { label: "Register", to: "/register" },
+      ];
 
   return (
     <AppBar
@@ -61,21 +56,7 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Brand />
-          {/* <Box>
-            <Button
-              sx={{
-                fontFamily: "helvetica",
-                color: "grey",
 
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-            >
-              Concursos
-            </Button>
-            asasaq
-          </Box> */}
           <Box
             sx={{
               flexGrow: 1,
@@ -179,44 +160,28 @@ function Navbar() {
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
               >
-                <Link to="./login">
+                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                   <Button
-                    color="secondary"
+                    variant="secondary"
                     sx={{
-                      backgroundColor: "transparent",
-
-                      fontWeight: "bold",
+                      borderRadius: "50px",
                       boxShadow: "none",
-                      width: "15rem",
-                      margin: "auto",
+                      height: 50,
+                      ml: 10,
                     }}
+                    onClick={handleOpenUserMenu}
                   >
-                    Login
+                    <PersonRoundedIcon
+                      fontSize="medium"
+                      sx={{
+                        color: "black",
+                        "&:hover": {
+                          color: "#2bd0d0",
+                        },
+                      }}
+                    />
                   </Button>
-                </Link>
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  backgroundColor: "white",
-                }}
-                className="blockMenu"
-                onClick={handleCloseNavMenu}
-              >
-                <Link to="./register">
-                  <Button
-                    color="secondary"
-                    sx={{
-                      backgroundColor: "transparent",
-
-                      fontWeight: "bold",
-                      boxShadow: "none",
-                      width: "15rem",
-                      margin: "auto",
-                    }}
-                  >
-                    Register
-                  </Button>
-                </Link>
+                </Box>
               </MenuItem>
             </Menu>
           </Box>
@@ -274,16 +239,23 @@ function Navbar() {
               display: { xs: "none", md: "flex", lg: "flex", xl: "flex" },
             }}
           >
+            <span
+              style={{
+                marginRight: "10px",
+                marginTop: "0.5rem",
+                color: "black",
+              }}
+            >
+              {user ? `Hola, ${user.username}` : "Hola, Invitado"}
+            </span>
             <Button
               variant="secondary"
               sx={{
                 borderRadius: "50px",
-
                 boxShadow: "none",
-
                 height: 50,
               }}
-              onClick={handleClick}
+              onClick={handleOpenUserMenu}
             >
               <PersonRoundedIcon
                 fontSize="large"
@@ -295,31 +267,12 @@ function Navbar() {
                 }}
               />
             </Button>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-            >
-              <div>
-                <Link to="./login">
-                  <Button onClick={handleClose}>Login</Button>
-                </Link>
-              </div>
-              <div>
-                <Link to="./register">
-                  <Button onClick={handleClose}>Register</Button>
-                </Link>
-              </div>
-            </Popover>
+
+            <CollapseMenu
+              anchor={anchorElUser}
+              onClose={() => setAnchorElUser(null)}
+              options={optionsUserMenu}
+            />
           </Box>
         </Toolbar>
       </Container>
