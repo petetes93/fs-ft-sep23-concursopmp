@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Button, Stack, TextField } from '@mui/material'
+import { Button, Stack, TextField, Typography } from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -14,7 +14,7 @@ function Form({
   defaultValues = {},
 }) {
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     setError,
@@ -35,19 +35,38 @@ function Form({
       onSubmit={handleSubmit((data) => onSubmit(data, { setError, reset }))}
       spacing={5}
     >
-      {inputs.map(({ name, type, ...rest }) => {
+      {inputs.map(({ name, type, label, ...rest }) => {
         const Input = fields[type] || fields.input
-
-        const { ref, ...registerProps } = register(name)
-
+        if (type === 'file') {
+          return (
+            <Controller
+              key={name}
+              name={name}
+              control={control}
+              render={({ field: { onChange, value, ...field } }) => {
+                return (
+                  <Input
+                    {...field}
+                    {...rest}
+                    value={value?.fileName}
+                    type={type}
+                    errors={errors[name]}
+                    onChange={(e) => onChange(e.target.files[0])}
+                  />
+                )
+              }}
+            />
+          )
+        }
         return (
-          <Input
-            type={type}
-            errors={errors[name]}
-            inputRef={ref}
-            {...registerProps}
-            {...rest}
-          />
+          <Stack key={name} spacing={1}>
+            <Typography variant='subtitle1'>{label}</Typography>
+            <Controller
+              control={control}
+              name={name}
+              render={({ field }) => <Input type={type} {...field} {...rest} />}
+            />
+          </Stack>
         )
       })}
 
@@ -55,4 +74,5 @@ function Form({
     </Stack>
   )
 }
+
 export default Form

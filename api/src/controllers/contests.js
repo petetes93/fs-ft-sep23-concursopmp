@@ -6,10 +6,10 @@ const getAll = (req, res, next) => {
   const query = theme ? { theme } : {}
 
   Contest.find(query)
-    .then((contests) => {
+    .then(contests => {
       res.json(contests)
     })
-    .catch((error) => {
+    .catch(error => {
       next(error)
     })
 }
@@ -118,7 +118,7 @@ const hideContest = async (req, res) => {
     res.json(contest)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ error: 'Error al deshabilitar el comentario' })
+    res.status(500).json({ error: 'Error al deshabilitar el concurso' })
   }
 }
 
