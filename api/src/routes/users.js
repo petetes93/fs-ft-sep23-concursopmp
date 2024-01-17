@@ -19,7 +19,7 @@ router.get("/:userID", userController.getOneUser);
 router.put("/delete/:userID", userController.isDeleted);
 
 // Añadir auth, admin
-router.put("/:userID", userController.updateUser);
+router.put("/:userID", auth, admin, userController.updateUser);
 
 // Añadir auth, admin
 router.delete("/:userID", userController.deleteUser);

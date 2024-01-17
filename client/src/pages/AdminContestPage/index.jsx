@@ -20,13 +20,11 @@ import {
 } from "@mui/material";
 import contestService from "../../services/contest-service";
 import { Link } from "react-router-dom";
-
 function AdminContestPage() {
   const [contests, setContests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [selectedContestId, setSelectedContestId] = useState(null);
-
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/contest")
@@ -37,19 +35,25 @@ function AdminContestPage() {
         console.error("Error fetching contests:", error);
       });
   }, []);
-
   const filteredContests = contests.filter((contest) =>
     contest.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
   const suspendContest = (contestId) => {
     openDeleteModal(contestId);
   };
-
   const confirmSuspendContest = () => {
     contestService
       .desactivate(selectedContestId)
-      .then(() => toast.success("Concurso inhabilitado"))
+      .then(() => {
+        toast.success("Concurso inhabilitado");
+        setContests((prevContests) =>
+          prevContests.map((contest) =>
+            contest._id === selectedContestId
+              ? { ...contest, isDeleted: new Date() }
+              : contest
+          )
+        );
+      })
       .catch((error) => {
         console.error("Error al desactivar el concurso", error);
         toast.error("Error al desactivar el concurso");
@@ -58,19 +62,16 @@ function AdminContestPage() {
         closeDeleteModal();
       });
   };
-
   const openDeleteModal = (contestId) => {
     setSelectedContestId(contestId);
     setOpenModal(true);
   };
-
   const closeDeleteModal = () => {
     setSelectedContestId(null);
     setOpenModal(false);
   };
-
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="md" sx={{marginTop:'40px', marginBottom:'40px'}}>
       <Stack spacing={3} alignItems="center">
         <Typography variant="h4" component="h4">
           Lista de Concursos
@@ -86,7 +87,11 @@ function AdminContestPage() {
               label="Buscar concursos"
               variant="outlined"
               size="medium"
-              sx={{ width: "200px", marginRight: "20px" }}
+              sx={{
+                backgroundColor:'white',
+                width: "200px",
+                marginRight: "20px",
+              }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -97,7 +102,7 @@ function AdminContestPage() {
             component={Link}
             to="/createcontest"
             startIcon={<AccountBoxIcon />}
-            sx={{ backgroundColor: "#b05f5f" }}
+            sx={{ backgroundColor: "#616A6B" }}
           >
             Añadir concurso
           </Button>
@@ -106,11 +111,11 @@ function AdminContestPage() {
             color="success"
             component={Link}
             to="/adminuser"
+            sx={{ backgroundColor: "#D7DBDD" }}
           >
             Ir a Usuarios
           </Button>
         </Stack>
-        {/* Mapea tus datos de concursos filtrados aquí */}
         {filteredContests.map((contest) => (
           <Stack
             key={contest._id}
@@ -123,27 +128,43 @@ function AdminContestPage() {
               borderRadius: "5px",
               padding: "10px",
               width: "100%",
+              backgroundColor: "white",
             }}
           >
             <Typography variant="body1">Concurso: {contest.name}</Typography>
-            <Stack direction="row" spacing={1}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AccountBoxIcon />}
-                sx={{ fontSize: "0.8rem" }}
-              >
-                Editar concurso
-              </Button>
-              <IconButton
-                color="error"
-                aria-label="delete"
-                sx={{ fontSize: "1rem" }}
-                onClick={() => suspendContest(contest._id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Stack>
+            {contest.isDeleted ? (
+              <TextField
+                variant="outlined"
+                size="medium"
+                value="Concurso desactivado"
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{
+                  backgroundColor: "#F0F0F0",
+                  width: "150px",
+                }}
+              />
+            ) : (
+              <Stack direction="row" spacing={1}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AccountBoxIcon />}
+                  sx={{ fontSize: "0.8rem", backgroundColor: "#34495E" }}
+                >
+                  Editar concurso
+                </Button>
+                <IconButton
+                  color="error"
+                  aria-label="delete"
+                  sx={{ fontSize: "1rem" }}
+                  onClick={() => suspendContest(contest._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
+            )}
           </Stack>
         ))}
         <Dialog open={openModal} onClose={closeDeleteModal}>
@@ -164,5 +185,4 @@ function AdminContestPage() {
     </Container>
   );
 }
-
 export default AdminContestPage;

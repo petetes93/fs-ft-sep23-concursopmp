@@ -23,13 +23,11 @@ import {
   Button as MuiButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-
 const AdminUserPage = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
-
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/user")
@@ -40,7 +38,6 @@ const AdminUserPage = () => {
         console.error("Error fetching users:", error);
       });
   }, []);
-
   const makeAdmin = (userID) => {
     axios
       .put(`http://localhost:3000/api/user/${userID}`, { isAdmin: true })
@@ -50,7 +47,6 @@ const AdminUserPage = () => {
             user._id === userID ? { ...user, isAdmin: true } : user
           )
         );
-
         toast.success("Usuario convertido en administrador");
       })
       .catch((error) => {
@@ -58,7 +54,6 @@ const AdminUserPage = () => {
         toast.error("Error al convertir a usuario en administrador");
       });
   };
-
   const removeAdmin = (userID) => {
     axios
       .put(`http://localhost:3000/api/user/${userID}`, { isAdmin: false })
@@ -68,7 +63,6 @@ const AdminUserPage = () => {
             user._id === userID ? { ...user, isAdmin: false } : user
           )
         );
-
         toast.success("El usuario ya no es administrador");
       })
       .catch((error) => {
@@ -76,12 +70,10 @@ const AdminUserPage = () => {
         toast.error("Error al quitar privilegios de administrador");
       });
   };
-
   const toggleAccountStatus = (userID, isDeleted) => {
     const action = isDeleted ? activateAccount : suspendAccount;
     action(userID);
   };
-
   const suspendAccount = (userID) => {
     axios
       .put(`http://localhost:3000/api/user/delete/${userID}`)
@@ -98,7 +90,6 @@ const AdminUserPage = () => {
         toast.error("Error al desactivar al usuario");
       });
   };
-
   const activateAccount = (userID) => {
     axios
       .put(`http://localhost:3000/api/user/delete/${userID}`)
@@ -115,11 +106,9 @@ const AdminUserPage = () => {
         toast.error("Error al activar al usuario");
       });
   };
-
   const deleteUser = (userID) => {
     openDeleteModal(userID);
   };
-
   const confirmDeleteUser = () => {
     axios
       .delete(`http://localhost:3000/api/user/${selectedUserId}`)
@@ -134,23 +123,19 @@ const AdminUserPage = () => {
         closeDeleteModal();
       });
   };
-
   const filteredUsers = users.filter((user) =>
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
   const openDeleteModal = (userID) => {
     setSelectedUserId(userID);
     setOpenModal(true);
   };
-
   const closeDeleteModal = () => {
     setSelectedUserId(null);
     setOpenModal(false);
   };
-
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="md" sx={{marginTop:'40px', marginBottom:'40px'}}>
       <Stack spacing={3} alignItems="center">
         <Typography variant="h4" component="h4">
           Lista de Usuarios
@@ -169,7 +154,11 @@ const AdminUserPage = () => {
             label="Buscar usuarios"
             variant="outlined"
             size="medium"
-            sx={{ width: "200px", marginRight: "20px" }}
+            sx={{
+              backgroundColor:'white',
+              width: "200px",
+              marginRight: "20px"
+            }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -178,11 +167,11 @@ const AdminUserPage = () => {
             color="success"
             component={Link}
             to="/admincontest"
+            sx={{ backgroundColor: "#D7DBDD" }}
           >
             Ir a Concursos
           </Button>
         </Container>
-
         {filteredUsers.map((user) => (
           <Stack
             key={user._id}
@@ -195,6 +184,7 @@ const AdminUserPage = () => {
               borderRadius: "5px",
               padding: "10px",
               width: "100%",
+              backgroundColor: "white",
             }}
           >
             <Typography variant="body1">
@@ -260,5 +250,4 @@ const AdminUserPage = () => {
     </Container>
   );
 };
-
 export default AdminUserPage;

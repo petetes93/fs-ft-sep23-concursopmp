@@ -79,7 +79,7 @@ function ContestPage() {
               sx={{
                 color: "white",
                 fontSize: "30px",
-                marginTop: "-360px",
+                marginTop: "-400px",
                 marginBottom: "100px",
                 zIndex: 1,
                 textAlign: 'center',
@@ -97,7 +97,8 @@ function ContestPage() {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom:'100px'
+}}>
             <TextField
               label="Buscar temática"
               variant="outlined"
@@ -117,15 +118,15 @@ function ContestPage() {
                 },
                 '& legend': { display: 'none' },
                 '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.1s ease-in" },
-                backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                borderRadius: '20px',
+                backgroundColor: '#FDFDFD',
+                borderRadius: '12px',
                 outline: 'none',
                 width: '700px',
                 height: '40px',
                 marginBottom: '',
+                boxShadow: 'inset 0 0 0 1px black',
                 '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                  boxShadow: 'inset 0 0 0 2px white'
+                  boxShadow: 'inset 0 0 0 1.5px black'
                 },
               }}
             />
@@ -136,6 +137,7 @@ function ContestPage() {
                 marginLeft: '-30px',
                 alignSelf: 'center',
                 paddingRight: '5px',
+                zIndex:1
               }}
             />
           </div>
@@ -150,11 +152,11 @@ function ContestPage() {
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
                 sx={{
+                  marginRight:'10px',
                   minWidth: '130px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                  }
+                  backgroundColor: 'white',
+
+                  
                 }}
               >
                 {" "}
@@ -169,23 +171,19 @@ function ContestPage() {
 
       <div
         style={{
-
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: '40px',
+          gridTemplateColumns: `repeat(auto-fill, minmax(345px, 1fr))`,
+          gap: '20px',
           marginLeft: '20px',
-          marginRight: '20px',
-          justifyContent: 'center',
           alignItems: 'center',
-          marginTop: '50px',
-          marginBottom: '100px',
         }}
       >
-        {filteredContests.map(contest => {
-          return <ContestCard key={contest._id} contest={contest} />;
-        })}
+        {filteredContests.map((contest, index) => (
+          <div key={contest._id}>
+            <ContestCard contest={contest} />
+          </div>
+        ))}
       </div>
-
     </>
   );
 }
