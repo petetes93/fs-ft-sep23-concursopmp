@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Divider } from "@mui/material";
+import { Divider, Container } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,32 +20,38 @@ function ProductCard({ design }) {
         backgroundColor: '#68A9AB',
       }}
     >
-      <div>
         <Link to={`/design/${_id}`}>
-          <CardMedia component="img" alt={title} height="300" image={image} />
+        <Container disableGutters sx={{width:'100%'}}>
+          <CardMedia 
+            component="img"
+            height="300" 
+            image={image}
+            sx={{ width: '100%'}}
+          />
+          </Container>
         </Link>
-      </div>
 
       <CardContent
         sx={{
-          //color: 'white',
+          color: 'white',
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "flex-end",
         }}
       >
-        <Link to={`/design/${_id}`}>
+        
           <div>
+          <Link to={`/design/${_id}`}>
             <div style={{ textDecoration: "none", color: "inherit" }}>
               <Typography
                 sx={{
                   fontSize: "30px",
-                  marginBottom: "15px",
+                  marginBottom: "20px",
                 }}
               >
                 {title}
               </Typography>
             </div>
+          </Link>
 
             <Typography
               variant="body2"
@@ -57,18 +63,6 @@ function ProductCard({ design }) {
               <ThumbUpAltIcon />
             </Typography>
           </div>
-        </Link>
-
-        {/*   <Typography
-          variant="body2"
-          sx={{
-            fontSize: '14px',
-            margin: '5px',
-            fontFamily: 'Montserrat, sans-serif',
-          }}
-        >
-          2024-01-09
-        </Typography> */}
       </CardContent>
 
       <Divider
@@ -77,17 +71,19 @@ function ProductCard({ design }) {
           opacity: '0.2',
           width: '90%',
           marginLeft: '15px',
+          marginTop: '15px',
         }}
       />
+
       <div>
         <Typography
           variant="body2"
           sx={{
-            fontSize: "14px",
-            marginBottom: "10px",
-            fontFamily: "Montserrat, sans-serif",
+            fontSize: '14px',
+            marginBottom: '10px',
+            fontFamily: 'Montserrat, sans-serif',
+            textAlign: 'center',
             marginTop: "10px",
-            textAlign: "center",
           }}
         >
           {author.username}

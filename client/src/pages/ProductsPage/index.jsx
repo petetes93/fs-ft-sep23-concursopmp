@@ -19,6 +19,8 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import { useDesigns, useContest } from 'hooks'
 import AddIcon from '@mui/icons-material/Add'
+import SearchIcon from '@mui/icons-material/Search'
+
 
 function ProductsPage() {
   const { contestId } = useParams()
@@ -76,6 +78,7 @@ function ProductsPage() {
                 marginTop: '-170px',
                 marginBottom: '100px',
                 zIndex: 1,
+                filter: 'drop-shadow(0px 5px 5px rgba(0, 0, 0, 1))',
               }}
             >
               {contest.name}
@@ -87,33 +90,48 @@ function ProductsPage() {
       <Container disableGutters sx={{ marginTop: '50px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <TextField
-              label="Buscar por autor"
-              autoComplete="off"
+              label="Buscar autor"
               variant="outlined"
               value={searchAuthor}
               onChange={e => setSearchAuthor(e.target.value)}
               sx={{
+                '& label': {
+                  marginTop:'-7px'
+                },
+                  marginLeft:'10px',
                 '& input': {
                   color: 'black',
-                  height: '100%',
+                  height: '10px',
                 },
                 '& fieldset': {
                   border: 'none',
                 },
+                '& legend': { display: 'none' },
+                '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.1s ease-in" },
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 borderRadius: '20px',
                 outline: 'none',
                 width: '700px',
                 height: '40px',
-                lineHeight: '60px',
-                display: 'flex',
-                justifyContent: 'center',
+                marginBottom: '',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                  boxShadow: 'inset 0 0 0 2px white'
                 },
               }}
             />
+            <SearchIcon
+              sx={{
+                fontSize:'25px',
+                color: 'black',
+                marginLeft: '-30px',
+                alignSelf: 'center',
+                paddingRight: '5px',
+              }}
+            />
+          </div>
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
@@ -123,7 +141,6 @@ function ProductsPage() {
                 startIcon={<AddIcon />}
                 sx={{
                   marginLeft: '15px',
-                  marginTop: '10px',
                 }}
               >
                 Añadir diseño

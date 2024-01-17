@@ -1,16 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
+import React from 'react';
+import { Container, Divider } from '@mui/material';
+import { Link } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
 
 function ContestCard({ contest }) {
-  const { name, image, _id } = contest
+  const { name, image, _id, theme } = contest;
+
+
+  const truncatedName = name.length > 13 ? `${name.slice(0, 40)}...` : name;
+
   return (
     <Card
       sx={{
-        maxHeight: 600,
+        height: 400,
         width: 345,
         boxShadow: '0 10px 10px rgba(0, 0, 0, 0.5)',
         backgroundColor: '#68A9AB',
@@ -19,11 +24,16 @@ function ContestCard({ contest }) {
         justifyContent: 'center',
       }}
     >
-      <div>
-        <Link to={`/contest/${_id}`}>
-          <CardMedia component="img" height="300" image={image} />
-        </Link>
-      </div>
+      <Link to={`/contest/${_id}`}>
+        <Container disableGutters sx={{width:'100%', height:'50%'}}>
+          <CardMedia 
+            component="img"
+            height="200" 
+            image={image}
+            sx={{ width: '100%'}}
+          />
+        </Container>
+      </Link>
 
       <CardContent
         sx={{
@@ -32,6 +42,7 @@ function ContestCard({ contest }) {
           justifyContent: 'center',
           alignItems: 'center',
           color: 'white',
+          height:'50%'
         }}
       >
         <Link to={`/contest/${_id}`}>
@@ -45,8 +56,33 @@ function ContestCard({ contest }) {
           </Typography>
         </Link>
       </CardContent>
+
+      <Divider
+        style={{
+          backgroundColor: 'black',
+          opacity: '0.2',
+          width: '90%',
+          marginLeft: '15px',
+          marginTop: '15px',
+        }}
+      />
+
+      <div>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: '14px',
+            marginBottom: '10px',
+            fontFamily: 'Montserrat, sans-serif',
+            textAlign: 'center',
+            marginTop: "10px",
+          }}
+        >
+          {theme}
+        </Typography>
+      </div>
     </Card>
-  )
+  );
 }
 
-export default ContestCard
+export default ContestCard;
