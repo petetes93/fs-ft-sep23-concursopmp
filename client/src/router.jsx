@@ -6,6 +6,14 @@ import ProductsPage from "./pages/ProductsPage";
 import ContestPage from "./pages/ContestPage";
 import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import ErrorPage from "pages/ErrorPage";
+import RootLayout from "layouts/RootLayout";
+import ProductsPage from "./pages/ProductsPage";
+import ContestPage from "./pages/ContestPage";
+import LoginPage from "pages/LoginPage";
+import RegisterPage from "pages/RegisterPage";
 // import AdminPage from "./pages/AdminPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import DetailsPage from "./pages/DetailPage";
@@ -14,7 +22,7 @@ import ConcursoForm from "./pages/CrearConcurso/crearconcurso";
 import AddDesingPage from "pages/AddDesingPage";
 import AdminContestPage from "./pages/AdminContestPage";
 import ProtectedRoute from "./utils/ProtectedRoute";
-
+import LogoutPage from "./pages/LogoutPage";
 import Dashboard from "./pages/Dashboard";
 const router = createBrowserRouter([
   {
@@ -75,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: "/createcontest",
         element: <ConcursoForm />,
+      },
+      {
+        path: "/logout",
+        element: <LogoutPage />,
       },
     ],
   },
