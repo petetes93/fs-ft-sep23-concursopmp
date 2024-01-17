@@ -12,7 +12,8 @@ import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import ConcursoForm from './pages/CrearConcurso/crearconcurso'
 import EditarConcurso from './pages/EditarConcurso/EditarConcurso'
-import AddDesingPage from 'pages/AddDesingPage'
+
+import AddDesignPage from 'pages/AddDesignPage'
 import AdminContestPage from './pages/AdminContestPage'
 import ProtectedRoute from './utils/ProtectedRoute'
 import LogoutPage from './pages/LogoutPage'
@@ -32,8 +33,8 @@ const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
-        path: '/product/add_desing',
-        element: <AddDesingPage />,
+        path: '/product/add_desing/:contestId',
+        element: <AddDesignPage />,
       },
       {
         path: '/login',

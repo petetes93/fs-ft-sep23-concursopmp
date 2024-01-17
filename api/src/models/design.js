@@ -24,6 +24,9 @@ const designValidationSchema = [
     .notEmpty()
     .isString()
     .withMessage('Se necesita un título para el diseño'),
+  body('description')
+    .isString()
+    .withMessage('Se necesita una descripción para el diseño'),
 ]
 
 const TYPES = {
