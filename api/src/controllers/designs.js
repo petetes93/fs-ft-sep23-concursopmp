@@ -12,8 +12,6 @@ const getAll = async (req, res) => {
       query.author = author
     }
 
-    console.log(query)
-
     const designs = await Design.find(query)
       .populate('voteRegister', '-votedDesign')
       .populate('author', '-password -_id -email -isAdmin -__v')

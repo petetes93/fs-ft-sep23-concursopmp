@@ -8,8 +8,14 @@ console.log('DESDE CONTEXTO:', user)
 const initialValues = !user
   ? { auth: false }
   : user.isAdmin
-  ? { auth: true, admin: true, username: user.username, id: user.id }
-  : { auth: true, username: user.username, id: user.id }
+  ? {
+      auth: true,
+      admin: true,
+      username: user.username,
+      id: user.id,
+      email: user.email,
+    }
+  : { auth: true, username: user.username, id: user.id, email: user.email }
 
 const AuthContext = createContext(initialValues)
 AuthContext.displayName = 'AuthContext'
@@ -20,6 +26,7 @@ function reducer(state, action) {
       return {
         auth: true,
         admin: true,
+        email: action.email,
         username: action.username,
         id: action.id,
       }
@@ -28,6 +35,7 @@ function reducer(state, action) {
       return {
         auth: true,
         admin: true,
+        email: action.email,
         username: action.username,
         id: action.id,
       }
