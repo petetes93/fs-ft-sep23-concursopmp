@@ -7,10 +7,10 @@ const getAll = (req, res, next) => {
   const query = theme ? { theme } : {}
 
   Contest.find(query)
-    .then(contests => {
+    .then((contests) => {
       res.json(contests)
     })
-    .catch(error => {
+    .catch((error) => {
       next(error)
     })
 }
@@ -56,6 +56,7 @@ const update = async (req, res) => {
   }
   const updatedcontest = { contestId, ...updates }
 
+  await cloudinary.uploader.destroy(oldcontest.imageCloudinaryId, {
   await cloudinary.uploader.destroy(oldcontest.imageCloudinaryId, {
     invalidate: true,
   })

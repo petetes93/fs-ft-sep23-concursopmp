@@ -12,7 +12,7 @@ function ConcursoForm() {
   const [, dispatch] = useAuth()
   const [erroresDesdeRespuesta, setErroresDesdeRespuesta] = useState([])
 
-  const handleFormSubmit = concursoData => {
+  const handleFormSubmit = (concursoData) => {
     console.log(concursoData)
 
     const formData = new FormData()
@@ -27,21 +27,21 @@ function ConcursoForm() {
 
     contestService
       .create(formData)
-      .then(response => {
+      .then((response) => {
         toast.success('Concurso creado exitosamente.')
-        navigate('/', { replace: true })
+        navigate('/admincontest', { replace: true })
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
       })
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems="center"
+        alignItems='center'
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -54,7 +54,7 @@ function ConcursoForm() {
           marginBottom: '50px',
         }}
       >
-        <Typography variant="h2" component="h2" sx={{ marginBottom: '20px' }}>
+        <Typography variant='h2' component='h2' sx={{ marginBottom: '20px' }}>
           Crear Concurso
         </Typography>
 
@@ -63,8 +63,8 @@ function ConcursoForm() {
           onSubmit={handleFormSubmit}
           validationSchema={schema}
           erroresDesdeRespuesta={erroresDesdeRespuesta}
-          submitLabel="Crear Concurso"
-          fieldWidth="10ch"
+          submitLabel='Crear Concurso'
+          fieldWidth='10ch'
           sx={{ width: '100%' }}
         />
       </Stack>

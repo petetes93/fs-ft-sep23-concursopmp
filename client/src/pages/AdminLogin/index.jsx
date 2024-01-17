@@ -20,7 +20,7 @@ function LoginAdmin() {
         if (isAdmin) {
           const tipo = 'admin'
 
-          navigate('/', { replace: true })
+          navigate('/Dashboard', { replace: true })
         } else {
           toast.error('No tienes privilegios de administrador.')
         }
