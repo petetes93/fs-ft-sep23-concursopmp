@@ -35,11 +35,11 @@ function LoginAdmin() {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems='center'
+        alignItems="center"
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -58,8 +58,8 @@ function LoginAdmin() {
           },
         }}
       >
-        <Typography variant='h2' component='h2'>
-          Inicio de sesión
+        <Typography variant="h2" component="h2">
+          Panel de Administradores
         </Typography>
 
         <Form
@@ -67,8 +67,8 @@ function LoginAdmin() {
           onSubmit={IniciarSesionAdmin}
           validationSchema={schema}
           erroresDesdeRespuesta={erroresDesdeRespuesta}
-          submitLabel='Enviar'
-          fieldWidth='10ch'
+          submitLabel="Enviar"
+          fieldWidth="10ch"
         />
       </Stack>
     </Container>

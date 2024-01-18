@@ -79,7 +79,8 @@ function ProductsPage() {
             <Typography
               sx={{
                 color: 'white',
-                fontSize: '30px',
+                fontSize: '40px',
+                fontWeight: 600,
                 marginTop: '-170px',
                 marginBottom: '100px',
                 zIndex: 1,
@@ -150,12 +151,24 @@ function ProductsPage() {
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
+            <Button
+              variant="contained"
+              component={Link}
+              to="/"
+              sx={{ backgroundColor: '#D7DBDD', height: '29%', color: 'black' }}
+            >
+              Ir a Concursos
+            </Button>
             <Link to={`/product/add_desing/${contestId}`}>
               <Button
                 aria-label="add"
                 startIcon={<AddIcon />}
                 sx={{
                   marginLeft: '15px',
+                  mr: '40px',
+                  border: 'solid 1px',
+                  backgroundColor: '#FDFDFD',
+                  '&:hover': { backgroundColor: '#FDFDFD' },
                 }}
               >
                 Añadir diseño

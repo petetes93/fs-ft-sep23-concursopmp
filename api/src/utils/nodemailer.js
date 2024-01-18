@@ -16,11 +16,11 @@ const sendEmail = (email, username) => {
     to: `${email}`,
     subject: 'Diseño enviado',
     html: `
-    <b>Hola ${username}!</b> 
+    <b>¡Hola, ${username}!</b> 
     <br>
     <p>Tu diseño ha sido subido con éxito, si los administradores consideran que cumple con los requisitos adecuados será publicado en nuestra web.</p>
     <br>
-    <p>Gracias por participar!.</p>`,
+    <b>!Gracias por participar!</b>`,
   })
 }
 

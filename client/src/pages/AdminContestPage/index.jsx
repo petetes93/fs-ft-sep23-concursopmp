@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContests } from 'hooks'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -21,7 +21,7 @@ import contestService from '../../services/contest-service'
 import 'react-toastify/dist/ReactToastify.css'
 
 function AdminContestPage() {
-  const { contests, loading } = useContests()
+  const { contests, loading, setContests } = useContests()
   const [searchTerm, setSearchTerm] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [selectedContestId, setSelectedContestId] = useState(null)
@@ -37,9 +37,20 @@ function AdminContestPage() {
   }
 
   const confirmSuspendContest = () => {
+    const deactivationDate = new Date()
+
     contestService
       .desactivate(selectedContestId)
-      .then(() => toast.success('Concurso inhabilitado'))
+      .then(() => {
+        const updatedContests = contests.map((contest) => {
+          if (contest._id === selectedContestId) {
+            return { ...contest, isDeleted: deactivationDate }
+          }
+          return contest
+        })
+        setContests(updatedContests)
+        toast.success('Concurso inhabilitado')
+      })
       .catch((error) => {
         console.error('Error al desactivar el concurso', error)
         toast.error('Error al desactivar el concurso')
@@ -129,20 +140,32 @@ function AdminContestPage() {
               <TextField
                 variant="outlined"
                 size="medium"
-                value="Concurso desactivado"
+                value="Desactivado"
                 InputProps={{
                   readOnly: true,
                 }}
                 sx={{
                   backgroundColor: '#F0F0F0',
-                  width: '150px',
+                  width: '125px',
                 }}
               />
             ) : (
               <Stack direction="row" spacing={1}>
+                {' '}
+                <Button
+                  variant="contained"
+                  color="success"
+                  component={Link}
+                  to={`/admindesigns/${contest._id}`}
+                  sx={{ fontSize: '0.8rem' }}
+                >
+                  Ver diseños
+                </Button>
                 <Button
                   variant="contained"
                   color="primary"
+                  component={Link}
+                  to={`/editcontest/${contest._id}`}
                   startIcon={<AccountBoxIcon />}
                   sx={{ fontSize: '0.8rem', backgroundColor: '#34495E' }}
                 >

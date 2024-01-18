@@ -11,7 +11,7 @@ import AdminUserPage from './pages/AdminUserPage'
 import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import CreateContestPage from './pages/CreateContestPage'
-import EditarConcurso from './pages/AdminEditContestPage'
+import AdminEditContest from './pages/AdminEditContestPage'
 import AddDesignPage from 'pages/AddDesignPage'
 import AdminDesignPage from './pages/AdminDesignPage'
 import AdminContestPage from './pages/AdminContestPage'
@@ -92,7 +92,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/editcontest/:contestId',
-        element: <EditarConcurso />,
+        element: <AdminEditContest />,
       },
       {
         path: '/logout',
