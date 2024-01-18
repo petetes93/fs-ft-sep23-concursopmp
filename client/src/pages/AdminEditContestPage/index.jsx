@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import contestService from 'services/contest-service'
 import { useContest } from 'hooks'
 
-function EditarConcurso() {
+function AdminEditContest() {
   const navigate = useNavigate()
   const { contestId } = useParams()
   const { contest, loadingContest } = useContest(contestId)
@@ -60,11 +60,11 @@ function EditarConcurso() {
   // }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems='center'
+        alignItems="center"
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -82,7 +82,7 @@ function EditarConcurso() {
           },
         }}
       >
-        <Typography variant='h2' component='h2' sx={{ marginBottom: '20px' }}>
+        <Typography variant="h2" component="h2" sx={{ marginBottom: '20px' }}>
           Editar concurso
         </Typography>
 
@@ -91,8 +91,8 @@ function EditarConcurso() {
           onSubmit={handleEditContest}
           validationSchema={editSchema}
           errorsFromResponse={errorsFromResponse}
-          submitLabel='Guardar Cambios'
-          fieldWidth='10ch'
+          submitLabel="Guardar Cambios"
+          fieldWidth="10ch"
           defaultValues={defaultValues}
           sx={{ width: '100%' }}
         />
@@ -101,4 +101,4 @@ function EditarConcurso() {
   )
 }
 
-export default EditarConcurso
+export default AdminEditContest

@@ -81,7 +81,9 @@ function Form({
         )
       })}
 
-      <Button type="submit">{submitLabel}</Button>
+      <Button type="submit" sx={{ backgroundColor: '#dee2e6' }}>
+        {submitLabel}
+      </Button>
     </Stack>
   )
 }

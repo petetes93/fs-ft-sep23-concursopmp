@@ -87,7 +87,13 @@ const DetailsPage = () => {
         startIcon={<ArrowBackIosIcon />}
         component={Link}
         to={`/contest/${design.contest._id}`}
-        sx={{ ml: 5, position: 'fixed' }}
+        sx={{
+          ml: 5,
+          mt: 5,
+          backgroundColor: '#D7DBDD',
+          height: '29%',
+          color: 'black',
+        }}
       >
         Volver
       </Button>

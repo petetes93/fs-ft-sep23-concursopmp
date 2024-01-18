@@ -28,7 +28,7 @@ import userService from '../../services/user-service'
 import { Link } from 'react-router-dom'
 
 const AdminUserPage = () => {
-  const { users, loading } = useUsers()
+  const { users, loading, setUsers } = useUsers()
   const [searchTerm, setSearchTerm] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState(null)
@@ -138,7 +138,7 @@ const AdminUserPage = () => {
     setOpenModal(true)
   }
 
-  const closeDeleteModal = () => {
+  const closeDeleteModal = (userId) => {
     setSelectedUserId(null)
     setOpenModal(false)
   }
@@ -254,7 +254,10 @@ const AdminUserPage = () => {
           </DialogContent>
           <DialogActions>
             <MuiButton onClick={closeDeleteModal}>Cancelar</MuiButton>
-            <MuiButton onClick={confirmDeleteUser} color="error">
+            <MuiButton
+              onClick={() => confirmDeleteUser(selectedUserId)}
+              color="error"
+            >
               Eliminar
             </MuiButton>
           </DialogActions>
