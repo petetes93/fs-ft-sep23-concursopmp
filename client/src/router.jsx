@@ -11,7 +11,7 @@ import AdminUserPage from './pages/AdminUserPage'
 import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import CreateContestPage from './pages/CreateContestPage'
-import EditarConcurso from './pages/EditarConcurso/EditarConcurso'
+import EditarConcurso from './pages/AdminEditContestPage'
 import AddDesignPage from 'pages/AddDesignPage'
 import AdminDesignPage from './pages/AdminDesignPage'
 import AdminContestPage from './pages/AdminContestPage'
@@ -19,6 +19,7 @@ import ProtectedRoute from './utils/ProtectedRoute'
 import LogoutPage from './pages/LogoutPage'
 import Dashboard from './pages/Dashboard'
 import AdminDetailPage from './pages/AdminDetailPage'
+
 const router = createBrowserRouter([
   {
     path: '/',
