@@ -57,7 +57,6 @@ const update = async (req, res) => {
   const updatedcontest = { contestId, ...updates }
 
   await cloudinary.uploader.destroy(oldcontest.imageCloudinaryId, {
-  await cloudinary.uploader.destroy(oldcontest.imageCloudinaryId, {
     invalidate: true,
   })
 
