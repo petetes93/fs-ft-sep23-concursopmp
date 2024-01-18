@@ -73,7 +73,7 @@ const DetailsPage = () => {
 
         setNewComment('')
       })
-      .catch((err) => console.log(err))
+      .catch((err) => toast.error('Registrate para comentar'))
   }
 
   if (loading) return <CircularProgress />

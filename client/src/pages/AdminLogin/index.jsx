@@ -5,21 +5,25 @@ import { Form } from 'components'
 import { login } from 'services/auth-service'
 import { toast } from 'react-toastify'
 import { schema, fields } from './form-data'
-// import { useAuth } from 'hooks'
+import { useAuth } from 'hooks'
 import { useNavigate } from 'react-router-dom'
+import { logout } from 'services/auth-service'
 
 function LoginAdmin() {
   const navigate = useNavigate()
-  //   const [, dispatch] = useAuth()
+  const [, dispatch] = useAuth()
   const [erroresDesdeRespuesta, setErroresDesdeRespuesta] = useState([])
+
+  logout()
+  dispatch({ type: 'logout' })
 
   const IniciarSesionAdmin = (usuario) => {
     login(usuario)
       .then((decodedJWT) => {
-        const { isAdmin } = decodedJWT
+        const { isAdmin, username } = decodedJWT
         if (isAdmin) {
-          const tipo = 'admin'
-
+          const type = 'admin'
+          dispatch({ type, username })
           navigate('/Dashboard', { replace: true })
         } else {
           toast.error('No tienes privilegios de administrador.')

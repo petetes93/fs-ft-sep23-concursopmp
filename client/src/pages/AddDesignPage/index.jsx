@@ -32,6 +32,8 @@ function DesignForm() {
       })
       .catch((err) => {
         console.log(err)
+        toast.error('Necesitas estar registrado para subir un diseño')
+        navigate('/login', { replace: true })
       })
   }
 

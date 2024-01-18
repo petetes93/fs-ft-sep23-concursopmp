@@ -67,7 +67,13 @@ const DetailsPage = () => {
         startIcon={<ArrowBackIosIcon />}
         component={Link}
         to={`/admindesigns/${design.contest._id}`}
-        sx={{ ml: 5, position: 'fixed' }}
+        sx={{
+          ml: 5,
+          mt: 5,
+          backgroundColor: '#D7DBDD',
+          height: '29%',
+          color: 'black',
+        }}
       >
         Volver
       </Button>
@@ -185,7 +191,7 @@ const DetailsPage = () => {
             )}
             <Container sx={{ mt: 4, textAlign: 'center' }}>
               <Typography variant="h6" sx={{ ml: 2, mb: 2 }}>
-                Estado de aprovación
+                Estado de aprobación
               </Typography>
               <Button
                 variant="contained"

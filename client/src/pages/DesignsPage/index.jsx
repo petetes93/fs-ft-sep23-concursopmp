@@ -8,26 +8,24 @@ import {
   CircularProgress,
   TextField,
 } from '@mui/material'
-import Catalog from 'src/components/Catalog/Catalog'
 import ProductCard from 'src/components/ProductCard/ProductCard'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import { useDesigns, useContest } from 'hooks'
+import { useDesigns, useContest, useAuth } from 'hooks'
 import AddIcon from '@mui/icons-material/Add'
 import SearchIcon from '@mui/icons-material/Search'
 
-function ProductsPage() {
+function DesignsPage() {
   const { contestId } = useParams()
+  const { user } = useAuth()
   const { designs, loading } = useDesigns()
   const { contest, loadingContest } = useContest(contestId)
   const [searchAuthor, setSearchAuthor] = useState('')
 
   if (loading && loadingContest) return <CircularProgress />
+
+  console.log(user)
 
   const matchedDesigns = designs.filter(
     (design) =>
@@ -159,7 +157,7 @@ function ProductsPage() {
             >
               Ir a Concursos
             </Button>
-            <Link to={`/product/add_desing/${contestId}`}>
+            <Link to={`/design/add_design/${contestId}`}>
               <Button
                 aria-label="add"
                 startIcon={<AddIcon />}
@@ -210,4 +208,4 @@ function ProductsPage() {
   )
 }
 
-export default ProductsPage
+export default DesignsPage
