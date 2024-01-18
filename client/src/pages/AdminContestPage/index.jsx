@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useContests } from 'hooks'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import {
   Container,
   Stack,
@@ -6,37 +9,24 @@ import {
   TextField,
   Button,
   IconButton,
-} from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
-import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import {
+  CircularProgress,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
 } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import contestService from '../../services/contest-service'
-import { Link } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css'
 
 function AdminContestPage() {
-  const [contests, setContests] = useState([])
+  const { contests, loading } = useContests()
   const [searchTerm, setSearchTerm] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [selectedContestId, setSelectedContestId] = useState(null)
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3000/api/contest')
-      .then((response) => {
-        setContests(response.data)
-      })
-      .catch((error) => {
-        console.error('Error fetching contests:', error)
-      })
-  }, [])
+  if (loading) return <CircularProgress />
 
   const filteredContests = contests.filter((contest) =>
     contest.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -70,42 +60,42 @@ function AdminContestPage() {
   }
 
   return (
-    <Container component='main' maxWidth='md'>
-      <Stack spacing={3} alignItems='center'>
-        <Typography variant='h4' component='h4'>
+    <Container component="main" maxWidth="md">
+      <Stack spacing={3} alignItems="center">
+        <Typography variant="h4" component="h4">
           Lista de Concursos
         </Typography>
         <Stack
-          direction='row'
-          alignItems='center'
-          justifyContent='space-between'
-          width='100%'
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          width="100%"
         >
-          <Stack direction='row' alignItems='center'>
+          <Stack direction="row" alignItems="center">
             <TextField
-              label='Buscar concursos'
-              variant='outlined'
-              size='medium'
+              label="Buscar concursos"
+              variant="outlined"
+              size="medium"
               sx={{ width: '200px', marginRight: '20px' }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Stack>
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             component={Link}
-            to='/createcontest'
+            to="/createcontest"
             startIcon={<AccountBoxIcon />}
             sx={{ backgroundColor: '#b05f5f' }}
           >
             Añadir concurso
           </Button>
           <Button
-            variant='contained'
-            color='success'
+            variant="contained"
+            color="success"
             component={Link}
-            to='/adminuser'
+            to="/adminuser"
           >
             Ir a Usuarios
           </Button>
@@ -114,10 +104,10 @@ function AdminContestPage() {
         {filteredContests.map((contest) => (
           <Stack
             key={contest._id}
-            direction='row'
+            direction="row"
             spacing={2}
-            alignItems='center'
-            justifyContent='space-between'
+            alignItems="center"
+            justifyContent="space-between"
             sx={{
               border: '1px solid #ccc',
               borderRadius: '5px',
@@ -125,11 +115,20 @@ function AdminContestPage() {
               width: '100%',
             }}
           >
-            <Typography variant='body1'>Concurso: {contest.name}</Typography>
-            <Stack direction='row' spacing={1}>
+            <Typography variant="body1">Concurso: {contest.name}</Typography>
+            <Stack direction="row" spacing={1}>
               <Button
-                variant='contained'
-                color='primary'
+                variant="contained"
+                color="success"
+                component={Link}
+                to={`/admindesigns/${contest._id}`}
+                sx={{ fontSize: '0.8rem', backgroundColor: '#55a630' }}
+              >
+                Moderar
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
                 startIcon={<AccountBoxIcon />}
                 sx={{ fontSize: '0.8rem' }}
                 component={Link}
@@ -138,8 +137,8 @@ function AdminContestPage() {
                 Editar concurso
               </Button>
               <IconButton
-                color='error'
-                aria-label='delete'
+                color="error"
+                aria-label="delete"
                 sx={{ fontSize: '1rem' }}
                 onClick={() => suspendContest(contest._id)}
               >
@@ -157,7 +156,7 @@ function AdminContestPage() {
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDeleteModal}>Cancelar</Button>
-            <Button onClick={confirmSuspendContest} color='error'>
+            <Button onClick={confirmSuspendContest} color="error">
               Eliminar
             </Button>
           </DialogActions>

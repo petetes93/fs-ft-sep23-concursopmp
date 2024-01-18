@@ -21,6 +21,7 @@ const TYPES = {
   'image/jpeg': 'jpeg',
   'image/png': 'png',
 }
+
 const schema = yup
   .object({
     title: yup.string().required('Titulo obligatorio'),
