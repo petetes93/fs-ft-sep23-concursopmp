@@ -60,7 +60,11 @@ function AdminContestPage() {
   }
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container
+      component="main"
+      maxWidth="md"
+      sx={{ marginTop: '40px', marginBottom: '40px' }}
+    >
       <Stack spacing={3} alignItems="center">
         <Typography variant="h4" component="h4">
           Lista de Concursos
@@ -76,7 +80,11 @@ function AdminContestPage() {
               label="Buscar concursos"
               variant="outlined"
               size="medium"
-              sx={{ width: '200px', marginRight: '20px' }}
+              sx={{
+                backgroundColor: 'white',
+                width: '200px',
+                marginRight: '20px',
+              }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -87,7 +95,7 @@ function AdminContestPage() {
             component={Link}
             to="/createcontest"
             startIcon={<AccountBoxIcon />}
-            sx={{ backgroundColor: '#b05f5f' }}
+            sx={{ backgroundColor: '#616A6B' }}
           >
             Añadir concurso
           </Button>
@@ -96,11 +104,11 @@ function AdminContestPage() {
             color="success"
             component={Link}
             to="/adminuser"
+            sx={{ backgroundColor: '#D7DBDD' }}
           >
             Ir a Usuarios
           </Button>
         </Stack>
-        {/* Mapea tus datos de concursos filtrados aquí */}
         {filteredContests.map((contest) => (
           <Stack
             key={contest._id}
@@ -113,38 +121,43 @@ function AdminContestPage() {
               borderRadius: '5px',
               padding: '10px',
               width: '100%',
+              backgroundColor: 'white',
             }}
           >
             <Typography variant="body1">Concurso: {contest.name}</Typography>
-            <Stack direction="row" spacing={1}>
-              <Button
-                variant="contained"
-                color="success"
-                component={Link}
-                to={`/admindesigns/${contest._id}`}
-                sx={{ fontSize: '0.8rem', backgroundColor: '#55a630' }}
-              >
-                Moderar
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AccountBoxIcon />}
-                sx={{ fontSize: '0.8rem' }}
-                component={Link}
-                to={`/editcontest/${contest._id}`}
-              >
-                Editar concurso
-              </Button>
-              <IconButton
-                color="error"
-                aria-label="delete"
-                sx={{ fontSize: '1rem' }}
-                onClick={() => suspendContest(contest._id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Stack>
+            {contest.isDeleted ? (
+              <TextField
+                variant="outlined"
+                size="medium"
+                value="Concurso desactivado"
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{
+                  backgroundColor: '#F0F0F0',
+                  width: '150px',
+                }}
+              />
+            ) : (
+              <Stack direction="row" spacing={1}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AccountBoxIcon />}
+                  sx={{ fontSize: '0.8rem', backgroundColor: '#34495E' }}
+                >
+                  Editar concurso
+                </Button>
+                <IconButton
+                  color="error"
+                  aria-label="delete"
+                  sx={{ fontSize: '1rem' }}
+                  onClick={() => suspendContest(contest._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
+            )}
           </Stack>
         ))}
         <Dialog open={openModal} onClose={closeDeleteModal}>

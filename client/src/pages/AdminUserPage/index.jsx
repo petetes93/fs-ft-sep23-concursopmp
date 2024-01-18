@@ -144,7 +144,11 @@ const AdminUserPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container
+      component="main"
+      maxWidth="md"
+      sx={{ marginTop: '40px', marginBottom: '40px' }}
+    >
       <Stack spacing={3} alignItems="center">
         <Typography variant="h4" component="h4">
           Lista de Usuarios
@@ -163,7 +167,11 @@ const AdminUserPage = () => {
             label="Buscar usuarios"
             variant="outlined"
             size="medium"
-            sx={{ width: '200px', marginRight: '20px' }}
+            sx={{
+              backgroundColor: 'white',
+              width: '200px',
+              marginRight: '20px',
+            }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -172,11 +180,11 @@ const AdminUserPage = () => {
             color="success"
             component={Link}
             to="/admincontest"
+            sx={{ backgroundColor: '#D7DBDD' }}
           >
             Ir a Concursos
           </Button>
         </Container>
-
         {filteredUsers.map((user) => (
           <Stack
             key={user._id}
@@ -189,6 +197,7 @@ const AdminUserPage = () => {
               borderRadius: '5px',
               padding: '10px',
               width: '100%',
+              backgroundColor: 'white',
             }}
           >
             <Typography variant="body1">

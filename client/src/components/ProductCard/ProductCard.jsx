@@ -15,8 +15,8 @@ function ProductCard({ design }) {
       sx={{
         maxHeight: 550,
         width: 345,
-        boxShadow: '0 10px 10px  rgba(0, 0, 0, 0.5)',
-        backgroundColor: '#68A9AB',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#FDFDFD',
       }}
     >
       <Link to={`/design/${_id}`}>
@@ -42,8 +42,10 @@ function ProductCard({ design }) {
             <div style={{ textDecoration: 'none', color: 'inherit' }}>
               <Typography
                 sx={{
-                  fontSize: '30px',
+                  color: 'black',
+                  fontSize: '25px',
                   marginBottom: '20px',
+                  fontWeight: '500',
                 }}
               >
                 {title}
@@ -54,7 +56,7 @@ function ProductCard({ design }) {
           <Typography
             variant="body2"
             fontSize="25px"
-            sx={{ display: 'flex', alignItems: 'center' }}
+            sx={{ display: 'flex', alignItems: 'center', color: 'black' }}
           >
             <span style={{ marginRight: '6px' }}>{voteRegister.length}</span>
 
@@ -63,17 +65,17 @@ function ProductCard({ design }) {
         </div>
       </CardContent>
 
-      <Divider
-        style={{
-          backgroundColor: 'black',
-          opacity: '0.2',
-          width: '90%',
-          marginLeft: '15px',
-          marginTop: '15px',
-        }}
-      />
-
       <div>
+        <Divider
+          style={{
+            backgroundColor: 'black',
+            opacity: '0.2',
+            width: '90%',
+            marginLeft: '15px',
+            marginTop: '15px',
+          }}
+        />
+
         <Typography
           variant="body2"
           sx={{
