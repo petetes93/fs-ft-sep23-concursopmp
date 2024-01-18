@@ -10,12 +10,14 @@ import RegisterPage from 'pages/RegisterPage'
 import AdminUserPage from './pages/AdminUserPage'
 import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
-import ConcursoForm from './pages/CrearConcurso/crearconcurso'
+import CreateContestPage from './pages/CreateContestPage'
 import AddDesignPage from 'pages/AddDesignPage'
+import AdminDesignPage from './pages/AdminDesignPage'
 import AdminContestPage from './pages/AdminContestPage'
 import ProtectedRoute from './utils/ProtectedRoute'
 import LogoutPage from './pages/LogoutPage'
 import Dashboard from './pages/Dashboard'
+import AdminDetailPage from './pages/AdminDetailPage'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -65,6 +67,16 @@ const router = createBrowserRouter([
         element: <AdminContestPage />,
       },
       {
+        path: '/admindesigns/:contestId',
+        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
+        element: <AdminDesignPage />,
+      },
+      {
+        path: '/admindesign/:designId',
+        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
+        element: <AdminDetailPage />,
+      },
+      {
         path: '/design/:designId',
         element: <DetailsPage />,
       },
@@ -74,7 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/createcontest',
-        element: <ConcursoForm />,
+        element: <CreateContestPage />,
       },
       {
         path: '/logout',

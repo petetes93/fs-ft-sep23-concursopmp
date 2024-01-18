@@ -30,9 +30,12 @@ function ProductsPage() {
   if (loading && loadingContest) return <CircularProgress />
 
   const matchedDesigns = designs.filter(
-    (design) => design.contest === contestId
+    (design) =>
+      design.contest === contestId &&
+      design.approvalDate &&
+      (!design.isDeleted || design.approvalDate > design.isDeleted)
   )
-  console.log(matchedDesigns)
+  console.log(contest)
 
   const filteredAuthor = matchedDesigns.filter((design) => {
     return (
@@ -175,6 +178,8 @@ function ProductsPage() {
             sx={{
               color: 'white',
               fontSize: '30px',
+              marginTop: '-170px',
+              marginBottom: '100px',
               zIndex: 1,
               filter: 'drop-shadow(0px 5px 5px rgba(0, 0, 0, 1))',
             }}

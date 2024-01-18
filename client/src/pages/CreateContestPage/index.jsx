@@ -12,7 +12,7 @@ function ConcursoForm() {
   const [, dispatch] = useAuth()
   const [erroresDesdeRespuesta, setErroresDesdeRespuesta] = useState([])
 
-  const handleFormSubmit = concursoData => {
+  const handleFormSubmit = (concursoData) => {
     console.log(concursoData)
 
     const formData = new FormData()
@@ -27,11 +27,11 @@ function ConcursoForm() {
 
     contestService
       .create(formData)
-      .then(response => {
+      .then((response) => {
         toast.success('Concurso creado exitosamente.')
-        navigate('/', { replace: true })
+        navigate('/admincontest', { replace: true })
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
       })
   }
