@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import {
   AppBar,
@@ -11,53 +11,53 @@ import {
   Menu,
   MenuItem,
   Button,
-} from "@mui/material";
+} from '@mui/material'
 
-import { CollapseMenu } from "../../components";
-import { useAuth } from "hooks";
+import { CollapseMenu } from '../../components'
+import { useAuth } from 'hooks'
 
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import MenuIcon from "@mui/icons-material/Menu";
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
+import MenuIcon from '@mui/icons-material/Menu'
 
-import Brand from "./Brand";
+import Brand from './Brand'
 
 function Navbar() {
-  const [user] = useAuth();
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user] = useAuth()
+  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElUser, setAnchorElUser] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(user)
+
   const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
+    setIsLoggedIn(false)
+  }
 
-  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget)
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget)
 
-  const handleOpenUserResponsive = (event) =>
-    setIsLoggedIn(event.currentTarget);
+  const handleOpenUserResponsive = (event) => setIsLoggedIn(event.currentTarget)
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
-  const pages = ["Shop", "Liquidacion", "diseñadores", "Comunidad", "Tiendas"];
+  const pages = ['Shop', 'Liquidacion', 'diseñadores', 'Comunidad', 'Tiendas']
 
   const optionsUserMenu = user.auth
-    ? [{ label: "Logout", to: "/logout" }]
+    ? [{ label: 'Logout', to: '/logout' }]
     : [
-        { label: "Login", to: "/login" },
-        { label: "Register", to: "/register" },
-      ];
+        { label: 'Login', to: '/login' },
+        { label: 'Register', to: '/register' },
+      ]
 
   return (
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#F7F7F8",
+        backgroundColor: '#F7F7F8',
 
-        boxShadow: "none",
+        boxShadow: 'none',
 
-        margin: "auto",
+        margin: 'auto',
       }}
     >
       <Container maxWidth="xl">
@@ -67,8 +67,8 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              ml: "50%",
-              display: { xs: "flex", md: "none", lg: "none", xl: "none" },
+              ml: '50%',
+              display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none' },
             }}
           >
             <IconButton
@@ -85,24 +85,24 @@ function Navbar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
+                vertical: 'top',
+                horizontal: 'center',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "flex", md: "none", lg: "none", xl: "none" },
+                display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none' },
               }}
             >
               {pages.map((page) => (
                 <MenuItem
                   sx={{
-                    backgroundColor: "white",
+                    backgroundColor: 'white',
                   }}
                   className="blockMenu"
                   key={page}
@@ -113,11 +113,11 @@ function Navbar() {
                       width="100%"
                       align="center"
                       sx={{
-                        fontFamily: "helvetica",
+                        fontFamily: 'helvetica',
                         fontWeight: 500,
-                        color: "gray",
+                        color: 'gray',
                         pl: 11,
-                        alignItems: "center",
+                        alignItems: 'center',
                       }}
                     >
                       {page}
@@ -127,7 +127,7 @@ function Navbar() {
               ))}
               <MenuItem
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: 'white',
                 }}
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
@@ -136,10 +136,10 @@ function Navbar() {
                   <Typography
                     width="100%"
                     sx={{
-                      fontFamily: "helvetica",
+                      fontFamily: 'helvetica',
                       fontWeight: 500,
-                      color: "gray",
-                      alignContent: "center",
+                      color: 'gray',
+                      alignContent: 'center',
                       pl: 11,
                       mr: 10,
                     }}
@@ -150,23 +150,23 @@ function Navbar() {
               </MenuItem>
               <MenuItem
                 sx={{
-                  borderTop: "1px solid black",
+                  borderTop: '1px solid black',
 
-                  backgroundColor: "white",
-                  "&:hover": {
-                    background: "#3a3054",
+                  backgroundColor: 'white',
+                  '&:hover': {
+                    background: '#3a3054',
 
-                    boxShadow: "none",
+                    boxShadow: 'none',
                   },
                 }}
               ></MenuItem>
 
               <MenuItem
                 sx={{
-                  backgroundColor: "white",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
+                  backgroundColor: 'white',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                 }}
                 className="blockMenu"
                 onClick={handleCloseNavMenu}
@@ -174,26 +174,26 @@ function Navbar() {
                 <Box
                   sx={{
                     flexGrow: 1,
-                    display: { xs: "flex", md: "none" },
-                    flexDirection: "column",
-                    alignItems: "center",
+                    display: { xs: 'flex', md: 'none' },
+                    flexDirection: 'column',
+                    alignItems: 'center',
                   }}
                 >
-                  {!isLoggedIn && (
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                  {!isLoggedIn ? (
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <Link
                         to="/login"
                         style={{
-                          fontFamily: "helvetica",
+                          fontFamily: 'helvetica',
                           fontWeight: 900,
-                          color: "gray",
+                          color: 'gray',
                         }}
                       >
                         <Button
                           variant="secondary"
                           sx={{
-                            borderRadius: "50px",
-                            boxShadow: "none",
+                            borderRadius: '50px',
+                            boxShadow: 'none',
                             height: 50,
                           }}
                           onClick={handleOpenUserResponsive}
@@ -204,16 +204,16 @@ function Navbar() {
                       <Link
                         to="/register"
                         style={{
-                          fontFamily: "helvetica",
+                          fontFamily: 'helvetica',
                           fontWeight: 700,
-                          color: "gray",
+                          color: 'gray',
                         }}
                       >
                         <Button
                           variant="secondary"
                           sx={{
-                            borderRadius: "50px",
-                            boxShadow: "none",
+                            borderRadius: '50px',
+                            boxShadow: 'none',
                             height: 50,
                           }}
                           onClick={handleOpenUserResponsive}
@@ -222,24 +222,21 @@ function Navbar() {
                         </Button>
                       </Link>
                     </div>
-                  )}
-
-                  {isLoggedIn && (
+                  ) : (
                     <Link
                       to="/logout"
                       style={{
-                        fontFamily: "helvetica",
+                        fontFamily: 'helvetica',
                         fontWeight: 700,
-                        color: "gray",
+                        color: 'gray',
                       }}
                     >
                       <Button
                         variant="secondary"
                         sx={{
-                          borderRadius: "50px",
-                          boxShadow: "none",
+                          borderRadius: '50px',
+                          boxShadow: 'none',
                           height: 50,
-                          ml: 10,
                         }}
                         onClick={handleLogout}
                       >
@@ -254,19 +251,19 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex", lg: "flex", xl: "flex" },
+              display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex' },
             }}
           >
             <Link to="./">
               <Button
                 sx={{
-                  ml: "5rem",
+                  ml: '5rem',
                   my: 2,
-                  fontFamily: "helvetica",
-                  color: "grey",
+                  fontFamily: 'helvetica',
+                  color: 'grey',
 
-                  "&:hover": {
-                    color: "#2bd0d0",
+                  '&:hover': {
+                    color: '#2bd0d0',
                   },
                 }}
               >
@@ -284,12 +281,12 @@ function Navbar() {
 
                     my: 2,
 
-                    fontFamily: "helvetica",
+                    fontFamily: 'helvetica',
 
-                    color: "grey",
+                    color: 'grey',
 
-                    "&:hover": {
-                      color: "#2bd0d0",
+                    '&:hover': {
+                      color: '#2bd0d0',
                     },
                   }}
                 >
@@ -302,14 +299,14 @@ function Navbar() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex", lg: "flex", xl: "flex" },
+              display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex' },
             }}
           >
             <span
               style={{
-                marginRight: "10px",
-                marginTop: "0.5rem",
-                color: "black",
+                marginRight: '10px',
+                marginTop: '0.5rem',
+                color: 'black',
               }}
             >
               {user.username ? `Hola, ${user.username}` : null}
@@ -317,8 +314,8 @@ function Navbar() {
             <Button
               variant="secondary"
               sx={{
-                borderRadius: "50px",
-                boxShadow: "none",
+                borderRadius: '50px',
+                boxShadow: 'none',
                 height: 50,
               }}
               onClick={handleOpenUserMenu}
@@ -326,9 +323,9 @@ function Navbar() {
               <PersonRoundedIcon
                 fontSize="large"
                 sx={{
-                  color: "black",
-                  "&:hover": {
-                    color: "#2bd0d0",
+                  color: 'black',
+                  '&:hover': {
+                    color: '#2bd0d0',
                   },
                 }}
               />
@@ -343,7 +340,7 @@ function Navbar() {
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

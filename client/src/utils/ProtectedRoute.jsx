@@ -12,7 +12,9 @@ const ROLES = {
 function ProtectedRoute({ page: Page, role }) {
   const [{ auth: isAuth, [role]: hasRole }] = useAuth()
 
-  const isAuthorized = hasRole || (!isAuth && role === ROLES.ANONYMOUS)
+  const isAuthorized = isAuth
+    ? hasRole || role === ROLES.ANONYMOUS
+    : role === ROLES.ANONYMOUS
 
   if (isAuthorized) return <Page />
 

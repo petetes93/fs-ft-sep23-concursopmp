@@ -36,6 +36,7 @@ const register = async (req, res) => {
         isAdmin: newUser.isAdmin,
         username: newUser.username,
         email: newUser.email,
+        isDeleted: newUser.isDeleted,
       },
       process.env.privateKey
     )
