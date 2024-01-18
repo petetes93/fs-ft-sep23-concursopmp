@@ -17,8 +17,8 @@ function ContestCard({ contest }) {
       sx={{
         height: 400,
         width: 345,
-        boxShadow: '0 10px 10px rgba(0, 0, 0, 0.5)',
-        backgroundColor: '#68A9AB',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#FDFDFD',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -50,6 +50,8 @@ function ContestCard({ contest }) {
             sx={{
               fontSize: '30px',
               textAlign: 'center',
+              color:'black',
+              fontWeight: '500'
             }}
           >
             {name}

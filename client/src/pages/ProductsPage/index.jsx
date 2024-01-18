@@ -95,7 +95,13 @@ function ProductsPage() {
       <Container disableGutters sx={{ marginTop: '50px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '100px',
+              }}
+            >
               <TextField
                 label="Buscar autor"
                 variant="outlined"
@@ -118,15 +124,15 @@ function ProductsPage() {
                     opacity: 0,
                     transition: 'all 0.1s ease-in',
                   },
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                  borderRadius: '20px',
+                  backgroundColor: '#FDFDFD',
+                  borderRadius: '12px',
                   outline: 'none',
                   width: '700px',
                   height: '40px',
                   marginBottom: '',
+                  boxShadow: 'inset 0 0 0 1px black',
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                    boxShadow: 'inset 0 0 0 2px white',
+                    boxShadow: 'inset 0 0 0 1.5px black',
                   },
                 }}
               />
@@ -137,6 +143,7 @@ function ProductsPage() {
                   marginLeft: '-30px',
                   alignSelf: 'center',
                   paddingRight: '5px',
+                  zIndex: 1,
                 }}
               />
             </div>
@@ -161,12 +168,10 @@ function ProductsPage() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: '40px',
-          marginTop: '50px',
+          gridTemplateColumns: `repeat(auto-fill, minmax(345px, 1fr))`,
+          gap: '20px',
           marginLeft: '20px',
-          marginRight: '20px',
-          marginBottom: '100px',
+          alignItems: 'center',
         }}
       >
         {filteredAuthor.length > 0 ? (
