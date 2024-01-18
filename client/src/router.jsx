@@ -87,7 +87,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/createcontest',
-        element: <ConcursoForm />,
+        element: <CreateContestPage />,
       },
       {
         path: '/editcontest/:contestId',
