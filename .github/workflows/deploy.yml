@@ -1,0 +1,19 @@
+name: deploy from thebridge repo
+on:
+  schedule:
+    - cron: '* * * * *'
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Merge upstream
+        run: |
+          git config --global user.name 'Equipo Desafio Pampling'
+          git config --global user.email 'manuelguerreron93@gmail.com'
+          git pull --unshallow
+          git remote add upstream https://github.com/TheBridge-FullStackDeveloper/fs-ft-sep23-concursopmp.git
+          git fetch upstream
+          git checkout master
+          git merge --no-edit upstream/master
+          git push origin master

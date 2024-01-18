@@ -37,11 +37,11 @@ function ConcursoForm() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems="center"
+        alignItems='center'
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -54,7 +54,7 @@ function ConcursoForm() {
           marginBottom: '50px',
         }}
       >
-        <Typography variant="h2" component="h2" sx={{ marginBottom: '20px' }}>
+        <Typography variant='h2' component='h2' sx={{ marginBottom: '20px' }}>
           Crear Concurso
         </Typography>
 
@@ -63,8 +63,8 @@ function ConcursoForm() {
           onSubmit={handleFormSubmit}
           validationSchema={schema}
           erroresDesdeRespuesta={erroresDesdeRespuesta}
-          submitLabel="Crear Concurso"
-          fieldWidth="10ch"
+          submitLabel='Crear Concurso'
+          fieldWidth='10ch'
           sx={{ width: '100%' }}
         />
       </Stack>

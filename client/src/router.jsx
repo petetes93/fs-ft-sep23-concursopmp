@@ -11,6 +11,7 @@ import AdminUserPage from './pages/AdminUserPage'
 import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
 import CreateContestPage from './pages/CreateContestPage'
+import EditarConcurso from './pages/EditarConcurso/EditarConcurso'
 import AddDesignPage from 'pages/AddDesignPage'
 import AdminDesignPage from './pages/AdminDesignPage'
 import AdminContestPage from './pages/AdminContestPage'
@@ -86,7 +87,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/createcontest',
-        element: <CreateContestPage />,
+        element: <ConcursoForm />,
+      },
+      {
+        path: '/editcontest/:contestId',
+        element: <EditarConcurso />,
       },
       {
         path: '/logout',

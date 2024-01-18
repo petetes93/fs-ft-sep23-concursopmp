@@ -131,6 +131,8 @@ function AdminContestPage() {
                 color="primary"
                 startIcon={<AccountBoxIcon />}
                 sx={{ fontSize: '0.8rem' }}
+                component={Link}
+                to={`/editcontest/${contest._id}`}
               >
                 Editar concurso
               </Button>

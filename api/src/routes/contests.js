@@ -1,45 +1,45 @@
-const { Router } = require("express");
-const contestController = require("../controllers/contests");
-const { commonValidationSchema, uploadImage } = require("../models/contest");
+const { Router } = require('express')
+const contestController = require('../controllers/contests')
+const { commonValidationSchema, uploadImage } = require('../models/contest')
 
-const mongoIdFromParam = require("../middlewares/mongoIdFromParam");
+const mongoIdFromParam = require('../middlewares/mongoIdFromParam')
 
-const validate = require("../middlewares/validate");
-const auth = require("../middlewares/auth");
-const admin = require("../middlewares/admin");
+const validate = require('../middlewares/validate')
+const auth = require('../middlewares/auth')
+const admin = require('../middlewares/admin')
 
-const router = Router();
+const router = Router()
 
-router.get("/", contestController.getAll);
+router.get('/', contestController.getAll)
 router.get(
-  "/:contestId",
-  mongoIdFromParam("contestId"),
+  '/:contestId',
+  mongoIdFromParam('contestId'),
   validate,
   contestController.getOne
-);
+)
 
 router.post(
-  "/",
+  '/',
   auth,
   admin,
   uploadImage,
   commonValidationSchema,
   validate,
   contestController.create
-);
+)
 
-router.put("/delete/:contestId", auth, admin, contestController.hideContest);
+router.put('/delete/:contestId', auth, admin, contestController.hideContest)
 
 router.put(
-  "/:contestId",
+  '/:contestId',
   auth,
   admin,
   uploadImage,
-  mongoIdFromParam("contestId"),
+  mongoIdFromParam('contestId'),
   commonValidationSchema,
   validate,
   contestController.update
-);
-router.put("/", auth, admin, validate, contestController.activate);
+)
+router.put('/', auth, admin, validate, contestController.activate)
 
-module.exports = router;
+module.exports = router

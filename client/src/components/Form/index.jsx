@@ -14,6 +14,7 @@ function Form({
   defaultValues = {},
 }) {
   const {
+    register,
     control,
     handleSubmit,
     reset,
@@ -58,6 +59,7 @@ function Form({
             />
           )
         }
+        const { ref, ...registerProps } = register(name)
         return (
           <Stack key={name} spacing={1}>
             <Typography variant="subtitle1">{label}</Typography>
@@ -65,7 +67,14 @@ function Form({
               control={control}
               name={name}
               render={({ field }) => (
-                <Input type={type} errors={errors[name]} {...field} {...rest} />
+                <Input
+                  type={type}
+                  inputRef={ref}
+                  errors={errors[name]}
+                  {...field}
+                  {...registerProps}
+                  {...rest}
+                />
               )}
             />
           </Stack>
