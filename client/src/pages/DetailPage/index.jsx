@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { useDesign, useAuth } from 'hooks'
+import { toast } from 'react-toastify'
 import {
   Card,
   CardContent,
@@ -12,14 +14,8 @@ import {
   Paper,
   Rating,
 } from '@mui/material'
-
-import { toast } from 'react-toastify'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-
-import { useDesign, useAuth } from 'hooks'
-
 import voteService from '../../services/vote-service'
-
 import commentService from '../../services/comment-service'
 
 const DetailsPage = () => {
@@ -32,21 +28,21 @@ const DetailsPage = () => {
 
   useEffect(() => {
     if (!loading) {
-      const userVote = design.voteRegister.find(vote => vote.user === id)
+      const userVote = design.voteRegister.find((vote) => vote.user === id)
       if (userVote) {
         setSelectedRating(userVote.punctuation)
       }
     }
   }, [loading, design.voteRegister, id])
 
-  const handleVote = value => {
+  const handleVote = (value) => {
     console.log(`Votaste con ${value} estrellas`)
     setSelectedRating(value)
-    if (!design.voteRegister.find(vote => vote.user === id))
+    if (!design.voteRegister.find((vote) => vote.user === id))
       voteService
         .addVote(designId, { punctuation: selectedRating })
         .then(() => toast.success('Tu voto ha sido registrado'))
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err))
 
     voteService
       .update(designId, { punctuation: selectedRating })
@@ -54,7 +50,7 @@ const DetailsPage = () => {
         setNewComment('')
         toast.success('Tu voto ha sido actualizado')
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
 
   const handleSubmit = () => {
@@ -63,7 +59,7 @@ const DetailsPage = () => {
       .then(() => {
         console.log('Comentario Enviado')
 
-        setDesign(prevDesign => ({
+        setDesign((prevDesign) => ({
           ...prevDesign,
           commentRegister: [
             ...prevDesign.commentRegister,
@@ -77,7 +73,7 @@ const DetailsPage = () => {
 
         setNewComment('')
       })
-      .catch(err => console.log(err))
+      .catch((err) => toast.error('Registrate para comentar'))
   }
 
   if (loading) return <CircularProgress />
@@ -91,13 +87,19 @@ const DetailsPage = () => {
         startIcon={<ArrowBackIosIcon />}
         component={Link}
         to={`/contest/${design.contest._id}`}
-        sx={{ mt: 5, ml: 5 }}
+        sx={{
+          ml: 5,
+          mt: 5,
+          backgroundColor: '#D7DBDD',
+          height: '29%',
+          color: 'black',
+        }}
       >
         Volver
       </Button>
       <Card
         sx={{
-          mt: '6rem',
+          mt: '3rem',
           width: '60%',
           ml: '20%',
         }}
@@ -173,8 +175,8 @@ const DetailsPage = () => {
 
             {design.commentRegister.length > 0 ? (
               design.commentRegister
-                .filter(comment => !comment.isDeleted)
-                .map(comment => {
+                .filter((comment) => !comment.isDeleted)
+                .map((comment) => {
                   const totalDate = new Date(comment.commentDate)
 
                   const commentDate = `${totalDate.getDate()}-${
@@ -234,7 +236,7 @@ const DetailsPage = () => {
               rows={3}
               sx={{ width: '60%', mt: '2rem' }}
               value={newComment}
-              onChange={e => setNewComment(e.target.value)}
+              onChange={(e) => setNewComment(e.target.value)}
             />
             <Button
               sx={{ width: '20%', mt: '2rem' }}

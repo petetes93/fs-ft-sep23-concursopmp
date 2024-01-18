@@ -1,52 +1,53 @@
 import { useEffect, useState } from 'react'
+import * as React from 'react'
+import { Link, useParams } from 'react-router-dom'
 import {
   Container,
   Grid,
+  Button,
   CircularProgress,
   TextField,
-  FormControl,
-  InputLabel,
 } from '@mui/material'
-import React from 'react'
+import ProductCard from 'src/components/ProductCard/ProductCard'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { useContests } from 'hooks'
-import Catalog from 'src/components/Catalog/Catalog'
-import ContestCard from 'src/components/ContestCard/ContestCard'
-import SearchBar from 'src/components/ContestCard/ContestCard'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
+import { useDesigns, useContest, useAuth } from 'hooks'
+import AddIcon from '@mui/icons-material/Add'
 import SearchIcon from '@mui/icons-material/Search'
 
-function ContestPage() {
-  const { contests, loading } = useContests()
+function DesignsPage() {
+  const { contestId } = useParams()
+  const { user } = useAuth()
+  const { designs, loading } = useDesigns()
+  const { contest, loadingContest } = useContest(contestId)
+  const [searchAuthor, setSearchAuthor] = useState('')
 
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterStatus, setFilterStatus] = useState('')
+  if (loading && loadingContest) return <CircularProgress />
 
-  if (loading) return <CircularProgress />
+  console.log(user)
 
-  const visibleContests = contests.filter((contest) => !contest.isDeleted)
+  const matchedDesigns = designs.filter(
+    (design) =>
+      design.contest === contestId &&
+      design.approvalDate &&
+      (!design.isDeleted || design.approvalDate > design.isDeleted)
+  )
+  console.log(contest)
 
-  const filteredContests = visibleContests.filter((contest) => {
+  const filteredAuthor = matchedDesigns.filter((design) => {
     return (
-      (!searchTerm ||
-        contest.theme.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (!filterStatus ||
-        (filterStatus === '' && contest.isActive) ||
-        (contest.isActive && filterStatus === 'Activo') ||
-        (!contest.isActive && filterStatus === 'Finalizado'))
+      design &&
+      design.author.username &&
+      design.author.username.toLowerCase().includes(searchAuthor.toLowerCase())
     )
   })
-
-  console.log(contests)
 
   return (
     <>
       <Card
         sx={{
-          maxHeight: '400px',
+          maxHeight: '300px',
           maxWidth: '100%',
           margin: 0,
           boxShadow: '0 5px 5px  rgba(0, 0, 0, 0.5)',
@@ -58,14 +59,12 @@ function ContestPage() {
         <div>
           <CardMedia
             style={{
-              filter: 'blur(3.5px)',
-              height: '500px',
+              height: '300px',
               width: '100%',
             }}
             component="img"
-            image="https://statics.pampling.com/imagenes/banners_new/imagen_banner_1.jpg"
+            image={contest.image}
           />
-
           <Container
             disableGutters
             sx={{
@@ -78,19 +77,15 @@ function ContestPage() {
             <Typography
               sx={{
                 color: 'white',
-                fontSize: '30px',
+                fontSize: '40px',
                 fontWeight: 600,
-                marginTop: '-400px',
+                marginTop: '-170px',
                 marginBottom: '100px',
                 zIndex: 1,
-                textAlign: 'center',
-                filter: 'drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.5))',
+                filter: 'drop-shadow(0px 5px 5px rgba(0, 0, 0, 1))',
               }}
             >
-              "Explora y vota en emocionantes sorteos temáticos mientras
-              descubres creativos diseños. ¡Participa en la diversión y elige
-              tus favoritos para tener la oportunidad de ganar premios
-              increíbles!"
+              {contest.name}
             </Typography>
           </Container>
         </div>
@@ -107,10 +102,10 @@ function ContestPage() {
               }}
             >
               <TextField
-                label="Buscar temática"
+                label="Buscar autor"
                 variant="outlined"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchAuthor}
+                onChange={(e) => setSearchAuthor(e.target.value)}
                 sx={{
                   '& label': {
                     marginTop: '-7px',
@@ -154,24 +149,29 @@ function ContestPage() {
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
-            <FormControl>
-              <InputLabel>Estado</InputLabel>
-              <Select
-                label="Estado"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
+            <Button
+              variant="contained"
+              component={Link}
+              to="/"
+              sx={{ backgroundColor: '#D7DBDD', height: '29%', color: 'black' }}
+            >
+              Ir a Concursos
+            </Button>
+            <Link to={`/design/add_design/${contestId}`}>
+              <Button
+                aria-label="add"
+                startIcon={<AddIcon />}
                 sx={{
-                  marginRight: '80px',
-                  minWidth: '130px',
-                  backgroundColor: 'white',
+                  marginLeft: '15px',
+                  mr: '40px',
+                  border: 'solid 1px',
+                  backgroundColor: '#FDFDFD',
+                  '&:hover': { backgroundColor: '#FDFDFD' },
                 }}
               >
-                {' '}
-                <MenuItem value="">Todos</MenuItem>
-                <MenuItem value="Activo">Activo</MenuItem>
-                <MenuItem value="Finalizado">Inactivos</MenuItem>
-              </Select>
-            </FormControl>
+                Añadir diseño
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </Container>
@@ -185,14 +185,27 @@ function ContestPage() {
           alignItems: 'center',
         }}
       >
-        {filteredContests.map((contest, index) => (
-          <div key={contest._id}>
-            <ContestCard contest={contest} />
-          </div>
-        ))}
+        {filteredAuthor.length > 0 ? (
+          filteredAuthor.map((design) => {
+            return <ProductCard key={design._id} design={design} />
+          })
+        ) : (
+          <Typography
+            sx={{
+              color: 'white',
+              fontSize: '30px',
+              marginTop: '-170px',
+              marginBottom: '100px',
+              zIndex: 1,
+              filter: 'drop-shadow(0px 5px 5px rgba(0, 0, 0, 1))',
+            }}
+          >
+            Sé tu el primero en publicar un diseño!
+          </Typography>
+        )}
       </div>
     </>
   )
 }
 
-export default ContestPage
+export default DesignsPage

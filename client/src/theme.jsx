@@ -49,11 +49,11 @@ const ThemeProvider = ({ children }) => (
           left: 0,
           width: '100%',
           height: '100%',
-          backgroundImage: 'url("https://www.hdwallpapers.in/download/blue_mixed_paint_aesthetic_background_4k_hd_blue_aesthetic-HD.jpg")',
-          backgroundColor:'#95d5b2',
+          // backgroundImage: 'url("https://www.hdwallpapers.in/download/blue_mixed_paint_aesthetic_background_4k_hd_blue_aesthetic-HD.jpg")',
+          backgroundColor:'#fff4d9',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          filter: 'blur(30px)',
+          // filter: 'blur(30px)',
         }}
       ></div>
       <div

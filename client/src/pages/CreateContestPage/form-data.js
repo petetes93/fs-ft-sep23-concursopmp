@@ -12,7 +12,7 @@ const fields = [
   },
   {
     name: 'description',
-    label: 'Descipción',
+    label: 'Descripción',
     multiline: true,
   },
   {

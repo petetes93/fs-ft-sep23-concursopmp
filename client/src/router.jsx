@@ -2,7 +2,7 @@ import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import ErrorPage from 'pages/ErrorPage'
 import RootLayout from 'layouts/RootLayout'
-import ProductsPage from './pages/ProductsPage'
+import DesignsPage from './pages/DesignsPage'
 import ContestPage from './pages/ContestPage'
 import LoginPage from 'pages/LoginPage'
 import RegisterPage from 'pages/RegisterPage'
@@ -10,12 +10,16 @@ import RegisterPage from 'pages/RegisterPage'
 import AdminUserPage from './pages/AdminUserPage'
 import DetailsPage from './pages/DetailPage'
 import LoginAdmin from './pages/AdminLogin'
-import ConcursoForm from './pages/CrearConcurso/crearconcurso'
-import AddDesingPage from 'pages/AddDesingPage'
+import CreateContestPage from './pages/CreateContestPage'
+import AdminEditContest from './pages/AdminEditContestPage'
+import AddDesignPage from 'pages/AddDesignPage'
+import AdminDesignPage from './pages/AdminDesignPage'
 import AdminContestPage from './pages/AdminContestPage'
 import ProtectedRoute from './utils/ProtectedRoute'
 import LogoutPage from './pages/LogoutPage'
 import Dashboard from './pages/Dashboard'
+import AdminDetailPage from './pages/AdminDetailPage'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,61 +28,64 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <ContestPage />,
-      },
-      {
-        path: '/contest/:contestId',
-        element: <ProductsPage />,
-      },
-      {
-        path: '/product/add_desing',
-        element: <AddDesingPage />,
+        element: <ProtectedRoute page={ContestPage} role="anonymous" />,
       },
       {
         path: '/login',
-        // element: <ProtectedRoute page={LoginPage} role='anonymous' />,
-        element: <LoginPage />,
+        element: <ProtectedRoute page={LoginPage} role="anonymous" />,
       },
       {
         path: '/register',
-        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
-        element: <RegisterPage />,
+        element: <ProtectedRoute page={RegisterPage} role="anonymous" />,
       },
-      // {
-      //   path: "/admin",
-      //   // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
-      //   element: <AdminPage />,
-      // },
+      {
+        path: '/contest/:contestId',
+        element: <ProtectedRoute page={DesignsPage} role="anonymous" />,
+      },
+      {
+        path: '/design/:designId',
+        element: <ProtectedRoute page={DetailsPage} role="anonymous" />,
+      },
+      {
+        path: '/design/add_design/:contestId',
+        element: <ProtectedRoute page={AddDesignPage} role="anonymous" />,
+      },
+      {
+        path: '/admin',
+        element: <ProtectedRoute page={LoginAdmin} role="anonymous" />,
+      },
       {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <ProtectedRoute page={Dashboard} role="admin" />,
       },
 
       {
         path: '/adminuser',
-        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
-        element: <AdminUserPage />,
+        element: <ProtectedRoute page={AdminUserPage} role="admin" />,
       },
       {
         path: '/admincontest',
-        // element: <ProtectedRoute page={RegisterPage} role='anonymous' />,
-        element: <AdminContestPage />,
+        element: <ProtectedRoute page={AdminContestPage} role="admin" />,
       },
       {
-        path: '/design/:designId',
-        element: <DetailsPage />,
+        path: '/admindesigns/:contestId',
+        element: <ProtectedRoute page={AdminDesignPage} role="admin" />,
       },
       {
-        path: '/admin',
-        element: <LoginAdmin />,
+        path: '/admindesign/:designId',
+        element: <ProtectedRoute page={AdminDetailPage} role="admin" />,
       },
       {
         path: '/createcontest',
-        element: <ConcursoForm />,
+        element: <ProtectedRoute page={CreateContestPage} role="admin" />,
+      },
+      {
+        path: '/editcontest/:contestId',
+        element: <ProtectedRoute page={AdminEditContest} role="admin" />,
       },
       {
         path: '/logout',
-        element: <LogoutPage />,
+        element: <ProtectedRoute page={LogoutPage} role="anonymous" />,
       },
     ],
   },

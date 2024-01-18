@@ -22,6 +22,7 @@ function LoginPage() {
         navigate('/', { replace: true })
       })
       .catch((err) => {
+        toast.error('Error al iniciar sesión')
         const { data, status } = err.response
 
         if (Array.isArray(data) && status === 400)
@@ -31,11 +32,11 @@ function LoginPage() {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems='center'
+        alignItems="center"
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -54,7 +55,7 @@ function LoginPage() {
           },
         }}
       >
-        <Typography variant='h2' component='h2'>
+        <Typography variant="h2" component="h2">
           Inicio de sesión
         </Typography>
 
@@ -63,15 +64,15 @@ function LoginPage() {
           onSubmit={onSubmit}
           validationSchema={schema}
           errorsFromResponse={errorsFromResponse}
-          submitLabel='Enviar'
-          fieldWidth='10ch'
+          submitLabel="Enviar"
+          fieldWidth="10ch"
         />
 
-        <Stack direction='row' spacing={1}>
+        <Stack direction="row" spacing={1}>
           {/* <Link href='#' variant='body2'>
             ¿Olvidaste tu contraseña?
           </Link> */}
-          <Link href='/register' variant='body2'>
+          <Link href="/register" variant="body2">
             ¿No tienes cuenta? Regístrate
           </Link>
         </Stack>

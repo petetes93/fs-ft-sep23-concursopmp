@@ -1,38 +1,39 @@
 import React, { useState } from 'react'
 import { Stack, Typography, Container, CssBaseline } from '@mui/material'
 import { Form } from 'components'
-import contestService from 'services/contest-service'
+import designService from 'services/design-service'
 import { toast } from 'react-toastify'
 import { schema, fields } from './form-data'
 import { useAuth } from 'hooks'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-function ConcursoForm() {
+function DesignForm() {
   const navigate = useNavigate()
   const [, dispatch] = useAuth()
   const [erroresDesdeRespuesta, setErroresDesdeRespuesta] = useState([])
+  const { contestId } = useParams()
 
-  const handleFormSubmit = concursoData => {
-    console.log(concursoData)
-
+  const handleFormSubmit = (designData) => {
     const formData = new FormData()
+    designData.contest = contestId
 
-    formData.append('name', concursoData.name)
-    formData.append('image', concursoData.image)
-    formData.append('rules', concursoData.rules)
-    formData.append('description', concursoData.description)
-    formData.append('startDate', concursoData.startDate)
-    formData.append('finishDate', concursoData.finishDate)
-    formData.append('theme', concursoData.theme)
+    formData.append('title', designData.title)
+    formData.append('description', designData.description)
+    formData.append('image', designData.image)
+    formData.append('contest', designData.contest)
 
-    contestService
+    console.log(designData)
+
+    designService
       .create(formData)
-      .then(response => {
-        toast.success('Concurso creado exitosamente.')
+      .then((response) => {
+        toast.success('Diseño creado exitosamente.')
         navigate('/', { replace: true })
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
+        toast.error('Necesitas estar registrado para subir un diseño')
+        navigate('/login', { replace: true })
       })
   }
 
@@ -55,7 +56,7 @@ function ConcursoForm() {
         }}
       >
         <Typography variant="h2" component="h2" sx={{ marginBottom: '20px' }}>
-          Crear Concurso
+          Crear Diseño
         </Typography>
 
         <Form
@@ -63,7 +64,7 @@ function ConcursoForm() {
           onSubmit={handleFormSubmit}
           validationSchema={schema}
           erroresDesdeRespuesta={erroresDesdeRespuesta}
-          submitLabel="Crear Concurso"
+          submitLabel="Crear Diseño"
           fieldWidth="10ch"
           sx={{ width: '100%' }}
         />
@@ -72,4 +73,4 @@ function ConcursoForm() {
   )
 }
 
-export default ConcursoForm
+export default DesignForm

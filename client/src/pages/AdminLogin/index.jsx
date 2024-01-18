@@ -5,22 +5,26 @@ import { Form } from 'components'
 import { login } from 'services/auth-service'
 import { toast } from 'react-toastify'
 import { schema, fields } from './form-data'
-// import { useAuth } from 'hooks'
+import { useAuth } from 'hooks'
 import { useNavigate } from 'react-router-dom'
+import { logout } from 'services/auth-service'
 
 function LoginAdmin() {
   const navigate = useNavigate()
-  //   const [, dispatch] = useAuth()
+  const [, dispatch] = useAuth()
   const [erroresDesdeRespuesta, setErroresDesdeRespuesta] = useState([])
+
+  logout()
+  dispatch({ type: 'logout' })
 
   const IniciarSesionAdmin = (usuario) => {
     login(usuario)
       .then((decodedJWT) => {
-        const { isAdmin } = decodedJWT
+        const { isAdmin, username } = decodedJWT
         if (isAdmin) {
-          const tipo = 'admin'
-
-          navigate('/', { replace: true })
+          const type = 'admin'
+          dispatch({ type, username })
+          navigate('/Dashboard', { replace: true })
         } else {
           toast.error('No tienes privilegios de administrador.')
         }
@@ -35,11 +39,11 @@ function LoginAdmin() {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Stack
         spacing={3}
-        alignItems='center'
+        alignItems="center"
         sx={{
           width: '100%',
           justifyContent: 'center',
@@ -58,8 +62,8 @@ function LoginAdmin() {
           },
         }}
       >
-        <Typography variant='h2' component='h2'>
-          Inicio de sesión
+        <Typography variant="h2" component="h2">
+          Panel de Administradores
         </Typography>
 
         <Form
@@ -67,8 +71,8 @@ function LoginAdmin() {
           onSubmit={IniciarSesionAdmin}
           validationSchema={schema}
           erroresDesdeRespuesta={erroresDesdeRespuesta}
-          submitLabel='Enviar'
-          fieldWidth='10ch'
+          submitLabel="Enviar"
+          fieldWidth="10ch"
         />
       </Stack>
     </Container>
