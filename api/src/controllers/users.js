@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator')
 const User = require('../models/user')
 const { Design } = require('../models/design')
 const { Vote } = require('../models/vote')
+const { Comment } = require('../models/comment')
 
 const register = async (req, res) => {
   try {
@@ -164,12 +165,13 @@ const deleteUser = async (req, res) => {
     }
 
     await Vote.deleteMany({ user: userID })
+    await Comment.deleteMany({ user: userID })
 
     const userDesigns = await Design.find({ author: userID })
-    const designIDs = userDesigns.map((design) => design._id)
+    const designIDs = userDesigns.map(design => design._id)
 
     await Vote.deleteMany({ design: { $in: designIDs } })
-
+    await Comment.deleteMany({ design: { $in: designIDs } })
     await Design.deleteMany({ author: userID })
 
     const deletedUser = await User.findByIdAndDelete(userID)
