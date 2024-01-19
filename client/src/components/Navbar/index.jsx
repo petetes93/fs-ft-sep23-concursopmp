@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -25,22 +25,26 @@ function Navbar() {
   const [user] = useAuth()
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
-  const [isLoggedIn, setIsLoggedIn] = useState(user)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setIsLoggedIn(!!user.auth)
+  }, [user.auth])
 
   const handleLogout = () => {
     setIsLoggedIn(false)
   }
 
-  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget)
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget)
+  const handleOpenNavMenu = event => setAnchorElNav(event.currentTarget)
+  const handleOpenUserMenu = event => setAnchorElUser(event.currentTarget)
 
-  const handleOpenUserResponsive = (event) => setIsLoggedIn(event.currentTarget)
+  const handleOpenUserResponsive = event => setIsLoggedIn(event.currentTarget)
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
   }
 
-  const pages = ['Shop', 'Liquidacion', 'diseñadores', 'Comunidad', 'Tiendas']
+  const pages = ['Shop', 'Liquidacion', 'Diseñadores', 'Comunidad', 'Tiendas']
 
   const optionsUserMenu = user.auth
     ? [{ label: 'Logout', to: '/logout' }]
@@ -99,7 +103,7 @@ function Navbar() {
                 display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {pages.map(page => (
                 <MenuItem
                   sx={{
                     backgroundColor: 'white',
@@ -271,7 +275,7 @@ function Navbar() {
               </Button>
             </Link>
 
-            {pages.map((page) => (
+            {pages.map(page => (
               <Link to="https://www.pampling.com/tienda/catalogo/busqueda">
                 <Button
                   key={page}
