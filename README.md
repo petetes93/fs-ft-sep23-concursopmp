@@ -1,4 +1,4 @@
-URL: https://client-pampling.onrender.com/
+SITE: https://client-pampling.onrender.com/
 
 # HISTORIAS PROYECTO PAMPLING
 
